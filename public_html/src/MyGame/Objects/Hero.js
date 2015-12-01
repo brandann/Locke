@@ -194,3 +194,8 @@ Hero.prototype.updateControls = function () {
         }
     }
 };
+
+Hero.prototype.handleEnemyCollision = function(enemy) {
+    console.log("Enemy collision with hero");
+    this.getXform().setPosition(20, 20);
+};

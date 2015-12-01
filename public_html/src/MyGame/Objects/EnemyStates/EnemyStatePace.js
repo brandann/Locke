@@ -31,7 +31,8 @@ Enemy.prototype.updatePace = function () {
     if(distFromHero < 30) {                                                     // check hero distance firsrt
         if(heroXPos > enemyXPos) { this.mDir = 1; }                             // chase right
         else { this.mDir = -1; }                                                // chase left
-        this.mSpeedVel = 2;                                                     // increase speed
+        this.mSpeedVel = 1.75;                                                  // increase speed
+        if(Math.abs(heroXPos - enemyXPos) < 0.11) {this.mSpeedVel = 0;}         // if the enemy is under the hero stop pacing
         this.mEnemy.setColor([1, 0, 0, 1]);                                     // show red on chase
     }
     else {
