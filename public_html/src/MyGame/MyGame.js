@@ -149,8 +149,10 @@ MyGame.prototype.initialize = function () {
     
     var e = new Enemy();
     e.setHeroObject(this.mHero);
-    e.setChaseState([-27, 10]);
+    e.setChaseState([-35, 10]);
     this.mEnemies.addToSet(e);
+    
+    this._initLights();
     
 //    // Step B: the lights
 //    this._initializeLights();   // defined in MyGame_Lights.js
