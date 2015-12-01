@@ -16,7 +16,7 @@ function MyGame() {
     this.kBgBlueLandBG = "assets/blue_land.png";
     this.kBgGreenLandBG = "assets/green_land.png";
     this.kspritesheet_tiles = "assets/spritesheet_tiles.png";
-	this.kspritesheet_hud = "assets/spritesheet_hud.png";
+    this.kspritesheet_hud = "assets/spritesheet_hud.png";
     
     // The camera to view the scene
     this.mCamera = null;
@@ -61,13 +61,9 @@ MyGame.prototype.initialize = function () {
     key = 'objects';
     assetMap[key] = this.kspritesheet_tiles;
     
-    
-    
     this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms);
     this.mHUDManager = new HUDManager(this.kspritesheet_hud);
 
-    
-    
     this.mCamera = new Camera(
         vec2.fromValues(0, 0), // position of the camera
         100,                       // width of camera
@@ -75,10 +71,8 @@ MyGame.prototype.initialize = function () {
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
-    
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 
-    
     var i;
     var xPos = -50;
     
@@ -100,6 +94,7 @@ MyGame.prototype.initialize = function () {
     BgXform.setSize(100,100);
     
     this.mHero = new Hero();
+    this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     
     this.mEnemies = new GameObjectSet();
     
@@ -114,7 +109,6 @@ MyGame.prototype.initialize = function () {
     this.mEnemies.addToSet(e);
     
     this._initLights();
-    
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -122,14 +116,11 @@ MyGame.prototype.initialize = function () {
 MyGame.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
-    
     this.mCamera.setupViewProjection();
     
-    
     this.mBg.draw(this.mCamera);
-    
     this.mAllPlatforms.draw(this.mCamera);
-	this.mEnemies.draw(this.mCamera);
+    this.mEnemies.draw(this.mCamera);
     this.mHero.draw(this.mCamera);
     this.mHUDManager.draw(this.mCamera);
 };
@@ -137,11 +128,9 @@ MyGame.prototype.draw = function () {
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame.prototype.update = function () {
-    
     this.mAllPlatforms.updateWithREF(this.mHero);
     this.mHero.update(this.mAllPlatforms);
     this.mHUDManager.update(this.mCamera,0,0);
-	this.mEnemies.update();
-    
+    this.mEnemies.update();
     this._physicsSimulation();
 };

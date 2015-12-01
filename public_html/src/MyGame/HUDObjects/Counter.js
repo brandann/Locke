@@ -21,7 +21,7 @@ function Counter(hudSpriteSheet) {
     this.mSpriteMapNumbers[9] = [0,127,256,384];
     this.mSpriteMapNumbers[0] = [127,256,128,256];
     
-    this.mCounter = 0;
+    this.mCounter = 5;
     
     this.ones = new SpriteRenderable(this.mSpriteSheet);
     this.ones.setColor([1, 1, 1, 0]);
@@ -45,9 +45,10 @@ Counter.prototype.incByOne = function () {
 };
 
 Counter.prototype.decByOne = function () {
+    console.log("dec counter");
     if(this.mCounter > 0){
         this.mCounter -= 1;
-        this.ones.setElementPixelPosArray(this.mSpriteMapNumbers[this.mCounter]);         
+        this.ones.setElementPixelPosArray(this.mSpriteMapNumbers[this.mCounter]);
     }
 
 };

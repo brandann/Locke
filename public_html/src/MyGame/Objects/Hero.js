@@ -35,6 +35,7 @@ function Hero() {
     this.mPrevState = null;
     this.mNumJump = 0;
     
+    this.mLifeCounter = null;
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -196,6 +197,10 @@ Hero.prototype.updateControls = function () {
 };
 
 Hero.prototype.handleEnemyCollision = function(enemy) {
-    console.log("Enemy collision with hero");
     this.getXform().setPosition(20, 20);
+    this.mLifeCounter.decByOne();
+};
+
+Hero.prototype.setLifeCounter = function(life) {
+    this.mLifeCounter = life;
 };

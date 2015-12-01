@@ -79,3 +79,7 @@ HUDManager.prototype.draw = function (aCamera) {
     this.powerIcon.draw(aCamera);
     this.keyIcon.draw(aCamera);
 };
+
+HUDManager.prototype.getLifeCounter = function() {
+    return this.lifeCounter;
+};
