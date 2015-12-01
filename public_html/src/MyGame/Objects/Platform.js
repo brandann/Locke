@@ -21,8 +21,25 @@ function Platform(pixelPosition, spriteTexture, pos, size) {
 
     var rigidShape = new RigidRectangle(this.getXform(), size[0], size[1]);
     rigidShape.setMass(0);  // ensures no movements!
-    //rigidShape.setDrawBounds(true);
+    rigidShape.setDrawBounds(true);
     rigidShape.setColor([1, 0.2, 0.2, 1]);
-    this.setPhysicsComponent(rigidShape);
+    this.setPhysicsComponent(rigidShape);        
+
+
 }
 gEngine.Core.inheritPrototype(Platform, GameObject);
+
+Platform.prototype.getWidth = function () {
+    return this.mPlatform.getXform().getWidth();
+};
+
+Platform.prototype.update = function (hero) {
+    GameObject.prototype.update.call(this);
+    
+};
+
+
+
+
+
+

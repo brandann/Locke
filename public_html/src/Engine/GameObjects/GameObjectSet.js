@@ -42,6 +42,13 @@ GameObjectSet.prototype.update = function () {
     }
 };
 
+GameObjectSet.prototype.updateWithREF = function (gameObjREF) {
+    var i;
+    for (i = 0; i < this.mSet.length; i++) {
+        this.mSet[i].update(gameObjREF);
+    }
+};
+
 GameObjectSet.prototype.draw = function (aCamera) {
     var i;
     for (i = 0; i < this.mSet.length; i++) {
