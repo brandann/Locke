@@ -47,7 +47,6 @@ Enemy.prototype._heroCollision = function () {
     var heroBBox = this.mHero.getBBox();
     
     if(enemyBBox.intersectsBound(heroBBox)){ 
-        console.log("Coll w/ Hero");
         this.mEnemy.setColor([1, 1, 1, 1]); // show white on collision
     }
     else { 

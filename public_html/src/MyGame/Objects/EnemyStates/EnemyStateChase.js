@@ -8,34 +8,30 @@
 
 // sets the enemy state to pace around an initial position
 Enemy.prototype.setChaseState = function(initPos) {
-    var r = new RigidRectangle(this.getXform(), 5, 5);
-    r.setMass(0);  // less dense than Minions
     
-    this.mInitialPosition = initPos;
-    this.getXform().setPosition(initPos[0], initPos[1]);
+    var r = this.getPhysicsComponent();                                         // get the physics component
+    r.setMass(0);                                                               // turn off mass so flying object does not fall
     
-    this.kXDelta = .1;
-    this.mDir = 1;
-    this.mState = null;
-    this.mSpeedVel = 1;
+    this.getXform().setPosition(initPos[0], initPos[1]);                        // set the GameObject position to the initPos
     
-    this._updateState(this.updateChase);
+    this.mState = null;                                                         // null the mState, this is just percautionary
+    this.mSpeedVel = 0.15;                                                      // speed of the enemy when moving
+    
+    this._updateState(this.updateChase);                                        // set the update state to this state
 };
 
 Enemy.prototype.updateChase = function () {
     
     var xform = this.getXform();
     var distFromHero = vec2.distance(xform.getPosition(), this.mHero.getXform().getPosition());
-    var distFromInitial = vec2.distance(xform.getPosition(), this.mInitialPosition);
     
-    if(distFromHero < 30) {                                                                 // check hero distance firsrt
-        this.rotateObjPointTo(this.mHero.getXform().getPosition(), 0.05);
-        this.setSpeed(0.05);
-        this.mEnemy.setColor([1, 0, 0, 1]);                                                 // show red on chase
+    if(distFromHero < 30) {                                                     // check hero distance firsrt
+        this.rotateObjPointTo(this.mHero.getXform().getPosition(), 0.05);       // turn the enemy torwards the hero
+        this.setSpeed(this.mSpeedVel);                                          // set the speed to make the enemy move torwards hero
+        this.mEnemy.setColor([1, 0, 0, 1]);                                     // show red on chase
     }
     else {
-        this.setSpeed(0.0);
-        this.mEnemy.setColor([1, 0, 1, 1]);                                                 // show pink on patrol
+        this.setSpeed(0.0);                                                     // set the speed to 0 to stop movement
+        this.mEnemy.setColor([1, 0, 1, 1]);                                     // show pink on patrol
     }
-    //xform.incXPosBy(this.kXDelta * this.mDir * this.mSpeedVel);                             // change position
 };
