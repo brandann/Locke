@@ -35,29 +35,39 @@ Enemy.prototype.update = function () {
     // must call super class update
     GameObject.prototype.update.call(this);
     
-    if(this.mHero !== null) {
-        if(this.mState === null) {console.log("Enemy is missing updatestate! call setState()");}
-        else {this.mState();}
-        this._heroCollision();
+    if(this.mHero !== null) {                                                   // if the hero is null or not set do not do anything with the enemy
+        if(this.mState === null) {console.log("Enemy is missing estate");}      // if the state is set to null then the enemy has no AI or logic
+        else {this.mState();}                                                   // update the state
+        this._heroCollision();                                                  // check for collisions with the hero
     }
 };
 
+// this looks for hero collisions and maybe reports to the hero
+// when a collision has been detected
 Enemy.prototype._heroCollision = function () {
+    
     var enemyBBox = this.getBBox();
     var heroBBox = this.mHero.getBBox();
     
     if(enemyBBox.intersectsBound(heroBBox)){ 
-        this.mEnemy.setColor([1, 1, 1, 1]); // show white on collision
+        this.mEnemy.setColor([1, 1, 1, 1]);                                     // show white on collision
     }
     else { 
         // TODO: something w/ hero on collision
+        // something like:
+        // this.mHero.collisionHappened(this);
     }
 };
 
+// sets the enemy AI state
+// set the function to be called. fancy Javascript right here.
 Enemy.prototype._updateState = function (func) {
     this.mState = func;
 };
 
+// set the hero object, each update state uses the hero
+// different however they want
+// set the hero for the enemy to interact with
 Enemy.prototype.setHeroObject = function(hero) {
     this.mHero = hero;
 };
