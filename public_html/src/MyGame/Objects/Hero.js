@@ -11,19 +11,41 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Hero() {
+function Hero(spriteSheet) {
+    
     this.kXDelta = 1;
     this.kYDelta = 2.0;
     this.kJumpHeight = 40;
     this.kMaxVelocity = 20;
-    this.mDye = new Renderable();
-    this.mDye.setColor([0, 1, 1, 1]);
+    
+    this.mSpriteSheet = spriteSheet;
+    this.mSpriteMap = {};
+    
+    //topPixel, leftPixel, widthPixel, HeightPixel, numelements, paddingPixel
+    var key;
+    key = 'stand';
+    this.mSpriteMap[key] = [128,0,86,86,1,0];
+    key = 'blueDiamond';
+    this.mSpriteMap[key] = [0,128,896,1024];
+    key = 'goldKeyEmpty';
+    this.mSpriteMap[key] = [256,384,256,384];
+    key = 'goldKey';
+    this.mSpriteMap[key] = [256,384,128,256];
+    
+    
+    
+    this.mDye = new LightRenderable(this.mSpriteSheet);
+    this.mDye.setColor([1, 1, 1, 0]);
     this.mDye.getXform().setPosition(20, 20);
-    this.mDye.getXform().setSize(6, 6);
+    this.mDye.getXform().setSize(5, 6.5);
+    
+    this.mDye.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
+    this.mDye.setAnimationSpeed(2.5); 
+    this.mDye.setSpriteSequence(512, 0, 67, 92, 1, 0);
 
     GameObject.call(this, this.mDye);
-    var r = new RigidRectangle(this.getXform(), 5.75, 5.75);
-    r.setMass(0.7);  // less dense than Minions
+    var r = new RigidRectangle(this.getXform(), 5.95, 6.35);
+    r.setMass(0.7); 
     r.setRestitution(0.05);
     r.setColor([0, 1, 0, 1]);
     r.setDrawBounds(true);
@@ -59,6 +81,8 @@ Hero.prototype.update = function (platforms) {
 
     this.handlePlatformCollision(platforms);
     this.updateControls();
+    
+    this.mDye.updateAnimation();
     
     // now interact with the dyePack ...
 //    var i, obj;
@@ -196,6 +220,7 @@ Hero.prototype.updateControls = function () {
     }
 };
 
+<<<<<<< Updated upstream
 Hero.prototype.handleEnemyCollision = function(enemy) {
     this.getXform().setPosition(20, 20);
     this.mLifeCounter.decByOne();
@@ -203,4 +228,41 @@ Hero.prototype.handleEnemyCollision = function(enemy) {
 
 Hero.prototype.setLifeCounter = function(life) {
     this.mLifeCounter = life;
+=======
+Hero.prototype.changeAnimation = function () {
+    if (this.mHeroState !== this.mPreviousHeroState) {
+        switch (this.mHeroState) {
+            case Hero.eHeroState.eFaceLeft:
+                this.mDye.setSpriteSequence(1508, 0, 140, 180, 3, 0);
+                this.mDye.getXform().setSize(-this.kWidth, this.kHeight);
+                this.mDye.setAnimationSpeed(20);
+                break;
+//            case Hero.eHeroState.eFaceRight:
+//                this.mDye.setSpriteSequence(1508, 0, 140, 180, 3, 0);
+//                this.mDye.getXform().setSize(this.kWidth, this.kHeight);
+//                this.mDye.setAnimationSpeed(20);
+//                break;
+//            case Hero.eHeroState.eRunLeft:
+//                this.mDye.setSpriteSequence(1688, 0, 140, 180, 6, 0);
+//                this.mDye.getXform().setSize(-this.kWidth, this.kHeight);
+//                this.mDye.setAnimationSpeed(5);
+//                break;
+//            case Hero.eHeroState.eRunRight:
+//                this.mDye.setSpriteSequence(1688, 0, 140, 180, 6, 0);
+//                this.mDye.getXform().setSize(this.kWidth, this.kHeight);
+//                this.mDye.setAnimationSpeed(5);
+//                break;
+//            case Hero.eHeroState.eJumpLeft:
+//                this.mDye.setSpriteSequence(2048, 0, 140, 180, 10, 0);
+//                this.mDye.getXform().setSize(-this.kWidth, this.kHeight);
+//                this.mDye.setAnimationSpeed(4);
+//                break;
+//            case Hero.eHeroState.eJumpRight:
+//                this.mDye.setSpriteSequence(2048, 0, 140, 180, 10, 0);
+//                this.mDye.getXform().setSize(this.kWidth, this.kHeight);
+//                this.mDye.setAnimationSpeed(4);
+//                break;
+        }
+    }
+>>>>>>> Stashed changes
 };

@@ -17,18 +17,27 @@ function MyGame() {
     this.kBgGreenLandBG = "assets/green_land.png";
     this.kspritesheet_tiles = "assets/spritesheet_tiles.png";
     this.kspritesheet_hud = "assets/spritesheet_hud.png";
+<<<<<<< Updated upstream
+=======
+    this.kspritesheet_hero = "assets/spritesheet_hero_walk.png";
+>>>>>>> Stashed changes
     
     // The camera to view the scene
     this.mCamera = null;
+    this.mMiniMap = null;
+    this.mBg = null;
+    this.mMiniMapBg = null;
+    
+    
     this.mAllPlatforms = null;
     this.mHUDManager = null;
     this.mEnemies = null;
-    this.mBg = null;
+
     
     this.mPlatformFactory = null;
     this.mHero = null;
     
-    this.kGroundPlatWidth = 10;
+    this.kGameWorldWidth = 200;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -38,6 +47,7 @@ MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kBgGreenLandBG);
     gEngine.Textures.loadTexture(this.kspritesheet_tiles);
     gEngine.Textures.loadTexture(this.kspritesheet_hud);
+    gEngine.Textures.loadTexture(this.kspritesheet_hero);
 };
 
 MyGame.prototype.unloadScene = function () {
@@ -46,12 +56,14 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kBgGreenLandBG);
     gEngine.Textures.unloadTexture(this.kspritesheet_tiles);
     gEngine.Textures.unloadTexture(this.kspritesheet_hud);
+    gEngine.Textures.unloadTexture(this.kspritesheet_hero);
 };
 
 MyGame.prototype.initialize = function () {   
     //create game object sets
     this.mAllPlatforms = new GameObjectSet();
-    
+ 
+//Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
     var key;
     
@@ -61,18 +73,57 @@ MyGame.prototype.initialize = function () {
     key = 'objects';
     assetMap[key] = this.kspritesheet_tiles;
     
+<<<<<<< Updated upstream
     this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms);
     this.mHUDManager = new HUDManager(this.kspritesheet_hud);
 
+=======
+ // CreateManagers--------------------------------------------------------------   
+    
+    this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms);
+    this.mHUDManager = new HUDManager(this.kspritesheet_hud);
+
+//  Create Cameras--------------------------------------------------------------
+    var mainCamH = 720;
+    var mainCamW = 1280;
+    
+>>>>>>> Stashed changes
     this.mCamera = new Camera(
-        vec2.fromValues(0, 0), // position of the camera
-        100,                       // width of camera
-        [0, 0, 1280, 720]           // viewport (orgX, orgY, width, height)
+        vec2.fromValues(0, 0), 
+        100,                       
+        [0, 0, mainCamW, mainCamH]           
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
+    var miniMapH = mainCamH/2;
+    var miniMapW = mainCamW;
+    
+    var LLX = 0;
+    var LLY = mainCamH/2 - miniMapH/2;
+            
+    this.mMiniMap = new Camera(
+        vec2.fromValues(0, 0), 
+        this.kGameWorldWidth,                     
+        [LLX, LLY, miniMapW, miniMapH]   
+    );
+    this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
+    
+<<<<<<< Updated upstream
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 
+=======
+    this.mMiniMapBg = new Renderable();
+    this.mMiniMapBg.setColor([0,0,0,1]);
+    var mapXform = this.mMiniMapBg.getXform();
+    mapXform.setPosition(0,0);
+    mapXform.setSize(this.mCamera.getWCWidth(),this.mCamera.getWCHeight()/2 + 1);
+    
+ 
+ //set up Lights----------------------------------------------------------------
+    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+
+ //initialize game world--------------------------------------------------------    
+>>>>>>> Stashed changes
     var i;
     var xPos = -50;
     
@@ -93,8 +144,14 @@ MyGame.prototype.initialize = function () {
     BgXform.setPosition(0,0);
     BgXform.setSize(100,100);
     
+<<<<<<< Updated upstream
     this.mHero = new Hero();
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
+=======
+
+    
+    this.mHero = new Hero(this.kspritesheet_hero);
+>>>>>>> Stashed changes
     
     this.mEnemies = new GameObjectSet();
     
@@ -116,13 +173,40 @@ MyGame.prototype.initialize = function () {
 MyGame.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     this.mCamera.setupViewProjection();
+    this._drawGameWorld(this.mCamera);
+    this.mHUDManager.draw(this.mCamera);
     
+<<<<<<< Updated upstream
     this.mBg.draw(this.mCamera);
     this.mAllPlatforms.draw(this.mCamera);
     this.mEnemies.draw(this.mCamera);
     this.mHero.draw(this.mCamera);
     this.mHUDManager.draw(this.mCamera);
+=======
+    //draw the minimap if the user pressed M 
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.M)) {
+        
+        var mapXform = this.mMiniMapBg.getXform();
+        mapXform.setPosition(this.mCamera.getWCCenter()[0],this.mCamera.getWCCenter()[1]);
+        this.mMiniMapBg.draw(this.mCamera);
+        this.mMiniMap.setupViewProjection();
+        this._drawGameWorld(this.mMiniMap);
+        
+    }
+    
+};
+
+MyGame.prototype._drawGameWorld = function (aCamera) {
+    this.mBg.draw(aCamera);
+    this.mAllPlatforms.draw(aCamera);
+    this.mEnemies.draw(aCamera);
+    this.mHero.draw(aCamera);
+>>>>>>> Stashed changes
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
@@ -132,8 +216,12 @@ MyGame.prototype.update = function () {
     this.mHero.update(this.mAllPlatforms);
     this.mHUDManager.update(this.mCamera,0,0);
     this.mEnemies.update();
+<<<<<<< Updated upstream
     //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.9);
     this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
     //this.mCamera.panWith(this.mHero.getXform(), 0.9);
+=======
+    
+>>>>>>> Stashed changes
     this._physicsSimulation();
 };
