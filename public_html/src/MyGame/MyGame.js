@@ -106,7 +106,7 @@ MyGame.prototype.initialize = function () {
     
  
  //set up Lights----------------------------------------------------------------
-    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+    gEngine.DefaultResources.setGlobalAmbientIntensity(2);
 
  //initialize game world--------------------------------------------------------
     var i;
@@ -124,7 +124,7 @@ MyGame.prototype.initialize = function () {
     this.mPlatformFactory.newSpikePlatform([-23,-10]);
     this.mPlatformFactory.newAwardPlatform([20,10]);
   
-    this.mBg = new TextureRenderable(this.kBgGreenLandBG);
+    this.mBg = new LightRenderable(this.kBgGreenLandBG);
     var BgXform = this.mBg.getXform();
     BgXform.setPosition(0,0);
     BgXform.setSize(100,100);
