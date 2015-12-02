@@ -132,5 +132,8 @@ MyGame.prototype.update = function () {
     this.mHero.update(this.mAllPlatforms);
     this.mHUDManager.update(this.mCamera,0,0);
     this.mEnemies.update();
+    //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.9);
+    this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
+    //this.mCamera.panWith(this.mHero.getXform(), 0.9);
     this._physicsSimulation();
 };
