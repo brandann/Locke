@@ -17,10 +17,7 @@ function MyGame() {
     this.kBgGreenLandBG = "assets/green_land.png";
     this.kspritesheet_tiles = "assets/spritesheet_tiles.png";
     this.kspritesheet_hud = "assets/spritesheet_hud.png";
-<<<<<<< Updated upstream
-=======
     this.kspritesheet_hero = "assets/spritesheet_hero_walk.png";
->>>>>>> Stashed changes
     
     // The camera to view the scene
     this.mCamera = null;
@@ -73,11 +70,6 @@ MyGame.prototype.initialize = function () {
     key = 'objects';
     assetMap[key] = this.kspritesheet_tiles;
     
-<<<<<<< Updated upstream
-    this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms);
-    this.mHUDManager = new HUDManager(this.kspritesheet_hud);
-
-=======
  // CreateManagers--------------------------------------------------------------   
     
     this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms);
@@ -86,8 +78,6 @@ MyGame.prototype.initialize = function () {
 //  Create Cameras--------------------------------------------------------------
     var mainCamH = 720;
     var mainCamW = 1280;
-    
->>>>>>> Stashed changes
     this.mCamera = new Camera(
         vec2.fromValues(0, 0), 
         100,                       
@@ -108,10 +98,6 @@ MyGame.prototype.initialize = function () {
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
     
-<<<<<<< Updated upstream
-    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
-
-=======
     this.mMiniMapBg = new Renderable();
     this.mMiniMapBg.setColor([0,0,0,1]);
     var mapXform = this.mMiniMapBg.getXform();
@@ -122,8 +108,7 @@ MyGame.prototype.initialize = function () {
  //set up Lights----------------------------------------------------------------
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 
- //initialize game world--------------------------------------------------------    
->>>>>>> Stashed changes
+ //initialize game world--------------------------------------------------------
     var i;
     var xPos = -50;
     
@@ -144,14 +129,8 @@ MyGame.prototype.initialize = function () {
     BgXform.setPosition(0,0);
     BgXform.setSize(100,100);
     
-<<<<<<< Updated upstream
-    this.mHero = new Hero();
-    this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
-=======
-
-    
     this.mHero = new Hero(this.kspritesheet_hero);
->>>>>>> Stashed changes
+    this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     
     this.mEnemies = new GameObjectSet();
     
@@ -173,21 +152,10 @@ MyGame.prototype.initialize = function () {
 MyGame.prototype.draw = function () {
     // Step A: clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
     this.mCamera.setupViewProjection();
     this._drawGameWorld(this.mCamera);
     this.mHUDManager.draw(this.mCamera);
-    
-<<<<<<< Updated upstream
-    this.mBg.draw(this.mCamera);
-    this.mAllPlatforms.draw(this.mCamera);
-    this.mEnemies.draw(this.mCamera);
-    this.mHero.draw(this.mCamera);
-    this.mHUDManager.draw(this.mCamera);
-=======
     //draw the minimap if the user pressed M 
     if (gEngine.Input.isKeyPressed(gEngine.Input.keys.M)) {
         
@@ -196,9 +164,7 @@ MyGame.prototype.draw = function () {
         this.mMiniMapBg.draw(this.mCamera);
         this.mMiniMap.setupViewProjection();
         this._drawGameWorld(this.mMiniMap);
-        
     }
-    
 };
 
 MyGame.prototype._drawGameWorld = function (aCamera) {
@@ -206,7 +172,6 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mAllPlatforms.draw(aCamera);
     this.mEnemies.draw(aCamera);
     this.mHero.draw(aCamera);
->>>>>>> Stashed changes
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
@@ -216,12 +181,8 @@ MyGame.prototype.update = function () {
     this.mHero.update(this.mAllPlatforms);
     this.mHUDManager.update(this.mCamera,0,0);
     this.mEnemies.update();
-<<<<<<< Updated upstream
     //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.9);
     this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
     //this.mCamera.panWith(this.mHero.getXform(), 0.9);
-=======
-    
->>>>>>> Stashed changes
     this._physicsSimulation();
 };

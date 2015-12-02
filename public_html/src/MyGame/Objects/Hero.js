@@ -220,7 +220,6 @@ Hero.prototype.updateControls = function () {
     }
 };
 
-<<<<<<< Updated upstream
 Hero.prototype.handleEnemyCollision = function(enemy) {
     this.getXform().setPosition(20, 20);
     this.mLifeCounter.decByOne();
@@ -228,7 +227,8 @@ Hero.prototype.handleEnemyCollision = function(enemy) {
 
 Hero.prototype.setLifeCounter = function(life) {
     this.mLifeCounter = life;
-=======
+};
+
 Hero.prototype.changeAnimation = function () {
     if (this.mHeroState !== this.mPreviousHeroState) {
         switch (this.mHeroState) {
@@ -264,5 +264,4 @@ Hero.prototype.changeAnimation = function () {
 //                break;
         }
     }
->>>>>>> Stashed changes
 };
