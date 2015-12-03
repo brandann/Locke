@@ -18,6 +18,7 @@ function MyGame() {
     this.kspritesheet_tiles = "assets/spritesheet_tiles.png";
     this.kspritesheet_hud = "assets/spritesheet_hud.png";
     this.kspritesheet_hero = "assets/spritesheet_hero_walk.png";
+    this.kspritesheet_torch = "assets/Torch.png";
     
     // The camera to view the scene
     this.mCamera = null;
@@ -35,6 +36,8 @@ function MyGame() {
     this.mHero = null;
     
     this.kGameWorldWidth = 200;
+    
+    this.mTorchSet = null;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -45,6 +48,7 @@ MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kspritesheet_tiles);
     gEngine.Textures.loadTexture(this.kspritesheet_hud);
     gEngine.Textures.loadTexture(this.kspritesheet_hero);
+    gEngine.Textures.loadTexture(this.kspritesheet_torch);
 };
 
 MyGame.prototype.unloadScene = function () {
@@ -54,6 +58,7 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_tiles);
     gEngine.Textures.unloadTexture(this.kspritesheet_hud);
     gEngine.Textures.unloadTexture(this.kspritesheet_hero);
+    gEngine.Textures.unloadTexture(this.kspritesheet_torch);
 };
 
 MyGame.prototype.initialize = function () {   
@@ -136,15 +141,19 @@ MyGame.prototype.initialize = function () {
     
     var e = new Enemy();
     e.setHeroObject(this.mHero);
-    e.setPaceState([27, -10]);
+    e.setPaceState([35, -10]);
     this.mEnemies.addToSet(e);
     
     var e = new Enemy();
     e.setHeroObject(this.mHero);
-    e.setChaseState([-35, 10]);
+    e.setChaseState([-40, 10]);
     this.mEnemies.addToSet(e);
     
-    this._initLights();
+    this.mTorchSet = new GameObjectSet();
+    this.mTorchSet.addToSet(this._initLights([30,0]));
+    this.mTorchSet.addToSet(this._initLights([10,0]));
+    this.mTorchSet.addToSet(this._initLights([-10,0]));
+    this.mTorchSet.addToSet(this._initLights([-30,0]));
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -172,6 +181,7 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mAllPlatforms.draw(aCamera);
     this.mEnemies.draw(aCamera);
     this.mHero.draw(aCamera);
+    this.mTorchSet.draw(aCamera);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
@@ -181,6 +191,7 @@ MyGame.prototype.update = function () {
     this.mHero.update(this.mAllPlatforms);
     this.mHUDManager.update(this.mCamera,0,0);
     this.mEnemies.update();
+    this.mTorchSet.update();
     //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.9);
     this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
     //this.mCamera.panWith(this.mHero.getXform(), 0.9);

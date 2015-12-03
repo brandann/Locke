@@ -25,7 +25,7 @@ Enemy.prototype.updateChase = function () {
     var xform = this.getXform();
     var distFromHero = vec2.distance(xform.getPosition(), this.mHero.getXform().getPosition());
     
-    if(distFromHero < 30) {                                                     // check hero distance firsrt
+    if(distFromHero < this.mRange) {                                            // check hero distance firsrt
         this.rotateObjPointTo(this.mHero.getXform().getPosition(), 0.05);       // turn the enemy torwards the hero
         this.setSpeed(this.mSpeedVel);                                          // set the speed to make the enemy move torwards hero
         this.mEnemy.setColor([1, 0, 0, 1]);                                     // show red on chase

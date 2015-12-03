@@ -27,6 +27,8 @@ function Enemy() {
     this.setPhysicsComponent(r);
     
     this.mHero = null;
+    
+    this.mRange = 20;
 }
 
 gEngine.Core.inheritPrototype(Enemy, GameObject);

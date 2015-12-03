@@ -28,7 +28,7 @@ Enemy.prototype.updatePace = function () {
     var heroXPos = this.mHero.getXform().getXPos();
     var enemyXPos = xform.getXPos();
     
-    if(distFromHero < 30) {                                                     // check hero distance firsrt
+    if(distFromHero < this.mRange) {                                            // check hero distance firsrt
         if(heroXPos > enemyXPos) { this.mDir = 1; }                             // chase right
         else { this.mDir = -1; }                                                // chase left
         this.mSpeedVel = 1.75;                                                  // increase speed
