@@ -74,9 +74,7 @@ Torch.prototype.update = function () {
     GameObject.prototype.update.call(this);
     this.mTorch.updateAnimation();
     this.mColorCount--;
-    console.log("Count" + this.mColorToggle);
     if(this.mColorCount <= 0) {
-        
         var tcolor = this.mTorch.getLightAt(0).getColor();
         if(this.mColorToggle) { this.mTorch.getLightAt(0).setColor(this.mRedColor);}
         else {this.mTorch.getLightAt(0).setColor(this.mOrangeColor);}
