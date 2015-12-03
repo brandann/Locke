@@ -26,7 +26,7 @@ function Counter(hudSpriteSheet) {
     this.ones = new SpriteRenderable(this.mSpriteSheet);
     this.ones.setColor([1, 1, 1, 0]);
     this.ones.getXform().setPosition(-10, -10);
-    this.ones.getXform().setSize(5,5);
+    this.ones.getXform().setSize(10,10);
     this.ones.setElementPixelPosArray(this.mSpriteMapNumbers[5]);
     
     //this.tens = new SpriteRenderable(this.mSpriteSheet);

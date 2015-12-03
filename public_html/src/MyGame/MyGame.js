@@ -19,6 +19,8 @@ function MyGame() {
     this.kspritesheet_hud = "assets/spritesheet_hud.png";
     this.kspritesheet_hero = "assets/spritesheet_hero_walk.png";
     
+    this.kLayerPos = [];
+    
     // The camera to view the scene
     this.mCamera = null;
     this.mMiniMap = null;
@@ -29,12 +31,13 @@ function MyGame() {
     this.mAllPlatforms = null;
     this.mHUDManager = null;
     this.mEnemies = null;
+    this.mTextures = null;
 
     
     this.mPlatformFactory = null;
     this.mHero = null;
     
-    this.kGameWorldWidth = 200;
+    this.kGameWorldWidth = 1600;
 }
 gEngine.Core.inheritPrototype(MyGame, Scene);
 
@@ -56,9 +59,13 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_hero);
 };
 
-MyGame.prototype.initialize = function () {   
+MyGame.prototype.initialize = function () { 
+    
+
+    
     //create game object sets
     this.mAllPlatforms = new GameObjectSet();
+    this.mTextures = new GameObjectSet();
  
 //Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
@@ -72,15 +79,16 @@ MyGame.prototype.initialize = function () {
     
  // CreateManagers--------------------------------------------------------------   
     
-    this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms);
-    this.mHUDManager = new HUDManager(this.kspritesheet_hud);
+    this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms,
+                                                this.mTextures);
+    this.mHUDManager = new HUDManager(this.kspritesheet_hud,this.kspritesheet_tiles);
 
 //  Create Cameras--------------------------------------------------------------
-    var mainCamH = 720;
-    var mainCamW = 1280;
+    var mainCamH = 600;
+    var mainCamW = 800;
     this.mCamera = new Camera(
-        vec2.fromValues(0, 0), 
-        100,                       
+        vec2.fromValues(80, 60), 
+        160,                       
         [0, 0, mainCamW, mainCamH]           
     );
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
@@ -92,7 +100,7 @@ MyGame.prototype.initialize = function () {
     var LLY = mainCamH/2 - miniMapH/2;
             
     this.mMiniMap = new Camera(
-        vec2.fromValues(0, 0), 
+        vec2.fromValues(80, 60), 
         this.kGameWorldWidth,                     
         [LLX, LLY, miniMapW, miniMapH]   
     );
@@ -101,7 +109,7 @@ MyGame.prototype.initialize = function () {
     this.mMiniMapBg = new Renderable();
     this.mMiniMapBg.setColor([0,0,0,1]);
     var mapXform = this.mMiniMapBg.getXform();
-    mapXform.setPosition(0,0);
+    mapXform.setPosition(80,60);
     mapXform.setSize(this.mCamera.getWCWidth(),this.mCamera.getWCHeight()/2 + 1);
     
  
@@ -109,40 +117,20 @@ MyGame.prototype.initialize = function () {
     gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 
  //initialize game world--------------------------------------------------------
-    var i;
-    var xPos = -50;
-    
-    for(i = 0; i < 15; i++){
-        var width = this.mPlatformFactory.newSimplePlatform('middle','greenPlatforms',[xPos,-20]);
-        xPos += width;
-    }
-    
-    this.mPlatformFactory.newBoxPlatform('!withBorder','objects',[10,10]);
-    this.mPlatformFactory.newBoxPlatform('plainBox','objects',[2,10]);
-    this.mPlatformFactory.newBoxPlatform('plainBox','objects',[-6,10]);
-    this.mPlatformFactory.newSpikePlatform([-15,-10]);
-    this.mPlatformFactory.newSpikePlatform([-23,-10]);
-    this.mPlatformFactory.newAwardPlatform([20,10]);
+
+    this.LevelBlock1(0);
   
     this.mBg = new TextureRenderable(this.kBgGreenLandBG);
     var BgXform = this.mBg.getXform();
-    BgXform.setPosition(0,0);
-    BgXform.setSize(100,100);
+    BgXform.setPosition(80,60);
+    BgXform.setSize(160,120);
     
     this.mHero = new Hero(this.kspritesheet_hero);
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     
     this.mEnemies = new GameObjectSet();
     
-    var e = new Enemy();
-    e.setHeroObject(this.mHero);
-    e.setPaceState([27, -10]);
-    this.mEnemies.addToSet(e);
-    
-    var e = new Enemy();
-    e.setHeroObject(this.mHero);
-    e.setChaseState([-35, 10]);
-    this.mEnemies.addToSet(e);
+
     
     this._initLights();
 };
@@ -172,6 +160,7 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mAllPlatforms.draw(aCamera);
     this.mEnemies.draw(aCamera);
     this.mHero.draw(aCamera);
+    this.mTextures.draw(aCamera);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
@@ -183,6 +172,6 @@ MyGame.prototype.update = function () {
     this.mEnemies.update();
     //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.9);
     this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
-    //this.mCamera.panWith(this.mHero.getXform(), 0.9);
+    //this.mCamera.panWith(this.mHero.getXform(), 0.5);
     this._physicsSimulation();
 };

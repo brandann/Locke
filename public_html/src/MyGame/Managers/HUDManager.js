@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-function HUDManager(hudSpriteSheet) {
+function HUDManager(hudSpriteSheet,objSheet) {
     this.mSpriteSheet = hudSpriteSheet;
+    this.mObjSheet = objSheet;
     this.mSpriteMap = {};
  
     var key;
@@ -18,18 +19,27 @@ function HUDManager(hudSpriteSheet) {
     this.mSpriteMap[key] = [256,384,256,384];
     key = 'goldKey';
     this.mSpriteMap[key] = [256,384,128,256];
+    key = 'bomb';
+    this.mSpriteMap[key] = [0,126,512,638];
    
     this.lifeCounter = new Counter(this.mSpriteSheet);
     this.keyCounter = new Counter(this.mSpriteSheet);
     this.powerCounter = new Counter(this.mSpriteSheet);
     
     this.heartIcon = this.createIcon('heart');
-    this.powerIcon = this.createIcon('blueDiamond');
+    this.powerIcon = this.createIcon2('bomb');
     this.keyIcon = this.createIcon('goldKeyEmpty');
 }
 
 HUDManager.prototype.createIcon = function (key) {
     var sprite = new SpriteRenderable(this.mSpriteSheet);
+    sprite.setColor([1, 1, 1, 0]);
+    sprite.setElementPixelPosArray(this.mSpriteMap[key]); 
+    return sprite;
+};
+
+HUDManager.prototype.createIcon2 = function (key) {
+    var sprite = new SpriteRenderable(this.mObjSheet);
     sprite.setColor([1, 1, 1, 0]);
     sprite.setElementPixelPosArray(this.mSpriteMap[key]); 
     return sprite;
@@ -49,8 +59,8 @@ HUDManager.prototype.update = function (aCamera,lifeCount,keyCount) {
     var offsetY = camH * 0.03;
     var offsetX = camW * 0.02;
     
-    var hudelemH = 5;
-    var hudelemW = 5;
+    var hudelemH = 10;
+    var hudelemW = 10;
     
     this.lifeCounter.set(upperRightX - offsetX, upperRightY - offsetY,
                             hudelemW, hudelemH);
@@ -65,7 +75,7 @@ HUDManager.prototype.update = function (aCamera,lifeCount,keyCount) {
     
     Offset = upperRightX - (offsetX/2) - (3 * hudelemW);
     this.powerIcon.getXform().setPosition(Offset, upperRightY - offsetY);
-    this.powerIcon.getXform().setSize(hudelemW,hudelemH);
+    this.powerIcon.getXform().setSize(hudelemW -3,hudelemH -3);
     
     Offset = upperRightX - (offsetX) - (4 * hudelemW);
     this.keyIcon.getXform().setPosition(Offset, upperRightY - offsetY);

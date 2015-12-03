@@ -5,16 +5,23 @@
  */
 
 
-function PlatformFactory(mapOfSprites, globalPlatformSet) {
+function PlatformFactory(mapOfSprites, globalPlatformSet,globalTextureSet) {
     this.mSpriteSheetMap = mapOfSprites;
     this.mSpriteMap = {};
     this.mAllPlatforms = globalPlatformSet;
+    this.mTextureSet = globalTextureSet;
     
     var key;
     
     //green platforms
-    key = 'middle';
+    key = 'middleGreen';
     this.mSpriteMap[key] = [280,349,233,301];
+    key = 'leftGreen';
+    this.mSpriteMap[key] = [280,349,164,232];
+    key = 'rightGreen';
+    this.mSpriteMap[key] = [280,349,303,372];
+    key = 'dirt';
+    this.mSpriteMap[key] = [0,69,90,150];
     
     
     //objects
@@ -30,16 +37,32 @@ function PlatformFactory(mapOfSprites, globalPlatformSet) {
     this.mSpriteMap[key] = [512,639,1280,1408];
     key = 'spikes';
     this.mSpriteMap[key] = [129.5,257,0,65];
+    key = 'stone';
+    this.mSpriteMap[key] = [512,639,1792,1920];
+    key = 'lock';
+    this.mSpriteMap[key] = [256,384,768,896];
+    key = 'yellowBox';
+    this.mSpriteMap[key] = [0,127,768,896];
+    key = 'bomb';
+    this.mSpriteMap[key] = [0,127,511,639];
 }
 
 PlatformFactory.prototype.newSimplePlatform = function (object, sheet, pos) {
-    var platform = new Platform(this.mSpriteMap[object], this.mSpriteSheetMap[sheet], pos, [10,15]);
+    var platform = new Platform(this.mSpriteMap[object], this.mSpriteSheetMap[sheet], pos, [10,10]);
     this.mAllPlatforms.addToSet(platform);
     return platform.getWidth();
 };
 
+PlatformFactory.prototype.newSimpleTexture = function (object, sheet, pos) {
+    var texture = new LightRenderable(this.mSpriteSheetMap[sheet]);
+    texture.getXform().setPosition(pos[0], pos[1]);
+    texture.getXform().setSize(10,10);
+    texture.setElementPixelPosArray(this.mSpriteMap[object]);
+    this.mTextureSet.addToSet(texture);
+};
+
 PlatformFactory.prototype.newBoxPlatform = function (object, sheet, pos) {
-    var platform = new Platform(this.mSpriteMap[object], this.mSpriteSheetMap[sheet], pos, [8,8]);
+    var platform = new Platform(this.mSpriteMap[object], this.mSpriteSheetMap[sheet], pos, [10,10]);
     this.mAllPlatforms.addToSet(platform);
     return platform.getWidth();
 
@@ -48,7 +71,7 @@ PlatformFactory.prototype.newBoxPlatform = function (object, sheet, pos) {
 PlatformFactory.prototype.newSpikePlatform = function (pos) {
     var objectKey = 'spikes';
     var sheetKey = 'objects';
-    var platform = new SpikePlatform(this.mSpriteMap[objectKey], this.mSpriteSheetMap[sheetKey], pos, [8,5]);
+    var platform = new SpikePlatform(this.mSpriteMap[objectKey], this.mSpriteSheetMap[sheetKey], pos, [10,10]);
     this.mAllPlatforms.addToSet(platform);
     return platform.getWidth();
 
@@ -57,7 +80,7 @@ PlatformFactory.prototype.newSpikePlatform = function (pos) {
 PlatformFactory.prototype.newAwardPlatform = function (pos) {
     var objectKey = '!withBorder';
     var sheetKey = 'objects';
-    var platform = new AwardBox(this.mSpriteMap[objectKey], this.mSpriteSheetMap[sheetKey], pos, [8,8]);
+    var platform = new AwardBox(this.mSpriteMap[objectKey], this.mSpriteSheetMap[sheetKey], pos, [10,10]);
     this.mAllPlatforms.addToSet(platform);
     return platform.getWidth();
 };

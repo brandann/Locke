@@ -14,9 +14,9 @@
 function Hero(spriteSheet) {
     
     this.kXDelta = 1;
-    this.kYDelta = 2.0;
+    this.kYDelta = 5.0;
     this.kJumpHeight = 40;
-    this.kMaxVelocity = 20;
+    this.kMaxVelocity = 40;
     
     this.mSpriteSheet = spriteSheet;
     this.mSpriteMap = {};
@@ -31,20 +31,22 @@ function Hero(spriteSheet) {
     this.mSpriteMap[key] = [256,384,256,384];
     key = 'goldKey';
     this.mSpriteMap[key] = [256,384,128,256];
+    key = 'bomb';
+    this.mSpriteMap[key] = [256,384,128,256];
     
     
     
     this.mDye = new LightRenderable(this.mSpriteSheet);
     this.mDye.setColor([1, 1, 1, 0]);
-    this.mDye.getXform().setPosition(20, 20);
-    this.mDye.getXform().setSize(5, 6.5);
+    this.mDye.getXform().setPosition(20, 60);
+    this.mDye.getXform().setSize(10, 13);
     
     this.mDye.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
     this.mDye.setAnimationSpeed(2.5); 
     this.mDye.setSpriteSequence(512, 0, 67, 92, 1, 0);
 
     GameObject.call(this, this.mDye);
-    var r = new RigidRectangle(this.getXform(), 5.95, 6.35);
+    var r = new RigidRectangle(this.getXform(), 9.85, 12.5);
     r.setMass(0.7); 
     r.setRestitution(0.05);
     r.setColor([0, 1, 0, 1]);
@@ -166,7 +168,7 @@ Hero.prototype.updateControls = function () {
     //if(this.mState === Hero.state.Walking){
         if(!controlsPressed && this.mDir === Hero.dir.Right){
             if(v[0] > 0){
-                v[0] -= 0.5;
+                v[0] -= 1;
             }
             if(v[0] < 0){
                 v[0] = 0;
@@ -175,7 +177,7 @@ Hero.prototype.updateControls = function () {
         }
         if(!controlsPressed && this.mDir === Hero.dir.Left){
             if(v[0] < 0){
-                v[0] += 0.5;
+                v[0] += 1;
             }
             if(v[0] > 0){
                 v[0] = 0;
@@ -202,7 +204,7 @@ Hero.prototype.updateControls = function () {
         }
         if(this.mNumJump === 1){
             if(v[1] > 15 && v[1] < 30){
-                v[1] += this.kJumpHeight * 0.25;
+                v[1] += this.kJumpHeight * 0.50;
                 this.mState = Hero.state.Jumping;
                 this.mNumJump++;                
             }
@@ -212,7 +214,7 @@ Hero.prototype.updateControls = function () {
                 this.mNumJump++;                
             }
             else if(v[1] < 0){
-                v[1] += this.kJumpHeight * 1.25;
+                v[1] += this.kJumpHeight * 1.0;
                 this.mState = Hero.state.Jumping;
                 this.mNumJump++;                
             }

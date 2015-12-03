@@ -10,7 +10,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function Platform(pixelPosition, spriteTexture, pos, size) {
-    this.mPlatform = new SpriteRenderable(spriteTexture);
+    this.mPlatform = new LightRenderable(spriteTexture);
 
     this.mPlatform.setColor([1, 1, 1, 0]);
     this.mPlatform.getXform().setPosition(pos[0], pos[1]);
@@ -21,7 +21,7 @@ function Platform(pixelPosition, spriteTexture, pos, size) {
 
     var rigidShape = new RigidRectangle(this.getXform(), size[0], size[1]);
     rigidShape.setMass(0);  // ensures no movements!
-    rigidShape.setDrawBounds(true);
+    //rigidShape.setDrawBounds(true);
     rigidShape.setColor([1, 0.2, 0.2, 1]);
     this.setPhysicsComponent(rigidShape);        
 
