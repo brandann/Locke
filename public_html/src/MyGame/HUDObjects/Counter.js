@@ -38,7 +38,7 @@ function Counter(hudSpriteSheet) {
 }
 
 Counter.prototype.incByOne = function () {
-    if(this.mCounter < 99){
+    if(this.mCounter < 9){
         this.mCounter += 1;
         this.ones.setElementPixelPosArray(this.mSpriteMapNumbers[this.mCounter]);
     }

@@ -10,6 +10,7 @@ function PlatformFactory(mapOfSprites, globalPlatformSet,globalTextureSet) {
     this.mSpriteMap = {};
     this.mAllPlatforms = globalPlatformSet;
     this.mTextureSet = globalTextureSet;
+
     
     var key;
     
@@ -82,5 +83,5 @@ PlatformFactory.prototype.newAwardPlatform = function (pos) {
     var sheetKey = 'objects';
     var platform = new AwardBox(this.mSpriteMap[objectKey], this.mSpriteSheetMap[sheetKey], pos, [10,10]);
     this.mAllPlatforms.addToSet(platform);
-    return platform.getWidth();
+
 };

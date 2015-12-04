@@ -6,11 +6,20 @@
 
 MyGame.prototype.LevelBlock1 = function (offset) {
     
+    
+        
+  
+    var bg = new LightRenderable(this.kBgGreenLandBG);
+    var BgXform = bg.getXform();
+    BgXform.setPosition(80 + offset,60);
+    BgXform.setSize(160,120);
+    this.mBackGrouds.addToSet(bg);
+    
     var YLayerPos =[];
     YLayerPos[1] = 5;
     YLayerPos[2] = 15;
-    YLayerPos[3] = 25;
-    YLayerPos[4] = 35; //base ground layer
+    YLayerPos[3] = 25; //base ground layer
+    YLayerPos[4] = 35; 
     YLayerPos[5] = 45;
     YLayerPos[6] = 55;
     YLayerPos[7] = 65;
@@ -20,11 +29,6 @@ MyGame.prototype.LevelBlock1 = function (offset) {
     YLayerPos[11] = 105;
     YLayerPos[12] = 115;
     
-    var i;
-    for(i = 1; i<=12; i++){
-        YLayerPos[i] += offset;
-    }
-
     var XLayerPos =[];
     XLayerPos[1] = 5;
     XLayerPos[2] = 15;
@@ -43,8 +47,9 @@ MyGame.prototype.LevelBlock1 = function (offset) {
     XLayerPos[15] = 145;
     XLayerPos[16] = 155;
     
+    var i;
     for(i = 1; i<=16; i++){
-        YLayerPos[i] += offset;
+        XLayerPos[i] += offset;
     }
     
     for(i = 1; i <= 16; i++){

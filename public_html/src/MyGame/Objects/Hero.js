@@ -21,6 +21,8 @@ function Hero(spriteSheet) {
     this.mSpriteSheet = spriteSheet;
     this.mSpriteMap = {};
     
+    this.mPowerUpSet = new GameObjectSet();
+    
     //topPixel, leftPixel, widthPixel, HeightPixel, numelements, paddingPixel
     var key;
     key = 'stand';
@@ -55,11 +57,13 @@ function Hero(spriteSheet) {
     
     //Hero States
     this.mState = Hero.state.Idle;
-    this.mDir = Hero.dir.Foward;
+    this.mDir = Hero.dir.Right;
     this.mPrevState = null;
     this.mNumJump = 0;
     
     this.mLifeCounter = null;
+    this.mPowerCounter = null;
+    this.mKeyCounter = false;
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -72,10 +76,15 @@ Hero.state = Object.freeze({
 });
 
 Hero.dir = Object.freeze({
-    Left: 1,
-    Right: 2,
+    Left: -1,
+    Right: 1,
     Forward:3
 });
+
+Hero.prototype.draw = function (aCamera) {
+    GameObject.prototype.draw.call(this,aCamera);
+    this.mPowerUpSet.draw(aCamera);
+};
 
 Hero.prototype.update = function (platforms) {
     // must call super class update
@@ -84,20 +93,19 @@ Hero.prototype.update = function (platforms) {
     this.handlePlatformCollision(platforms);
     this.updateControls();
     
+    this.mPowerUpSet.update();
+    
+    var i;
+    for(i = 0; i < this.mPowerUpSet.size(); i++){
+        var obj = this.mPowerUpSet.getObjectAt(i);
+        if(obj.hasExpired()){
+            this.mPowerUpSet.removeFromSet(obj);
+        }
+    }
+    
     this.mDye.updateAnimation();
     
-    // now interact with the dyePack ...
-//    var i, obj;
-//    var heroBounds = this.getBBox();
-//    var p = this.getXform().getPosition();
-//    for (i=0; i<dyePacks.size(); i++) {
-//        obj = dyePacks.getObjectAt(i);
-//        // chase after hero
-//        obj.rotateObjPointTo(p, 0.8);
-//        if (obj.getBBox().intersectsBound(heroBounds)) {
-//            dyePacks.removeFromSet(obj);
-//        }
-//    }
+
 };
 Hero.prototype.handlePlatformCollision = function (platforms) {
     
@@ -186,13 +194,10 @@ Hero.prototype.updateControls = function () {
         }
     //}
 
-   // console.log(v[1]);
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
-//        xform.incXPosBy(-this.kXDelta);
-//    }
-//    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
-//        xform.incXPosBy(this.kXDelta);
-//    } 
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
+            this.mPowerUpSet.addToSet(new Power(this.getXform().getPosition(),this.mDir));
+            //this.mPowerUpSet.addToSet(new Item('heart',this.getXform().getPosition()));
+    } 
 
     
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
@@ -229,6 +234,23 @@ Hero.prototype.handleEnemyCollision = function(enemy) {
 
 Hero.prototype.setLifeCounter = function(life) {
     this.mLifeCounter = life;
+};
+
+Hero.prototype.setPowerCounter = function(power) {
+    this.mPowerCounter = power;
+};
+
+Hero.prototype.incPowerCounter = function() {
+    this.mPowerCounter.incByOne();
+};
+
+Hero.prototype.decPowerCounter = function() {
+    this.mPowerCounter.decByOne();
+};
+
+
+Hero.prototype.incLifeCounter = function() {
+    this.mLifeCounter.incByOne();
 };
 
 Hero.prototype.changeAnimation = function () {

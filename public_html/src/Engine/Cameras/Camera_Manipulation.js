@@ -20,6 +20,41 @@ Camera.prototype.update = function () {
     this.mCameraState.updateCameraState();
 };
 
+
+Camera.prototype.clamp = function(xmin,xmax,ymin,ymax){
+    
+    var WCcenter = this.getWCCenter();
+    //console.log(xmin);
+//    if(WCcenter[0] < xmin){
+//        WCcenter[0] = xmin;
+//    }
+//    if(WCcenter[0] > xmax){
+//        WCcenter[0] = xmax;
+//    }
+    if(WCcenter[1] < ymin){
+        WCcenter[1] = ymin;
+    }
+    if(WCcenter[1] > ymax){
+        WCcenter[1] = ymax;
+    }
+};
+
+Camera.prototype.clampToBackGround = function(bg){
+    var bgXform = bg.getXform();
+    //console.log(xmin);
+    var bgTop = bgXform.getYPos() + bgXform.getHeight()/2;
+    var bgLeft = bgXform.getXPos() - bgXform.getWidth()/2;
+    var bgBot = bgXform.getYPos() - bgXform.getHeight()/2;
+    var bgRight = bgXform.getXPos() + bgXform.getWidth()/2;
+    
+    var clampTop = bgTop - this.getWCHeight()/2;
+    var clampLeft = bgLeft + this.getWCWidth()/2;
+    var clampBot = bgBot + this.getWCHeight()/2;
+    var clampRight = bgRight - this.getWCWidth()/2;
+
+    this.clamp(clampLeft,clampRight,clampBot,clampTop);
+};
+
 Camera.prototype.panBy = function (dx, dy) {
     var newC = vec2.clone(this.getWCCenter());
     this.mWCCenter[0] += dx;

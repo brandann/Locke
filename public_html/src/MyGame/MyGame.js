@@ -33,6 +33,7 @@ function MyGame() {
     this.mHUDManager = null;
     this.mEnemies = null;
     this.mTextures = null;
+    this.mBackGrouds = null;
 
     
     this.mPlatformFactory = null;
@@ -73,6 +74,7 @@ MyGame.prototype.initialize = function () {
     //create game object sets
     this.mAllPlatforms = new GameObjectSet();
     this.mTextures = new GameObjectSet();
+    this.mBackGrouds = new GameObjectSet();
  
 //Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
@@ -121,19 +123,24 @@ MyGame.prototype.initialize = function () {
     
  
  //set up Lights----------------------------------------------------------------
-    gEngine.DefaultResources.setGlobalAmbientIntensity(2);
+    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 
  //initialize game world--------------------------------------------------------
 
-    this.LevelBlock1(0);
-  
     this.mBg = new LightRenderable(this.kBgGreenLandBG);
     var BgXform = this.mBg.getXform();
     BgXform.setPosition(80,60);
     BgXform.setSize(160,120);
     
+    var offset = 0;
+    this.LevelBlock1(offset);
+    offset += 160;
+    this.LevelBlock2(offset);
+
+    
     this.mHero = new Hero(this.kspritesheet_hero);
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
+    this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
     
     this.mEnemies = new GameObjectSet();
 
@@ -166,7 +173,7 @@ MyGame.prototype.draw = function () {
 };
 
 MyGame.prototype._drawGameWorld = function (aCamera) {
-    this.mBg.draw(aCamera);
+    this.mBackGrouds.draw(aCamera);
     this.mAllPlatforms.draw(aCamera);
     this.mEnemies.draw(aCamera);
     this.mHero.draw(aCamera);
@@ -183,8 +190,11 @@ MyGame.prototype.update = function () {
     this.mHUDManager.update(this.mCamera,0,0);
     this.mEnemies.update();
     this.mTorchSet.update();
-    //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.9);
+    
     this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
-    //this.mCamera.panWith(this.mHero.getXform(), 0.5);
+    this.mCamera.update();
+    this.mCamera.panWith(this.mHero.getXform(), 0.4);
+    this.mCamera.clampToBackGround(this.mBg);
+
     this._physicsSimulation();
 };

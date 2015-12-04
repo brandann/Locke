@@ -19,15 +19,15 @@ function HUDManager(hudSpriteSheet,objSheet) {
     this.mSpriteMap[key] = [256,384,256,384];
     key = 'goldKey';
     this.mSpriteMap[key] = [256,384,128,256];
-    key = 'bomb';
-    this.mSpriteMap[key] = [0,126,512,638];
+    key = 'power';
+    this.mSpriteMap[key] = [256,384,896,1024];
    
     this.lifeCounter = new Counter(this.mSpriteSheet);
     this.keyCounter = new Counter(this.mSpriteSheet);
     this.powerCounter = new Counter(this.mSpriteSheet);
     
     this.heartIcon = this.createIcon('heart');
-    this.powerIcon = this.createIcon2('bomb');
+    this.powerIcon = this.createIcon('power');
     this.keyIcon = this.createIcon('goldKeyEmpty');
 }
 
@@ -75,7 +75,7 @@ HUDManager.prototype.update = function (aCamera,lifeCount,keyCount) {
     
     Offset = upperRightX - (offsetX/2) - (3 * hudelemW);
     this.powerIcon.getXform().setPosition(Offset, upperRightY - offsetY);
-    this.powerIcon.getXform().setSize(hudelemW -3,hudelemH -3);
+    this.powerIcon.getXform().setSize(hudelemW,hudelemH);
     
     Offset = upperRightX - (offsetX) - (4 * hudelemW);
     this.keyIcon.getXform().setPosition(Offset, upperRightY - offsetY);
@@ -92,4 +92,8 @@ HUDManager.prototype.draw = function (aCamera) {
 
 HUDManager.prototype.getLifeCounter = function() {
     return this.lifeCounter;
+};
+
+HUDManager.prototype.getPowerCounter = function() {
+    return this.powerCounter;
 };
