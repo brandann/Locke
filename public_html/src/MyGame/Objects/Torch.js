@@ -16,7 +16,11 @@ MyGame.prototype._initLights = function(pos) {
             );
     
     
-    this.mBg.addLight(l); 
+    //this.mBg.addLight(l); 
+    var i = 0;
+    for(i = 0; i < this.mBackGrouds.size(); i++){
+        this.mBackGrouds.getObjectAt(i).addLight(l);
+    }
     this.mHero.getRenderable().addLight(l);
     
     var torch = new Torch(pos, this.kspritesheet_torch);

@@ -123,7 +123,7 @@ MyGame.prototype.initialize = function () {
     
  
  //set up Lights----------------------------------------------------------------
-    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+    gEngine.DefaultResources.setGlobalAmbientIntensity(2);
 
  //initialize game world--------------------------------------------------------
 
@@ -137,19 +137,18 @@ MyGame.prototype.initialize = function () {
     offset += 160;
     this.LevelBlock2(offset);
 
-    
     this.mHero = new Hero(this.kspritesheet_hero);
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
     
     this.mEnemies = new GameObjectSet();
 
-    
     this.mTorchSet = new GameObjectSet();
-    this.mTorchSet.addToSet(this._initLights([30,0]));
-    this.mTorchSet.addToSet(this._initLights([10,0]));
-    this.mTorchSet.addToSet(this._initLights([-10,0]));
-    this.mTorchSet.addToSet(this._initLights([-30,0]));
+    this.mTorchSet.addToSet(this._initLights([30,50]));
+    this.mTorchSet.addToSet(this._initLights([60,50]));
+    this.mTorchSet.addToSet(this._initLights([90,50]));
+    this.mTorchSet.addToSet(this._initLights([120,50]));
+    //this.mTorchSet.addToSet(this._initLights([150,50]));
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -179,7 +178,6 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mHero.draw(aCamera);
     this.mTextures.draw(aCamera);
     this.mTorchSet.draw(aCamera);
-
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
