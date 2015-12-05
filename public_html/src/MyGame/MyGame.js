@@ -75,7 +75,7 @@ MyGame.prototype.initialize = function () {
     this.mAllPlatforms = new GameObjectSet();
     this.mTextures = new GameObjectSet();
     this.mBackGrouds = new GameObjectSet();
-    //this.mEnemies = new GameObjectSet();
+    this.mEnemies = new GameObjectSet();
  
 //Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
