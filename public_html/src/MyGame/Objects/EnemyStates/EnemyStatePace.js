@@ -7,7 +7,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 // sets the enemy state to pace around an initial position
-Enemy.prototype.setPaceState = function(initPos) {
+Enemy.prototype.setPaceState = function(initPos, dist, range) {
     
     this.mInitialPosition = initPos;
     this.getXform().setPosition(initPos[0], initPos[1]);
@@ -16,8 +16,11 @@ Enemy.prototype.setPaceState = function(initPos) {
     this.mDir = 1;
     this.mState = null;
     this.mSpeedVel = 1;
+    this.mPaceDistance = dist;
     
     this._updateState(this.updatePace);
+    
+    this.mRange = range;
 };
 
 Enemy.prototype.updatePace = function () {
@@ -36,7 +39,7 @@ Enemy.prototype.updatePace = function () {
         this.mEnemy.setColor([1, 0, 0, 1]);                                     // show red on chase
     }
     else {
-        if (distFromInitial > 8) {                                              // reached patrol bounds
+        if (distFromInitial > this.mPaceDistance) {                                              // reached patrol bounds
             if(enemyXPos < this.mInitialPosition[0]) { this.mDir = 1; }         // partol right
             else { this.mDir = -1;}                                             // patrol left
         }

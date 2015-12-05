@@ -130,23 +130,25 @@ MyGame.prototype.LevelBlock1 = function (offset) {
 //    
     var e = new Enemy();
     e.setHeroObject(this.mHero);
-    e.setPaceState([70, this.kLayerPos[5]]);
+    e.setPaceState(             // set enemy as "not bat"
+            [80 + offset, 60],  // initial position
+            12,                 // pace distance
+            30);                // detection range
     this.mEnemies.addToSet(e);
 //    
-    var e = new Enemy();
-    e.setHeroObject(this.mHero);
-    e.setChaseState([this.kLayerPos[12], this.kLayerPos[8]]);
-    this.mEnemies.addToSet(e);
+    var e1 = new Enemy();
+    e1.setHeroObject(this.mHero);
+    e1.setChaseState(           // set enemy as bat
+            [115 + offset, 75], // initial position
+            20);                // detection range
+    this.mEnemies.addToSet(e1);
     
     var e = new Enemy();
     e.setHeroObject(this.mHero);
-    e.setChaseState([this.kLayerPos[10], this.kLayerPos[8]]);
+    e.setChaseState(            // set enemy as bat
+            [40 + offset, 95],  // initial position
+            20);                // detection range
     this.mEnemies.addToSet(e); 
-    
-    var e = new Enemy();
-    e.setHeroObject(this.mHero);
-    e.setChaseState([this.kLayerPos[15], this.kLayerPos[8]]);
-    this.mEnemies.addToSet(e);
 
 };
 

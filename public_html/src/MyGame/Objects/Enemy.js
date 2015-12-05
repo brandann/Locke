@@ -28,7 +28,7 @@ function Enemy() {
     
     this.mHero = null;
     
-    this.mRange = 20;
+    this.mRange = 30;
 }
 
 gEngine.Core.inheritPrototype(Enemy, GameObject);
@@ -36,7 +36,7 @@ gEngine.Core.inheritPrototype(Enemy, GameObject);
 Enemy.prototype.update = function () {
     // must call super class update
     GameObject.prototype.update.call(this);
-    
+    console.log("enemy pos: " + this.getXform().getXPos() + ", " + this.getXform().getYPos());
     if(this.mHero !== null) {                                                   // if the hero is null or not set do not do anything with the enemy
         if(this.mState === null) {console.log("Enemy is missing estate");}      // if the state is set to null then the enemy has no AI or logic
         else {this.mState();}                                                   // update the state

@@ -7,7 +7,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 // sets the enemy state to pace around an initial position
-Enemy.prototype.setChaseState = function(initPos) {
+Enemy.prototype.setChaseState = function(initPos, range) {
     
     var r = this.getPhysicsComponent();                                         // get the physics component
     r.setMass(0);                                                               // turn off mass so flying object does not fall
@@ -18,6 +18,8 @@ Enemy.prototype.setChaseState = function(initPos) {
     this.mSpeedVel = 0.15;                                                      // speed of the enemy when moving
     
     this._updateState(this.updateChase);                                        // set the update state to this state
+    
+    this.mRange = range;
 };
 
 Enemy.prototype.updateChase = function () {
