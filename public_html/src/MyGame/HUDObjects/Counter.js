@@ -21,13 +21,13 @@ function Counter(hudSpriteSheet) {
     this.mSpriteMapNumbers[9] = [0,127,256,384];
     this.mSpriteMapNumbers[0] = [127,256,128,256];
     
-    this.mCounter = 5;
+    this.mCounter = 3;
     
     this.ones = new SpriteRenderable(this.mSpriteSheet);
     this.ones.setColor([1, 1, 1, 0]);
     this.ones.getXform().setPosition(-10, -10);
     this.ones.getXform().setSize(10,10);
-    this.ones.setElementPixelPosArray(this.mSpriteMapNumbers[5]);
+    this.ones.setElementPixelPosArray(this.mSpriteMapNumbers[3]);
     
     //this.tens = new SpriteRenderable(this.mSpriteSheet);
     //this.tens.setColor([1, 1, 1, 0]);
@@ -51,6 +51,10 @@ Counter.prototype.decByOne = function () {
         this.ones.setElementPixelPosArray(this.mSpriteMapNumbers[this.mCounter]);
     }
 
+};
+
+Counter.prototype.getNumber = function () {
+    return this.mCounter;
 };
 
 Counter.prototype.setNumber = function (number) {

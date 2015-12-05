@@ -6,9 +6,9 @@
 
 
 function Power(pos,dir) {
-    this.mCycleLeft = 200;
-    var spritesheet = 'assets/spritesheet_hud.png';
-    this.powerUp = new LightRenderable(spritesheet);
+    this.mCycleLeft = 1000;
+    this.spriteSheet = 'assets/spritesheet_hud.png';
+    this.powerUp = new LightRenderable(this.spriteSheet);
 
     this.powerUp.setColor([1, 1, 1, 0]);
     this.powerUp.getXform().setPosition(pos[0],pos[1]);
@@ -17,7 +17,7 @@ function Power(pos,dir) {
     this.powerUp.setElementPixelPosArray([256,384,896,1024]);
                                 // show each element for mAnimSpeed updates
     GameObject.call(this, this.powerUp);
-    this.setSpeed(0.5);
+    this.setSpeed(0.60);
     this.setCurrentFrontDir([dir,0]);
     
     this.interval = 10;
@@ -27,6 +27,10 @@ function Power(pos,dir) {
     this.down = false;
     
     this.dir = dir;
+    
+    this.mParticleSet = new ParticleGameObjectSet();
+    
+    this.mexplode = false;
 
 //    var rigidShape = new RigidCircle(this.getXform(), 4);
 //    rigidShape.setMass(0.1);
@@ -36,17 +40,30 @@ function Power(pos,dir) {
 }
 gEngine.Core.inheritPrototype(Power, GameObject);
 
+Power.prototype.explode = function () {
+    
+    this.powerUp.setElementPixelPosArray([-1,-1,-1,-1]);
+    var i;
+   // for(i=0; i<100; i++){
+        this._createParticle(this.getXform().getPosition());
+   // }
+    this.mexplode = true;
+    
+};
+
+Power.prototype.draw = function (aCamera) {
+    GameObject.prototype.draw.call(this,aCamera);
+    
+    this.mParticleSet.draw(aCamera);
+};
 
 Power.prototype.update = function () {
     GameObject.prototype.update.call(this);
     // remember to update this.mMinion's animation
     this.mCycleLeft--;
     
-    if(this.hasExpired()){
-        this.powerUp.setElementPixelPosArray([-1,-1,-1,-1]);
-    }
-    
-   
+    this.mParticleSet.update();
+
     if(this.up){
         this.currentY += 0.1;
         this.setCurrentFrontDir([this.dir, this.currentY ]);
@@ -71,4 +88,35 @@ Power.prototype.update = function () {
 
 };
 
-Power.prototype.hasExpired = function() { return this.mCycleLeft <= 0; };
+Power.prototype.hasExpired = function() { 
+    
+    return this.mCycleLeft <= 0 || this.mexplode && this.mParticleSet.size() <= 0;
+
+};
+
+Power.prototype._createParticle = function(pos) {
+    var life = 30 + Math.random() * 200;
+    var p = new ParticleGameObject(this.spriteSheet, pos[0], pos[1], life);
+    //p.getRenderable().setColor([0, 0, 0.7, 1]);
+   // p.getRenderable().setElementPixelPosArray([256,384,896,1024]);
+    
+    // size of the particle
+    var r = 5.5 + Math.random() * 0.5;
+    p.getXform().setSize(r, r);
+    
+    // final color
+    var fr = 3.5 + Math.random();
+    var fg = 0.4 + 0.1 * Math.random();
+    var fb = 0.3 + 0.1 * Math.random();
+   // p.setFinalColor([fr, fg, fb, 0.6]);
+    
+    // velocity on the particle
+    var fx = 10 - 20 * Math.random();
+    var fy = 10 * Math.random();
+    p.getPhysicsComponent().setVelocity([fx, fy]);
+    
+    // size delta
+    p.setSizeDelta(5);
+    
+    this.mParticleSet.addToSet(p);
+};

@@ -130,15 +130,25 @@ MyGame.prototype.LevelBlock1 = function (offset) {
 //    this.mPlatformFactory.newSpikePlatform([xPos + 20,this.kLayerPos[3]]);
 //    this.mPlatformFactory.newAwardPlatform([60,this.kLayerPos[8]]);
 //    
-//    var e = new Enemy();
-//    e.setHeroObject(this.mHero);
-//    e.setPaceState([70, this.kLayerPos[5]]);
-//    this.mEnemies.addToSet(e);
+    var e = new Enemy();
+    e.setHeroObject(this.mHero);
+    e.setPaceState([70, this.kLayerPos[5]]);
+    this.mEnemies.addToSet(e);
 //    
-//    var e = new Enemy();
-//    e.setHeroObject(this.mHero);
-//    e.setChaseState([this.kLayerPos[12], this.kLayerPos[8]]);
-//    this.mEnemies.addToSet(e);
+    var e = new Enemy();
+    e.setHeroObject(this.mHero);
+    e.setChaseState([this.kLayerPos[12], this.kLayerPos[8]]);
+    this.mEnemies.addToSet(e);
+    
+    var e = new Enemy();
+    e.setHeroObject(this.mHero);
+    e.setChaseState([this.kLayerPos[10], this.kLayerPos[8]]);
+    this.mEnemies.addToSet(e); 
+    
+    var e = new Enemy();
+    e.setHeroObject(this.mHero);
+    e.setChaseState([this.kLayerPos[15], this.kLayerPos[8]]);
+    this.mEnemies.addToSet(e);
 
 };
 

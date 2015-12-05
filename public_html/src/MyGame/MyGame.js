@@ -75,6 +75,7 @@ MyGame.prototype.initialize = function () {
     this.mAllPlatforms = new GameObjectSet();
     this.mTextures = new GameObjectSet();
     this.mBackGrouds = new GameObjectSet();
+    this.mEnemies = new GameObjectSet();
  
 //Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
@@ -142,7 +143,7 @@ MyGame.prototype.initialize = function () {
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
     
-    this.mEnemies = new GameObjectSet();
+   
 
     
     this.mTorchSet = new GameObjectSet();
@@ -174,10 +175,12 @@ MyGame.prototype.draw = function () {
 
 MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mBackGrouds.draw(aCamera);
+    
     this.mAllPlatforms.draw(aCamera);
+    this.mTextures.draw(aCamera);
     this.mEnemies.draw(aCamera);
     this.mHero.draw(aCamera);
-    this.mTextures.draw(aCamera);
+   
     this.mTorchSet.draw(aCamera);
 
 };
@@ -186,7 +189,7 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
 // anything from this function!
 MyGame.prototype.update = function () {
     this.mAllPlatforms.updateWithREF(this.mHero);
-    this.mHero.update(this.mAllPlatforms);
+    this.mHero.update(this.mAllPlatforms,this.mEnemies);
     this.mHUDManager.update(this.mCamera,0,0);
     this.mEnemies.update();
     this.mTorchSet.update();
