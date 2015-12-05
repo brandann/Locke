@@ -75,6 +75,7 @@ MyGame.prototype.initialize = function () {
     this.mAllPlatforms = new GameObjectSet();
     this.mTextures = new GameObjectSet();
     this.mBackGrouds = new GameObjectSet();
+    //this.mEnemies = new GameObjectSet();
  
 //Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
@@ -137,45 +138,14 @@ MyGame.prototype.initialize = function () {
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
     
-    this.mEnemies = new GameObjectSet();
-    
+    //this.mEnemies = new GameObjectSet();
     this.mTorchSet = new GameObjectSet();
     
     var offset = 0;
     this.LevelBlock1(offset);
     offset += 160;
     this.LevelBlock2(offset);
-
-    //we should make all objects THEN add the lights to them...
-    //
-    //this.updateLightsObj(this.mHero);
-    //this.updateLightsSet(this.mBackGrouds);
-    //this.mBackGrouds.addLight(this.mTorchSet.getObjectAt(0));
-    
-    //this.mTorchSet.addToSet(this._initLights([30,50]));
-    //this.mTorchSet.addToSet(this._initLights([60,50]));
-    //this.mTorchSet.addToSet(this._initLights([90,50]));
-    //this.mTorchSet.addToSet(this._initLights([120,50]));
-    //this.mTorchSet.addToSet(this._initLights([150,50]));
 };
-/*
-MyGame.prototype.updateLightsSet = function (set) {
-    var i = 0;
-    var j = 0;
-    for(i = 0; i < set.size(); i++) {
-        for(j=0;j < this.mTorchSet.size();j++) {
-            set.getObjectAt(i).addLight(this.mTorchSet.getObjectAt(j));
-        }
-    }
-};
-
-MyGame.prototype.updateLightsObj = function (obj) {
-    var j = 0;
-        for(j=0;j < this.mTorchSet.size();j++) {
-            obj.getRenderable().addLight(this.mTorchSet.getObjectAt(j));
-        }
-};
-*/
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.
@@ -199,10 +169,12 @@ MyGame.prototype.draw = function () {
 
 MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mBackGrouds.draw(aCamera);
+    
     this.mAllPlatforms.draw(aCamera);
+    this.mTextures.draw(aCamera);
     this.mEnemies.draw(aCamera);
     this.mHero.draw(aCamera);
-    this.mTextures.draw(aCamera);
+   
     this.mTorchSet.draw(aCamera);
 };
 
@@ -210,7 +182,7 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
 // anything from this function!
 MyGame.prototype.update = function () {
     this.mAllPlatforms.updateWithREF(this.mHero);
-    this.mHero.update(this.mAllPlatforms);
+    this.mHero.update(this.mAllPlatforms,this.mEnemies);
     this.mHUDManager.update(this.mCamera,0,0);
     this.mEnemies.update();
     this.mTorchSet.update();

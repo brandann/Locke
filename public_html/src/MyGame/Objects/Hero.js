@@ -64,6 +64,8 @@ function Hero(spriteSheet) {
     this.mLifeCounter = null;
     this.mPowerCounter = null;
     this.mKeyCounter = false;
+    
+    this.powerTick = 0;
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -86,7 +88,7 @@ Hero.prototype.draw = function (aCamera) {
     this.mPowerUpSet.draw(aCamera);
 };
 
-Hero.prototype.update = function (platforms) {
+Hero.prototype.update = function (platforms,enemies) {
     // must call super class update
     GameObject.prototype.update.call(this);
 
@@ -95,12 +97,48 @@ Hero.prototype.update = function (platforms) {
     
     this.mPowerUpSet.update();
     
+    if(this.powerTick > 150){
+        this.incPowerCounter();
+        this.powerTick = 0;
+    }
+    
+    this.powerTick++;
+    
+    //handles the projectiles interaction with platform and enemies
     var i;
     for(i = 0; i < this.mPowerUpSet.size(); i++){
+        
         var obj = this.mPowerUpSet.getObjectAt(i);
-        if(obj.hasExpired()){
+        var objBB = obj.getBBox();
+        
+       if(obj.hasExpired()){
             this.mPowerUpSet.removeFromSet(obj);
+            
+        }else{
+            var k;
+            for(k = 0; k< platforms.size();k++){
+                var plat = platforms.getObjectAt(k);
+                var platBB = plat.getBBox();
+
+                if(objBB.intersectsBound(platBB)){
+                   // this.mPowerUpSet.removeFromSet(obj);
+                    obj.explode();
+                }
+            }
+            var j;
+            for(j = 0; j< enemies.size();j++){
+                
+                var enemy = enemies.getObjectAt(j);
+                var enemiesBB = enemy.getBBox();
+
+                if(objBB.intersectsBound(enemiesBB)){
+                    enemies.removeFromSet(enemy);
+                   // this.mPowerUpSet.removeFromSet(obj);
+                    obj.explode();
+                }
+            }            
         }
+
     }
     
     this.mDye.updateAnimation();
@@ -195,7 +233,11 @@ Hero.prototype.updateControls = function () {
     //}
 
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
+        
+        if(this.mPowerCounter.getNumber() >= 1){
+            this.decPowerCounter();
             this.mPowerUpSet.addToSet(new Power(this.getXform().getPosition(),this.mDir));
+        }
             //this.mPowerUpSet.addToSet(new Item('heart',this.getXform().getPosition()));
     } 
 
