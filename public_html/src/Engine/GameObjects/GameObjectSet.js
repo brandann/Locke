@@ -55,3 +55,10 @@ GameObjectSet.prototype.draw = function (aCamera) {
         this.mSet[i].draw(aCamera);
     }
 };
+
+GameObjectSet.prototype.addLight = function (light) {
+    var i;
+    for (i = 0; i < this.mSet.length; i++) {
+        this.mSet[i].getRenderable().addLight(light);
+    }
+};

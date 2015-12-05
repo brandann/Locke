@@ -12,11 +12,11 @@ uniform vec4 uPixelColor;
 uniform vec4 uGlobalAmbientColor; // this is shared globally
 uniform float uGlobalAmbientIntensity;
 
-#define kGLSLuLightArraySize 4
+#define kGLSLuLightArraySize 100
     // GLSL Fragment shader requires loop control
-    // variable to be a constant number. This number 4
+    // variable to be a constant number. This number 100
     // says, this fragment shader will _ALWAYS_ process
-    // all 4 light sources. 
+    // all 100 light sources. 
     // ***********WARNING***********************
     // This number must correspond to the constant with
     // the same name defined in LightShader.js file.

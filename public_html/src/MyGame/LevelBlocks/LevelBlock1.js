@@ -6,9 +6,6 @@
 
 MyGame.prototype.LevelBlock1 = function (offset) {
     
-    
-        
-  
     var bg = new LightRenderable(this.kBgGreenLandBG);
     var BgXform = bg.getXform();
     BgXform.setPosition(80 + offset,60);
@@ -116,9 +113,10 @@ MyGame.prototype.LevelBlock1 = function (offset) {
                                                 [XLayerPos[1],YLayerPos[12]]);
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[2],YLayerPos[12]]);                                                 
-                                                
-                                                
-                                                
+    
+    this.mTorchSet.addToSet(this._initLights([XLayerPos[1],YLayerPos[6]+2]));
+    this.mTorchSet.addToSet(this._initLights([XLayerPos[12],YLayerPos[7]+2]));
+    
 
 //     this.mPlatformFactory.newSimplePlatform('middle','greenPlatforms',
 //                                                [XLayerPos[1],YLayerPos[4]]);

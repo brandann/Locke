@@ -113,7 +113,8 @@ MyGame.prototype.initialize = function () {
         this.kGameWorldWidth,                     
         [LLX, LLY, miniMapW, miniMapH]   
     );
-    this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]);
+    var col = 51/255;
+    this.mCamera.setBackgroundColor([col, col, col, 1]);
     
     this.mMiniMapBg = new Renderable();
     this.mMiniMapBg.setColor([0,0,0,1]);
@@ -123,7 +124,7 @@ MyGame.prototype.initialize = function () {
     
  
  //set up Lights----------------------------------------------------------------
-    gEngine.DefaultResources.setGlobalAmbientIntensity(2);
+    gEngine.DefaultResources.setGlobalAmbientIntensity(1.2);
 
  //initialize game world--------------------------------------------------------
 
@@ -132,24 +133,49 @@ MyGame.prototype.initialize = function () {
     BgXform.setPosition(80,60);
     BgXform.setSize(160,120);
     
-    var offset = 0;
-    this.LevelBlock1(offset);
-    offset += 160;
-    this.LevelBlock2(offset);
-
     this.mHero = new Hero(this.kspritesheet_hero);
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
     
     this.mEnemies = new GameObjectSet();
-
+    
     this.mTorchSet = new GameObjectSet();
-    this.mTorchSet.addToSet(this._initLights([30,50]));
-    this.mTorchSet.addToSet(this._initLights([60,50]));
-    this.mTorchSet.addToSet(this._initLights([90,50]));
-    this.mTorchSet.addToSet(this._initLights([120,50]));
+    
+    var offset = 0;
+    this.LevelBlock1(offset);
+    offset += 160;
+    this.LevelBlock2(offset);
+
+    //we should make all objects THEN add the lights to them...
+    //
+    //this.updateLightsObj(this.mHero);
+    //this.updateLightsSet(this.mBackGrouds);
+    //this.mBackGrouds.addLight(this.mTorchSet.getObjectAt(0));
+    
+    //this.mTorchSet.addToSet(this._initLights([30,50]));
+    //this.mTorchSet.addToSet(this._initLights([60,50]));
+    //this.mTorchSet.addToSet(this._initLights([90,50]));
+    //this.mTorchSet.addToSet(this._initLights([120,50]));
     //this.mTorchSet.addToSet(this._initLights([150,50]));
 };
+/*
+MyGame.prototype.updateLightsSet = function (set) {
+    var i = 0;
+    var j = 0;
+    for(i = 0; i < set.size(); i++) {
+        for(j=0;j < this.mTorchSet.size();j++) {
+            set.getObjectAt(i).addLight(this.mTorchSet.getObjectAt(j));
+        }
+    }
+};
+
+MyGame.prototype.updateLightsObj = function (obj) {
+    var j = 0;
+        for(j=0;j < this.mTorchSet.size();j++) {
+            obj.getRenderable().addLight(this.mTorchSet.getObjectAt(j));
+        }
+};
+*/
 
 // This is the draw function, make sure to setup proper drawing environment, and more
 // importantly, make sure to _NOT_ change any state.

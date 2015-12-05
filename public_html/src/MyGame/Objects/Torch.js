@@ -9,9 +9,9 @@ MyGame.prototype._initLights = function(pos) {
             [pos[0], pos[1], 0],         // position
             [0, 0, -1],          // Direction 
             [255/255, 30/255, 0/255, 1],  // some color
-            0, 10,               // near and far distances
+            0, 70,               // near and far distances
             0.1, 0.2,            // inner and outer cones
-                    .5,                   // intensity
+                    .6,                   // intensity
                             1                  // drop off
             );
     
@@ -51,7 +51,7 @@ function Torch(pos, spriteSheet) {
     this.mTorch = new LightRenderable(spriteSheet);
     this.mTorch.setColor([1, 1, 1, 0]);
     this.mTorch.getXform().setPosition(pos[0], pos[1]);
-    this.mTorch.getXform().setSize(2.5,5);
+    this.mTorch.getXform().setSize(5,10);
     
     this.mTorch.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
     this.mTorch.setAnimationSpeed(20); 
