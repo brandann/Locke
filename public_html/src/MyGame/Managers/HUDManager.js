@@ -94,6 +94,11 @@ HUDManager.prototype.getLifeCounter = function() {
     return this.lifeCounter;
 };
 
+HUDManager.prototype.heroHasKey = function() {
+    var key = 'goldKey';
+    this.keyIcon.setElementPixelPosArray(this.mSpriteMap[key]);
+};
+
 HUDManager.prototype.getPowerCounter = function() {
     return this.powerCounter;
 };

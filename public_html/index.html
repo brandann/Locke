@@ -46,8 +46,8 @@
 <!--Use embedded shader code for now, in order to remove async loading complexity.-->
 
 <body onload="
-        var myGame = new MyGame();
-        gEngine.Core.initializeEngineCore('GLCanvas', myGame);
+        var menuScreen = new MenuScreen();
+        gEngine.Core.initializeEngineCore('GLCanvas', menuScreen);
             ">
     
     <!-- the following says there are javascript source code contained in 
@@ -140,6 +140,9 @@
             
    
     <!-- Client game code -->
+       <script type="text/javascript" src="src/MyGame/MenuScreen.js"></script>
+       <script type="text/javascript" src="src/MyGame/DeathScreen.js"></script>
+       <script type="text/javascript" src="src/MyGame/WinScreen.js"></script>
        <script type="text/javascript" src="src/MyGame/MyGame.js"></script>
        
        <script type="text/javascript" src="src/MyGame/LevelBlocks/LevelBlock1.js"></script>

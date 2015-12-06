@@ -39,8 +39,12 @@ function MyGame() {
     this.mPlatformFactory = null;
     this.mHero = null;
     
+    this.mHeroHasKey = false;
+    this.mKey = null;
+    
 
     this.kGameWorldWidth = 1600;
+    
     
     
     this.mTorchSet = null;
@@ -65,6 +69,19 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_hud);
     gEngine.Textures.unloadTexture(this.kspritesheet_hero);
     gEngine.Textures.unloadTexture(this.kspritesheet_torch);
+    
+    this.mAllPlatforms.removeAll();
+    this.mHUDManager.removeAll();
+    this.mEnemies.removeAll();
+    this.mTextures.removeAll();
+    this.mBackGrouds.removeAll();
+    this.mTorchSet.removeAll();
+    
+    this.mCamera = null;
+    this.mHero = null;
+    this.mMiniMap = null;
+    
+    gEngine.Core.cleanUp();
 };
 
 MyGame.prototype.initialize = function () { 
@@ -141,6 +158,8 @@ MyGame.prototype.initialize = function () {
     //this.mEnemies = new GameObjectSet();
     this.mTorchSet = new GameObjectSet();
     
+    this.mKey = new Item('goldKey', [100,60]);
+    
     var offset = 0;
     this.LevelBlock1(offset);
     offset += 160;
@@ -176,21 +195,55 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mHero.draw(aCamera);
    
     this.mTorchSet.draw(aCamera);
+    this.mKey.draw(aCamera);
+};
+
+MyGame.prototype.GameLost = function () {
+        var deathScreen = new DeathScreen(); 
+        gEngine.Core.startScene(deathScreen);
+};
+
+MyGame.prototype.GameWon = function () {
+        var winScreen = new WinScreen(); 
+        gEngine.Core.startScene(winScreen);
 };
 
 // The Update function, updates the application state. Make sure to _NOT_ draw
 // anything from this function!
 MyGame.prototype.update = function () {
+    
+
+    
+    var heroBB = this.mHero.getBBox();
+    var keyBB = this.mKey.getBBox();
+    
+    if(heroBB.intersectsBound(keyBB)){
+        this.mHeroHasKey = true;
+        this.mHUDManager.heroHasKey();
+        this.mKey.hide();
+    }
+    
+    
     this.mAllPlatforms.updateWithREF(this.mHero);
     this.mHero.update(this.mAllPlatforms,this.mEnemies);
     this.mHUDManager.update(this.mCamera,0,0);
-    this.mEnemies.update();
+    //this.mEnemies.update();
     this.mTorchSet.update();
     
     this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
     this.mCamera.update();
     this.mCamera.panWith(this.mHero.getXform(), 0.4);
     this.mCamera.clampToBackGround(this.mBg);
+    
+     if(this.mHUDManager.getLifeCounter().getNumber() <= 0){
+        this.GameLost();
+
+    }
+    
+    if(this.mHero.getXform().getXPos() < 20 && this.mHeroHasKey){
+        this.GameWon();
+
+    }   
 
     this._physicsSimulation();
 };

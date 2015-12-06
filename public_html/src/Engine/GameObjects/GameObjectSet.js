@@ -30,6 +30,13 @@ GameObjectSet.prototype.removeFromSet = function (obj) {
         this.mSet.splice(index, 1);
 };
 
+GameObjectSet.prototype.removeAll = function () {
+    var i;
+    for (i = 0; i < this.mSet.length; i++) {
+        this.removeFromSet(this.getObjectAt(i));
+    }
+};
+
 GameObjectSet.prototype.moveToLast = function (obj) {
     this.removeFromSet(obj);
     this.addToSet(obj);

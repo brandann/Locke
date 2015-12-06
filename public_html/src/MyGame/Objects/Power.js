@@ -97,7 +97,7 @@ Power.prototype.hasExpired = function() {
 Power.prototype._createParticle = function(pos) {
     var life = 30 + Math.random() * 200;
     var p = new ParticleGameObject(this.spriteSheet, pos[0], pos[1], life);
-    //p.getRenderable().setColor([0, 0, 0.7, 1]);
+    p.getRenderable().setColor([0, 0, 0.7, 1]);
    // p.getRenderable().setElementPixelPosArray([256,384,896,1024]);
     
     // size of the particle
@@ -108,7 +108,7 @@ Power.prototype._createParticle = function(pos) {
     var fr = 3.5 + Math.random();
     var fg = 0.4 + 0.1 * Math.random();
     var fb = 0.3 + 0.1 * Math.random();
-   // p.setFinalColor([fr, fg, fb, 0.6]);
+    p.setFinalColor([fr, fg, fb, 0.6]);
     
     // velocity on the particle
     var fx = 10 - 20 * Math.random();
@@ -116,7 +116,7 @@ Power.prototype._createParticle = function(pos) {
     p.getPhysicsComponent().setVelocity([fx, fy]);
     
     // size delta
-    p.setSizeDelta(5);
+    p.setSizeDelta(0.5);
     
     this.mParticleSet.addToSet(p);
 };

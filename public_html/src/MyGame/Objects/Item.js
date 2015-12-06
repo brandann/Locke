@@ -70,6 +70,15 @@ Item.prototype._handleCollision = function (hero) {
     
 };
 
+Item.prototype.hide = function () {
+    if(this.oneCollision === false){
+       this.oneCollision = true;
+       this.mItem.setElementPixelPosArray([-1,-1,-1,-1]);
+    } 
+        
+    
+};
+
 Item.prototype.update = function (hero) {
     GameObject.prototype.update.call(this);
     
