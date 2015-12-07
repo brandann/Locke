@@ -69,12 +69,12 @@ Camera.prototype.panWith = function (aXform, zone) {
     if (status !== BoundingBox.eboundCollideStatus.eInside) {
         var pos = aXform.getPosition();
         var newC = vec2.clone(this.getWCCenter());
-        if ((status & BoundingBox.eboundCollideStatus.eCollideTop) !== 0) {
-            newC[1] = pos[1] + (aXform.getHeight() / 2) - (zone * this.getWCHeight() / 2);
-        }
-        if ((status & BoundingBox.eboundCollideStatus.eCollideBottom) !== 0) {
-            newC[1] = pos[1] - (aXform.getHeight() / 2) + (zone * this.getWCHeight() / 2);
-        }
+//        if ((status & BoundingBox.eboundCollideStatus.eCollideTop) !== 0) {
+//            newC[1] = pos[1] + (aXform.getHeight() / 2) - (zone * this.getWCHeight() / 2);
+//        }
+//        if ((status & BoundingBox.eboundCollideStatus.eCollideBottom) !== 0) {
+//            newC[1] = pos[1] - (aXform.getHeight() / 2) + (zone * this.getWCHeight() / 2);
+//        }
         if ((status & BoundingBox.eboundCollideStatus.eCollideRight) !== 0) {
             newC[0] = pos[0] + (aXform.getWidth() / 2) - (zone * this.getWCWidth() / 2);
         }

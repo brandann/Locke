@@ -48,7 +48,7 @@ function Hero(spriteSheet) {
     this.mDye.setSpriteSequence(512, 0, 67, 92, 1, 0);
 
     GameObject.call(this, this.mDye);
-    var r = new RigidRectangle(this.getXform(), 9.85, 12.5);
+    var r = new RigidRectangle(this.getXform(), 8, 12.5);
     r.setMass(0.7); 
     r.setRestitution(0.05);
     r.setColor([0, 1, 0, 1]);
@@ -139,6 +139,17 @@ Hero.prototype.update = function (platforms,enemies) {
             }            
         }
 
+    }
+    
+    var l;
+    for(l = 0; l < this.mPowerUpSet.size(); l++){
+        var obj = this.mPowerUpSet.getObjectAt(l);
+        if(this.collideBottom(obj)){
+
+            var v = this.getPhysicsComponent().getVelocity();
+            v[1] += this.kJumpHeight * 0.05;
+            
+        }
     }
     
     this.mDye.updateAnimation();
@@ -244,26 +255,28 @@ Hero.prototype.updateControls = function () {
     
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
         
-        if(this.mNumJump === 0){
-            v[1] += this.kJumpHeight;
-            this.mState = Hero.state.Jumping;
-            this.mNumJump++;
-        }
-        if(this.mNumJump === 1){
-            if(v[1] > 15 && v[1] < 30){
-                v[1] += this.kJumpHeight * 0.50;
+        if(v[1] < 20){
+            if(this.mNumJump === 0){
+                v[1] += this.kJumpHeight;
                 this.mState = Hero.state.Jumping;
-                this.mNumJump++;                
+                this.mNumJump++;
             }
-            else if(v[1] < 15 && v[1] > 0){
-                v[1] += this.kJumpHeight * 0.75;
-                this.mState = Hero.state.Jumping;
-                this.mNumJump++;                
-            }
-            else if(v[1] < 0){
-                v[1] += this.kJumpHeight * 1.0;
-                this.mState = Hero.state.Jumping;
-                this.mNumJump++;                
+            if(this.mNumJump === 1){
+                if(v[1] > 15 && v[1] < 30){
+                    v[1] += this.kJumpHeight * 0.50;
+                    this.mState = Hero.state.Jumping;
+                    this.mNumJump++;                
+                }
+                else if(v[1] < 15 && v[1] > 0){
+                    v[1] += this.kJumpHeight * 0.75;
+                    this.mState = Hero.state.Jumping;
+                    this.mNumJump++;                
+                }
+                else if(v[1] < 0){
+                    v[1] += this.kJumpHeight * 1.0;
+                    this.mState = Hero.state.Jumping;
+                    this.mNumJump++;                
+                }
             }
         }
     }

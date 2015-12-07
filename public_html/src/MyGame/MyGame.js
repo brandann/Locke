@@ -19,6 +19,7 @@ function MyGame() {
     this.kspritesheet_hud = "assets/spritesheet_hud.png";
     this.kspritesheet_hero = "assets/spritesheet_hero_walk.png";
     this.kspritesheet_torch = "assets/Torch.png";
+    this.kspritesheet_castleBG = "assets/bg_castle.png";
     
     this.kLayerPos = [];
     
@@ -59,6 +60,7 @@ MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kspritesheet_hud);
     gEngine.Textures.loadTexture(this.kspritesheet_hero);
     gEngine.Textures.loadTexture(this.kspritesheet_torch);
+    gEngine.Textures.loadTexture(this.kspritesheet_castleBG);
 };
 
 MyGame.prototype.unloadScene = function () {
@@ -69,6 +71,8 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_hud);
     gEngine.Textures.unloadTexture(this.kspritesheet_hero);
     gEngine.Textures.unloadTexture(this.kspritesheet_torch);
+     gEngine.Textures.unloadTexture(this.kspritesheet_castleBG); 
+    
     
     this.mAllPlatforms.removeAll();
     this.mHUDManager.removeAll();
@@ -142,7 +146,7 @@ MyGame.prototype.initialize = function () {
     
  
  //set up Lights----------------------------------------------------------------
-    gEngine.DefaultResources.setGlobalAmbientIntensity(1.2);
+    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
 
  //initialize game world--------------------------------------------------------
 
@@ -158,12 +162,26 @@ MyGame.prototype.initialize = function () {
     //this.mEnemies = new GameObjectSet();
     this.mTorchSet = new GameObjectSet();
     
-    this.mKey = new Item('goldKey', [100,60]);
+    
     
     var offset = 0;
-    this.LevelBlock1(offset);
+//    this.LevelBlock1(offset);//begining this one must be first
+//    offset += 160;
+//    this.LevelBlock2(offset); //large amount of spikes
+//    offset += 160;
+//    this.LevelBlock3(offset); //randomized box placement
+//    offset += 160; 
+//    this.LevelBlock4(offset); //little bit of a maze
+//    offset += 160; 
+    this.LevelBlock10(offset); //entrace to castle
     offset += 160;
-    this.LevelBlock2(offset);
+    this.LevelBlock8(offset); //empty except for spike platform in the middle
+    offset += 160;
+    this.LevelBlock7(offset); //empty with L platform
+    offset += 160;
+    this.LevelBlock8(offset); //empty except for spike platform in the middle
+    offset += 160;    
+    this.LevelBlock9(offset); //final level block with key
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -230,10 +248,7 @@ MyGame.prototype.update = function () {
     //this.mEnemies.update();
     this.mTorchSet.update();
     
-    this.mCamera.clampAtBoundary(this.mHero.getXform(), 1);
-    this.mCamera.update();
-    this.mCamera.panWith(this.mHero.getXform(), 0.4);
-    this.mCamera.clampToBackGround(this.mBg);
+
     
      if(this.mHUDManager.getLifeCounter().getNumber() <= 0){
         this.GameLost();
@@ -246,4 +261,15 @@ MyGame.prototype.update = function () {
     }   
 
     this._physicsSimulation();
+    
+     
+    //this.mCamera.clampAtBoundary(this.mHero.getPhysicsComponent().getXform(), 1);
+    
+    //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.3 );
+    //var y = this.mHero.getPhysicsComponent().getXform().getYPos();
+    var x = this.mHero.getPhysicsComponent().getXform().getXPos();
+    this.mCamera.panTo(x,60);
+    //this.mCamera.clampToBackGround(this.mBg);  
+    this.mCamera.update();
+     
 };
