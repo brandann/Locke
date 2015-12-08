@@ -53,6 +53,9 @@ DeathScreen.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.keysheet);
     
     this.mFlyingThings.removeAll();
+    
+    var nextScene = new MenuScreen(); 
+    gEngine.Core.startScene(nextScene);
 
 };
 
@@ -73,7 +76,7 @@ DeathScreen.prototype.initialize = function () {
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]); 
    
    
-    this.mMsg = new FontRenderable("You Failed! The Pincess never had a chance");
+    this.mMsg = new FontRenderable("You Failed! The Princess never had a chance");
     this.mMsg.setColor([0, 0, 0, 1]);
     this.mMsg.getXform().setSize(100,10);
     this.mMsg.getXform().setPosition(40,80);
@@ -142,8 +145,7 @@ DeathScreen.prototype.initialize = function () {
 DeathScreen.prototype.update = function () {
     
     if(this.hasExpired()){
-        var nextScene = new MenuScreen(); 
-        gEngine.Core.startScene(nextScene);
+        gEngine.GameLoop.stop();
         return;
      }
      this.cycles++;

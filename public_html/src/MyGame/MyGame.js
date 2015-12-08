@@ -76,12 +76,21 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_castleBG); 
     
     this.mAllPlatforms.removeAll();
-    this.mHUDManager.removeAll();
     this.mBats.removeAll();
     this.mBlobs.removeAll();
     this.mTextures.removeAll();
     this.mBackGrouds.removeAll();
     this.mTorchSet.removeAll();
+    
+     if(this.mHUDManager.getLifeCounter().getNumber() <= 0){
+        this.GameLost();
+
+    }
+    
+    if(this.mHero.getXform().getXPos() < 20 && this.mHeroHasKey){
+        this.GameWon();
+
+    }    
 };
 
 MyGame.prototype.initialize = function () { 
@@ -161,28 +170,28 @@ MyGame.prototype.initialize = function () {
     
     
     var offset = 0;
-    this.LevelBlock1(offset);//begining this one must be first
-    offset += 160;
-    this.LevelBlock2(offset); //large amount of spikes
-    offset += 160;
-    this.LevelBlock3(offset); //randomized box placement
-    offset += 160; 
-    this.LevelBlock3(offset); //randomized box placement
-    offset += 160; 
-    this.LevelBlock2(offset); //large amount of spikes
-    offset += 160;
-    this.LevelBlock3(offset); //randomized box placement
-    offset += 160;         
-    this.LevelBlock4(offset); //little bit of a maze
-    offset += 160; 
-    this.LevelBlock10(offset); //entrace to castle
-    offset += 160;
-    this.LevelBlock8(offset); //empty except for spike platform in the middle
-    offset += 160;
-    this.LevelBlock7(offset); //empty with L platform
-    offset += 160;
-    this.LevelBlock8(offset); //empty except for spike platform in the middle
-    offset += 160;    
+//    this.LevelBlock1(offset);//begining this one must be first
+//    offset += 160;
+//    this.LevelBlock2(offset); //large amount of spikes
+//    offset += 160;
+//    this.LevelBlock3(offset); //randomized box placement
+//    offset += 160; 
+//    this.LevelBlock3(offset); //randomized box placement
+//    offset += 160; 
+//    this.LevelBlock2(offset); //large amount of spikes
+//    offset += 160;
+//    this.LevelBlock3(offset); //randomized box placement
+//    offset += 160;         
+//    this.LevelBlock4(offset); //little bit of a maze
+//    offset += 160; 
+//    this.LevelBlock10(offset); //entrace to castle
+//    offset += 160;
+//    this.LevelBlock8(offset); //empty except for spike platform in the middle
+//    offset += 160;
+//    this.LevelBlock7(offset); //empty with L platform
+//    offset += 160;
+//    this.LevelBlock8(offset); //empty except for spike platform in the middle
+//    offset += 160;    
     this.LevelBlock9(offset); //final level block with key
 };
 
@@ -220,11 +229,13 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
 };
 
 MyGame.prototype.GameLost = function () {
+        gEngine.GameLoop.stop();
         var deathScreen = new DeathScreen();       
         gEngine.Core.startScene(deathScreen);
 };
 
 MyGame.prototype.GameWon = function () {
+        gEngine.GameLoop.stop();
         var winScreen = new WinScreen(); 
         gEngine.Core.startScene(winScreen);
 };
@@ -235,14 +246,20 @@ MyGame.prototype.update = function () {
     
     if(this.mKey !== null){
         var heroBB = this.mHero.getBBox();
-    var keyBB = this.mKey.getBBox();
+        var keyBB = this.mKey.getBBox();
     
-    if(heroBB.intersectsBound(keyBB)){
-        this.mHeroHasKey = true;
-        this.mHUDManager.heroHasKey();
-        this.mKey.hide();
-        this.mHero.registerhasKey(true);
-    }
+        if(heroBB.intersectsBound(keyBB)){
+
+            var h =[];
+            if(this.mKey.pixelTouches(this.mHero,h)){
+
+                this.mHeroHasKey = true;
+                this.mHUDManager.heroHasKey();
+                this.mKey.hide(); 
+                this.mHero.registerhasKey(true);            
+            }
+
+        }
     }
     
     
@@ -256,15 +273,20 @@ MyGame.prototype.update = function () {
 
     
      if(this.mHUDManager.getLifeCounter().getNumber() <= 0){
-        this.GameLost();
+        gEngine.GameLoop.stop();
 
     }
     
     if(this.mHero.getXform().getXPos() < 20 && this.mHeroHasKey){
-        this.GameWon();
+        gEngine.GameLoop.stop();
 
     }   
     //var x = this.mHero.getPhysicsComponent().getXform().getXPos();
+    
+    if(this.mHero.getXform().getXPos() < -30){
+        this.mHero.handleEnemyCollision();
+    }
+    
     var x = this.mHero.getXform().getXPos();
     this.mCamera.panTo(x,60);  
     this.mCamera.update();

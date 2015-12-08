@@ -53,6 +53,8 @@ WinScreen.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.keysheet);
     
     this.mFlyingThings.removeAll();
+    var nextScene = new MenuScreen(); 
+    gEngine.Core.startScene(nextScene);
 
 };
 
@@ -142,8 +144,9 @@ WinScreen.prototype.initialize = function () {
 WinScreen.prototype.update = function () {
     
     if(this.hasExpired()){
-        var nextScene = new MenuScreen(); 
-        gEngine.Core.startScene(nextScene);
+
+
+        gEngine.GameLoop.stop();
         return;
      }
      this.cycles++;

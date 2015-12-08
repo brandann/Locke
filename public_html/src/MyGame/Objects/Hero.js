@@ -25,8 +25,18 @@ function Hero(spriteSheet) {
     
     //topPixel, leftPixel, widthPixel, HeightPixel, numelements, paddingPixel
     var key;
-    key = 'stand';
-    this.mSpriteMap[key] = [128,0,86,86,1,0];
+    key = 'standRight';
+    this.mSpriteMap[key] = [512,0,67,92,1,0];
+    key = 'standLeft';
+    this.mSpriteMap[key] = [420,0,67,92,1,0];
+    key = 'jumpRight';
+    this.mSpriteMap[key] = [328,0,67,92,1,0];
+    key = 'jumpLeft';
+    this.mSpriteMap[key] = [328,67,67,92,1,0];      
+    
+    
+    
+    
     key = 'blueDiamond';
     this.mSpriteMap[key] = [0,128,896,1024];
     key = 'goldKeyEmpty';
@@ -45,6 +55,7 @@ function Hero(spriteSheet) {
     
     this.mDye.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
     this.mDye.setAnimationSpeed(2.5); 
+   
     this.mDye.setSpriteSequence(512, 0, 67, 92, 1, 0);
 
     GameObject.call(this, this.mDye);
@@ -56,10 +67,10 @@ function Hero(spriteSheet) {
     this.setPhysicsComponent(r);
     
     //Hero States
-    this.mState = Hero.state.Idle;
+    this.mState = Hero.state.Walking;
     this.mDir = Hero.dir.Right;
-    this.mPrevState = null;
     this.mNumJump = 0;
+    
     
     this.mLifeCounter = null;
     this.mPowerCounter = null;
@@ -68,6 +79,8 @@ function Hero(spriteSheet) {
     this.powerTick = 0;
     
     this.mKey = null;
+    
+    this.Update = false;
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -85,6 +98,153 @@ Hero.dir = Object.freeze({
     Forward:3
 });
 
+Hero.prototype.changeAnimation = function () {
+    
+    //if(this.mPrevState !== this.mState){
+        switch (this.mState) {
+            case Hero.state.Walking:
+                if(this.mDir === Hero.dir.Left && !this.Update){
+                    //[512,0,67,92,1,0]
+                    this.mDye.setSpriteSequence(512, 0, 67, 92, 3, 3);
+                }
+                else if (this.mDir === Hero.dir.Right && !this.Update){
+                    //[420,0,67,92,1,0]
+                    this.mDye.setSpriteSequence(420, 0, 67,92, 3, 3);
+                }
+                break;
+//            case Hero.state.Idle:
+//                if(this.mDir === Hero.dir.Right){
+//                    //[512,0,67,92,1,0]
+//                    this.mDye.setSpriteSequence(512, 0, 67, 92, 1, 0);
+//                }
+//                else if (this.mDir === Hero.dir.Left){
+//                    //[420,0,67,92,1,0]
+//                    this.mDye.setSpriteSequence(420, 0, 67,92, 1, 0);
+//                }                
+                break;
+            case Hero.state.Jumping:
+                if(this.mDir === Hero.dir.Right){
+                    //[512,0,67,92,1,0]
+                    this.mDye.setSpriteSequence(328, 0, 67, 92, 1, 0);
+                }
+                else if (this.mDir === Hero.dir.Left){
+                    //[420,0,67,92,1,0]
+                    this.mDye.setSpriteSequence(328, 67, 67,92, 1, 0);
+                }                
+                break;
+
+        }
+    //}
+  
+};
+
+Hero.prototype.updateControls = function () {
+    
+    var v = this.getPhysicsComponent().getVelocity();
+    var xform = this.getXform();
+    
+    this.Update = false;
+    
+    
+    var controlsPressed = false;
+    
+
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
+        if(Math.abs(v[0]) <= this.kMaxVelocity){
+           v[0] -= this.kXDelta;
+
+        }
+
+        if(this.mDir === Hero.dir.Left && this.mState === Hero.state.Walking){
+            this.Update = true;
+        }
+        this.changeAnimation();  
+ 
+        this.mDir = Hero.dir.Left;
+        
+        controlsPressed = true;
+
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
+        if(Math.abs(v[0]) <= this.kMaxVelocity){
+            v[0] += this.kXDelta;
+        }
+        
+      
+
+
+       
+       
+        if(this.mDir === Hero.dir.Right && this.mState === Hero.state.Walking){
+            this.Update = true;
+        }
+                 
+        this.changeAnimation();  
+        this.mDir = Hero.dir.Right;
+        controlsPressed = true;
+    }
+    
+    //if the user has not pressed anything slow the hero down more quickly
+    //if(this.mState === Hero.state.Walking){
+        if(!controlsPressed && this.mDir === Hero.dir.Right){
+            if(v[0] > 0){
+                v[0] -= 1;
+            }
+            if(v[0] < 0){
+                v[0] = 0;
+            }
+
+        }
+        if(!controlsPressed && this.mDir === Hero.dir.Left){
+            if(v[0] < 0){
+                v[0] += 1;
+            }
+            if(v[0] > 0){
+                v[0] = 0;
+            }
+
+        }
+    //}
+
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
+        
+        if(this.mPowerCounter.getNumber() >= 1){
+            this.decPowerCounter();
+            this.mPowerUpSet.addToSet(new Power(this.getXform().getPosition(),this.mDir));
+        }
+    } 
+
+    
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
+        controlsPressed = true;
+        if(v[1] < 20){
+            if(this.mNumJump === 0){
+                v[1] += this.kJumpHeight;
+                this.mState = Hero.state.Jumping;
+                this.mNumJump++;
+            }
+            if(this.mNumJump === 1){
+                if(v[1] > 15 && v[1] < 30){
+                    v[1] += this.kJumpHeight * 0.50;
+                    this.mState = Hero.state.Jumping;
+                    this.mNumJump++;                
+                }
+                else if(v[1] < 15 && v[1] > 0){
+                    v[1] += this.kJumpHeight * 0.75;
+                    this.mState = Hero.state.Jumping;
+                    this.mNumJump++;                
+                }
+                else if(v[1] < 0){
+                    v[1] += this.kJumpHeight * 1.0;
+                    this.mState = Hero.state.Jumping;
+                    this.mNumJump++;                
+                }
+            }
+        }
+    }
+    
+};
+
 Hero.prototype.draw = function (aCamera) {
     GameObject.prototype.draw.call(this,aCamera);
     this.mPowerUpSet.draw(aCamera);
@@ -94,8 +254,9 @@ Hero.prototype.update = function (platforms,enemies) {
     // must call super class update
     GameObject.prototype.update.call(this);
 
-    this.handlePlatformCollision(platforms);
+    
     this.updateControls();
+    this.handlePlatformCollision(platforms);
     
     this.mPowerUpSet.update();
     
@@ -142,19 +303,12 @@ Hero.prototype.update = function (platforms,enemies) {
         }
 
     }
+
+    if(this.Update){
+       this.mDye.updateAnimation(); 
+    }
     
-//    var l;
-//    for(l = 0; l < this.mPowerUpSet.size(); l++){
-//        var obj = this.mPowerUpSet.getObjectAt(l);
-//        if(this.collideBottom(obj)){
-//
-//            var v = this.getPhysicsComponent().getVelocity();
-//            v[1] += this.kJumpHeight * 0.05;
-//            
-//        }
-//    }
     
-    this.mDye.updateAnimation();
     
 
 };
@@ -168,6 +322,7 @@ Hero.prototype.handlePlatformCollision = function (platforms) {
         
         if(this.collideBottom(obj) && this.mState === Hero.state.Jumping){
             this.mState = Hero.state.Walking;
+            this.changeAnimation();
             this.mNumJump = 0;
         }
         
@@ -200,91 +355,7 @@ Hero.prototype.collideBottom = function (obj) {
   return false;
 };
 
-Hero.prototype.updateControls = function () {
-    
-    var v = this.getPhysicsComponent().getVelocity();
-    var xform = this.getXform();
-    
-    var controlsPressed = false;
-    
 
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.A)) {
-        if(Math.abs(v[0]) <= this.kMaxVelocity){
-           v[0] -= this.kXDelta;
-
-        }
-        this.mDir = Hero.dir.Left;
-        controlsPressed = true;
-
-    }
-    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.D)) {
-        if(Math.abs(v[0]) <= this.kMaxVelocity){
-            v[0] += this.kXDelta;
-        }
-        this.mDir = Hero.dir.Right;
-        controlsPressed = true;
-    }
-    
-    //if the user has not pressed anything slow the hero down more quickly
-    //if(this.mState === Hero.state.Walking){
-        if(!controlsPressed && this.mDir === Hero.dir.Right){
-            if(v[0] > 0){
-                v[0] -= 1;
-            }
-            if(v[0] < 0){
-                v[0] = 0;
-            }
-
-        }
-        if(!controlsPressed && this.mDir === Hero.dir.Left){
-            if(v[0] < 0){
-                v[0] += 1;
-            }
-            if(v[0] > 0){
-                v[0] = 0;
-            }
-
-        }
-    //}
-
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.E)) {
-        
-        if(this.mPowerCounter.getNumber() >= 1){
-            this.decPowerCounter();
-            this.mPowerUpSet.addToSet(new Power(this.getXform().getPosition(),this.mDir));
-        }
-            //this.mPowerUpSet.addToSet(new Item('heart',this.getXform().getPosition()));
-    } 
-
-    
-    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
-        
-        if(v[1] < 20){
-            if(this.mNumJump === 0){
-                v[1] += this.kJumpHeight;
-                this.mState = Hero.state.Jumping;
-                this.mNumJump++;
-            }
-            if(this.mNumJump === 1){
-                if(v[1] > 15 && v[1] < 30){
-                    v[1] += this.kJumpHeight * 0.50;
-                    this.mState = Hero.state.Jumping;
-                    this.mNumJump++;                
-                }
-                else if(v[1] < 15 && v[1] > 0){
-                    v[1] += this.kJumpHeight * 0.75;
-                    this.mState = Hero.state.Jumping;
-                    this.mNumJump++;                
-                }
-                else if(v[1] < 0){
-                    v[1] += this.kJumpHeight * 1.0;
-                    this.mState = Hero.state.Jumping;
-                    this.mNumJump++;                
-                }
-            }
-        }
-    }
-};
 
 Hero.prototype.handleEnemyCollision = function(enemy) {
     if(!this.mKey){
@@ -292,6 +363,8 @@ Hero.prototype.handleEnemyCollision = function(enemy) {
     }else if(this.mKey){
         this.getXform().setPosition(1500,70);
     }
+
+    
     this.mLifeCounter.decByOne();
 };
 
@@ -316,39 +389,3 @@ Hero.prototype.incLifeCounter = function() {
     this.mLifeCounter.incByOne();
 };
 
-Hero.prototype.changeAnimation = function () {
-    if (this.mHeroState !== this.mPreviousHeroState) {
-        switch (this.mHeroState) {
-            case Hero.eHeroState.eFaceLeft:
-                this.mDye.setSpriteSequence(1508, 0, 140, 180, 3, 0);
-                this.mDye.getXform().setSize(-this.kWidth, this.kHeight);
-                this.mDye.setAnimationSpeed(20);
-                break;
-//            case Hero.eHeroState.eFaceRight:
-//                this.mDye.setSpriteSequence(1508, 0, 140, 180, 3, 0);
-//                this.mDye.getXform().setSize(this.kWidth, this.kHeight);
-//                this.mDye.setAnimationSpeed(20);
-//                break;
-//            case Hero.eHeroState.eRunLeft:
-//                this.mDye.setSpriteSequence(1688, 0, 140, 180, 6, 0);
-//                this.mDye.getXform().setSize(-this.kWidth, this.kHeight);
-//                this.mDye.setAnimationSpeed(5);
-//                break;
-//            case Hero.eHeroState.eRunRight:
-//                this.mDye.setSpriteSequence(1688, 0, 140, 180, 6, 0);
-//                this.mDye.getXform().setSize(this.kWidth, this.kHeight);
-//                this.mDye.setAnimationSpeed(5);
-//                break;
-//            case Hero.eHeroState.eJumpLeft:
-//                this.mDye.setSpriteSequence(2048, 0, 140, 180, 10, 0);
-//                this.mDye.getXform().setSize(-this.kWidth, this.kHeight);
-//                this.mDye.setAnimationSpeed(4);
-//                break;
-//            case Hero.eHeroState.eJumpRight:
-//                this.mDye.setSpriteSequence(2048, 0, 140, 180, 10, 0);
-//                this.mDye.getXform().setSize(this.kWidth, this.kHeight);
-//                this.mDye.setAnimationSpeed(4);
-//                break;
-        }
-    }
-};

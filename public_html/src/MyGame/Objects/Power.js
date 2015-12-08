@@ -44,9 +44,9 @@ Power.prototype.explode = function () {
     
     this.powerUp.setElementPixelPosArray([-1,-1,-1,-1]);
     var i;
-    for(i=0; i<5; i++){
+    //for(i=0; i<5; i++){
         this._createParticle(this.getXform().getPosition());
-    }
+    //}
     this.mexplode = true;
     
 };

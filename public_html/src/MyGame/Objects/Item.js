@@ -58,7 +58,7 @@ Item.prototype._handleCollision = function (hero) {
                    this.mItem.setElementPixelPosArray([-1,-1,-1,-1]);
                 }              
             case 'goldkey':
-
+                
                                
                 break;
             //case n:

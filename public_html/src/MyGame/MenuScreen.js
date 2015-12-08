@@ -51,6 +51,9 @@ MenuScreen.prototype.unloadScene = function() {
     gEngine.Textures.unloadTexture(this.keysheet);
     
     this.mFlyingThings.removeAll();
+    
+    this.mCurrentScene = new MyGame(); 
+    gEngine.Core.startScene(this.mCurrentScene);
 
 };
 
@@ -140,8 +143,7 @@ MenuScreen.prototype.initialize = function () {
 MenuScreen.prototype.update = function () {
     
     if(this.SceneComplete()){
-        this.mCurrentScene = new MyGame(); 
-        gEngine.Core.startScene(this.mCurrentScene);
+        gEngine.GameLoop.stop();
         return;
      }
     

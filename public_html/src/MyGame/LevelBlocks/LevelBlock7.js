@@ -55,13 +55,7 @@ MyGame.prototype.LevelBlock7 = function (offset) {
     for(i = 1; i <= 16; i++){
         this.mPlatformFactory.newSimpleTexture('stone','objects',
                                                 [XLayerPos[i],YLayerPos[12]]);        
-        
-        this.mPlatformFactory.newSpikePlatform([XLayerPos[i],YLayerPos[0]]);
-//        this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-//                                                [XLayerPos[i],YLayerPos[2]]);
-//        this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-//                                                [XLayerPos[i],YLayerPos[1]]);
-//                                                
+                                                     
     }
     
     
@@ -70,8 +64,6 @@ MyGame.prototype.LevelBlock7 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[2],YLayerPos[4]]);
                                                 
-    //this.mPlatformFactory.newSpikePlatform([XLayerPos[7],YLayerPos[4]]);
-    //this.mPlatformFactory.newSpikePlatform([XLayerPos[8],YLayerPos[4]]);
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[6],YLayerPos[5]]); 
                                                 
@@ -93,86 +85,6 @@ MyGame.prototype.LevelBlock7 = function (offset) {
                                                 [XLayerPos[16],YLayerPos[4]]);                                                
                                                
                                                 
-                                                
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[11],YLayerPos[4]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[12],YLayerPos[4]]);
-//                                                
-//   this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[9],YLayerPos[5]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[10],YLayerPos[5]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[11],YLayerPos[5]]);
-//                                                
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[10],YLayerPos[6]]);
-//                                                
-//    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]);                                            
-//                                                
-//    this.mPlatformFactory.newSimplePlatform('leftGreen','greenPlatforms',
-//                                                [XLayerPos[8],YLayerPos[5]]);
-//    this.mPlatformFactory.newSimplePlatform('rightGreen','greenPlatforms',
-//                                                [XLayerPos[9],YLayerPos[5]]); 
-//                                                
-//                                                
-//    this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-//                                                [XLayerPos[7],YLayerPos[3]]);
-//    this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-//                                                [XLayerPos[8],YLayerPos[3]]);
-//    this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-//                                                [XLayerPos[9],YLayerPos[3]]);
-//                                                
-//                                                
-//    this.mPlatformFactory.newSimplePlatform('plainBox','objects',
-//                                                [XLayerPos[11],YLayerPos[7]]);
-//    this.mPlatformFactory.newSimplePlatform('plainBox','objects',
-//                                                [XLayerPos[12],YLayerPos[7]]);
-//    this.mPlatformFactory.newSimplePlatform('plainBox','objects',
-//                                                [XLayerPos[13],YLayerPos[7]]);
-//    this.mPlatformFactory.newAwardPlatform([XLayerPos[14],YLayerPos[7]]);
-//    
-//    
-//    this.mPlatformFactory.newSimplePlatform('lock','objects',
-//                                                [XLayerPos[1],YLayerPos[4]]);                                                                                                
-//    this.mPlatformFactory.newSimplePlatform('lock','objects',
-//                                                [XLayerPos[1],YLayerPos[5]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[1],YLayerPos[6]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[1],YLayerPos[7]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[1],YLayerPos[8]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[1],YLayerPos[9]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[1],YLayerPos[10]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[1],YLayerPos[11]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[2],YLayerPos[10]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[2],YLayerPos[11]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[1],YLayerPos[12]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[2],YLayerPos[12]]);                                                 
-//    
-    //this.mTorchSet.addToSet(this._initLights([XLayerPos[1],YLayerPos[6]+2]));
-    //this.mTorchSet.addToSet(this._initLights([XLayerPos[12],YLayerPos[7]+2]));
-    
-
-//     this.mPlatformFactory.newSimplePlatform('middle','greenPlatforms',
-//                                                [XLayerPos[1],YLayerPos[4]]);
-    
-//    this.mPlatformFactory.newBoxPlatform('!withBorder','objects',[10,this.kLayerPos[8]]);
-//    this.mPlatformFactory.newBoxPlatform('plainBox','objects',[20,this.kLayerPos[8]]);
-//    this.mPlatformFactory.newBoxPlatform('plainBox','objects',[30,this.kLayerPos[8]]);
-//    this.mPlatformFactory.newSpikePlatform([xPos + 10,this.kLayerPos[3]]);
-//    this.mPlatformFactory.newSpikePlatform([xPos + 20,this.kLayerPos[3]]);
-//    this.mPlatformFactory.newAwardPlatform([60,this.kLayerPos[8]]);
-//    
     var e = new Enemy();
     e.setHeroObject(this.mHero);
     e.setPaceState(             // set enemy as "not bat"
