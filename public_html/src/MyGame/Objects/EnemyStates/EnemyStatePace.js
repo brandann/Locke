@@ -29,7 +29,7 @@ Enemy.prototype.setPaceState = function(initPos, dist, range) {
     
     this.mEnemy.getXform().setSize(8.38, 5);
     this.mEnemy.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
-    this.mEnemy.setAnimationSpeed(20); 
+    this.mEnemy.setAnimationSpeed(15); 
     this.mEnemy.setSpriteSequence(68, 57, 57, 34, 2, 0);
 };
 

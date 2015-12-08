@@ -21,6 +21,7 @@ function MyGame() {
     this.kspritesheet_torch = "assets/Torch.png";
     this.kspritesheet_castleBG = "assets/bg_castle.png";
     this.kSpriteSheetEnemy = "assets/EnemyAnimation.png";
+    this.kAudioSource = "assets/Audio/happy_adveture.mp3";
     
     this.kLayerPos = [];
     
@@ -64,6 +65,7 @@ MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kspritesheet_torch);
     gEngine.Textures.loadTexture(this.kspritesheet_castleBG);
     gEngine.Textures.loadTexture(this.kSpriteSheetEnemy);
+    gEngine.AudioClips.loadAudio(this.kAudioSource);
 };
 
 MyGame.prototype.unloadScene = function () {
@@ -76,6 +78,7 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_torch);
     gEngine.Textures.unloadTexture(this.kspritesheet_castleBG); 
     gEngine.Textures.unloadTexture(this.kSpriteSheetEnemy); 
+    gEngine.AudioClips.stopBackgroundAudio();
     
     this.mAllPlatforms.removeAll();
     this.mHUDManager.removeAll();
@@ -89,7 +92,8 @@ MyGame.prototype.unloadScene = function () {
 MyGame.prototype.initialize = function () { 
     
 
-    
+     gEngine.AudioClips.playBackgroundAudio(this.kAudioSource);
+     
     //create game object sets
     this.mAllPlatforms = new GameObjectSet();
     this.mTextures = new GameObjectSet();
@@ -254,6 +258,7 @@ MyGame.prototype.update = function () {
     this.mHUDManager.update(this.mCamera,0,0);
     this.mBats.update();
     this.mBlobs.update();
+    this.mTorchSet.update();
     
 
     
