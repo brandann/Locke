@@ -12,12 +12,18 @@ Enemy.prototype.setChaseState = function(initPos, range) {
     
     this.getXform().setPosition(initPos[0], initPos[1]);                        // set the GameObject position to the initPos
     
+    this.mEnemy.getXform().setSize(10, 5);
     this.mState = null;                                                         // null the mState, this is just percautionary
     this.mSpeedVel = 0.15;                                                      // speed of the enemy when moving
     
     this._updateState(this.updateChase);                                        // set the update state to this state
     
     this.mRange = 40;
+    
+    this.mEnemy.getXform().setSize(10, 5);
+    this.mEnemy.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
+    this.mEnemy.setAnimationSpeed(20); 
+    this.mEnemy.setSpriteSequence(128, 0, 88, 47, 2, 0);
 };
 
 Enemy.prototype.updateChase = function () {
@@ -30,4 +36,5 @@ Enemy.prototype.updateChase = function () {
     else if(this.getSpeed() !== 0) {
         this.setSpeed(0.0);                                                     // set the speed to 0 to stop movement
     }
+    this.mEnemy.updateAnimation();
 };

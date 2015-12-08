@@ -20,7 +20,7 @@ function MyGame() {
     this.kspritesheet_hero = "assets/HeroAnimation.png";
     this.kspritesheet_torch = "assets/Torch.png";
     this.kspritesheet_castleBG = "assets/bg_castle.png";
-    this.kSpriteSheetBat = "assets/BatAnimation.png";
+    this.kSpriteSheetEnemy = "assets/EnemyAnimation.png";
     
     this.kLayerPos = [];
     
@@ -63,6 +63,7 @@ MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kspritesheet_hero);
     gEngine.Textures.loadTexture(this.kspritesheet_torch);
     gEngine.Textures.loadTexture(this.kspritesheet_castleBG);
+    gEngine.Textures.loadTexture(this.kSpriteSheetEnemy);
 };
 
 MyGame.prototype.unloadScene = function () {
@@ -74,6 +75,7 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_hero);
     gEngine.Textures.unloadTexture(this.kspritesheet_torch);
     gEngine.Textures.unloadTexture(this.kspritesheet_castleBG); 
+    gEngine.Textures.unloadTexture(this.kSpriteSheetEnemy); 
     
     this.mAllPlatforms.removeAll();
     this.mHUDManager.removeAll();
@@ -216,7 +218,7 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mHero.draw(aCamera);
    
     this.mTorchSet.draw(aCamera);
-    this.mKey.draw(aCamera);
+    if(this.mKey !== null) {this.mKey.draw(aCamera);}
 };
 
 MyGame.prototype.GameLost = function () {
@@ -235,14 +237,14 @@ MyGame.prototype.update = function () {
     
     if(this.mKey !== null){
         var heroBB = this.mHero.getBBox();
-    var keyBB = this.mKey.getBBox();
-    
-    if(heroBB.intersectsBound(keyBB)){
-        this.mHeroHasKey = true;
-        this.mHUDManager.heroHasKey();
-        this.mKey.hide();
-        this.mHero.registerhasKey(true);
-    }
+        var keyBB = this.mKey.getBBox();
+
+        if(heroBB.intersectsBound(keyBB)){
+            this.mHeroHasKey = true;
+            this.mHUDManager.heroHasKey();
+            this.mKey.hide();
+            this.mHero.registerhasKey(true);
+        }
     }
     
     
