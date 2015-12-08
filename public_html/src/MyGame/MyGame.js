@@ -81,12 +81,21 @@ MyGame.prototype.unloadScene = function () {
     gEngine.AudioClips.stopBackgroundAudio();
     
     this.mAllPlatforms.removeAll();
-    this.mHUDManager.removeAll();
     this.mBats.removeAll();
     this.mBlobs.removeAll();
     this.mTextures.removeAll();
     this.mBackGrouds.removeAll();
     this.mTorchSet.removeAll();
+    
+     if(this.mHUDManager.getLifeCounter().getNumber() <= 0){
+        this.GameLost();
+
+    }
+    
+    if(this.mHero.getXform().getXPos() < 20 && this.mHeroHasKey){
+        this.GameWon();
+
+    }    
 };
 
 MyGame.prototype.initialize = function () { 
@@ -264,11 +273,13 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
 };
 
 MyGame.prototype.GameLost = function () {
+        gEngine.GameLoop.stop();
         var deathScreen = new DeathScreen();       
         gEngine.Core.startScene(deathScreen);
 };
 
 MyGame.prototype.GameWon = function () {
+        gEngine.GameLoop.stop();
         var winScreen = new WinScreen(); 
         gEngine.Core.startScene(winScreen);
 };
@@ -280,12 +291,18 @@ MyGame.prototype.update = function () {
     if(this.mKey !== null){
         var heroBB = this.mHero.getBBox();
         var keyBB = this.mKey.getBBox();
-
+    
         if(heroBB.intersectsBound(keyBB)){
-            this.mHeroHasKey = true;
-            this.mHUDManager.heroHasKey();
-            this.mKey.hide();
-            this.mHero.registerhasKey(true);
+
+            var h =[];
+            if(this.mKey.pixelTouches(this.mHero,h)){
+
+                this.mHeroHasKey = true;
+                this.mHUDManager.heroHasKey();
+                this.mKey.hide(); 
+                this.mHero.registerhasKey(true);            
+            }
+
         }
     }
     
@@ -301,15 +318,20 @@ MyGame.prototype.update = function () {
 
     
      if(this.mHUDManager.getLifeCounter().getNumber() <= 0){
-        this.GameLost();
+        gEngine.GameLoop.stop();
 
     }
     
     if(this.mHero.getXform().getXPos() < 20 && this.mHeroHasKey){
-        this.GameWon();
+        gEngine.GameLoop.stop();
 
     }   
     //var x = this.mHero.getPhysicsComponent().getXform().getXPos();
+    
+    if(this.mHero.getXform().getXPos() < -30){
+        this.mHero.handleEnemyCollision();
+    }
+    
     var x = this.mHero.getXform().getXPos();
     this.mCamera.panTo(x,60);  
     this.mCamera.update();

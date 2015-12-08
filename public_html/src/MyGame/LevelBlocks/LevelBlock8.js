@@ -56,7 +56,7 @@ MyGame.prototype.LevelBlock8 = function (offset) {
         this.mPlatformFactory.newSimpleTexture('stone','objects',
                                                 [XLayerPos[i],YLayerPos[12]]);        
         
-        this.mPlatformFactory.newSpikePlatform([XLayerPos[i],YLayerPos[0]]);
+        //this.mPlatformFactory.newSpikePlatform([XLayerPos[i],YLayerPos[0]]);
 //        this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
 //                                                [XLayerPos[i],YLayerPos[2]]);
 //        this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',

@@ -55,13 +55,7 @@ MyGame.prototype.LevelBlock7 = function (offset) {
     for(i = 1; i <= 16; i++){
         this.mPlatformFactory.newSimpleTexture('stone','objects',
                                                 [XLayerPos[i],YLayerPos[12]]);        
-        
-        this.mPlatformFactory.newSpikePlatform([XLayerPos[i],YLayerPos[0]]);
-//        this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-//                                                [XLayerPos[i],YLayerPos[2]]);
-//        this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-//                                                [XLayerPos[i],YLayerPos[1]]);
-//                                                
+                                                     
     }
     
     
@@ -70,8 +64,6 @@ MyGame.prototype.LevelBlock7 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[2],YLayerPos[4]]);
                                                 
-    //this.mPlatformFactory.newSpikePlatform([XLayerPos[7],YLayerPos[4]]);
-    //this.mPlatformFactory.newSpikePlatform([XLayerPos[8],YLayerPos[4]]);
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[6],YLayerPos[5]]); 
                                                 
@@ -93,7 +85,7 @@ MyGame.prototype.LevelBlock7 = function (offset) {
                                                 [XLayerPos[16],YLayerPos[4]]);                                                
                                                
                                                 
-                                                
+                                      
 //    this.mPlatformFactory.newSimplePlatform('stone','objects',
 //                                                [XLayerPos[11],YLayerPos[4]]);
 //    this.mPlatformFactory.newSimplePlatform('stone','objects',
