@@ -15,5 +15,5 @@ MyGame.prototype._physicsSimulation = function() {
     gEngine.Physics.processObjSet(this.mHero, this.mAllPlatforms);
 
     // Enemy platform
-    gEngine.Physics.processSetSet(this.mEnemies, this.mAllPlatforms);
+    gEngine.Physics.processSetSet(this.mBlobs, this.mAllPlatforms);
 };

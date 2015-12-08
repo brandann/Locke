@@ -9,6 +9,13 @@
 // sets the enemy state to pace around an initial position
 Enemy.prototype.setPaceState = function(initPos, dist, range) {
     
+    var r = new RigidRectangle(this.getXform(), 5, 5);
+    r.setMass(0.7);  // less dense than Minions
+    r.setRestitution(0.3);
+    r.setColor([1, 1, 0, 1]);
+    r.setDrawBounds(true);
+    this.setPhysicsComponent(r);
+    
     this.mInitialPosition = initPos;
     this.getXform().setPosition(initPos[0], initPos[1]);
     

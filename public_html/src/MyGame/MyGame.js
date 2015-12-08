@@ -17,9 +17,10 @@ function MyGame() {
     this.kBgGreenLandBG = "assets/green_land.png";
     this.kspritesheet_tiles = "assets/spritesheet_tiles.png";
     this.kspritesheet_hud = "assets/spritesheet_hud.png";
-    this.kspritesheet_hero = "assets/spritesheet_hero_walk.png";
+    this.kspritesheet_hero = "assets/HeroAnimation.png";
     this.kspritesheet_torch = "assets/Torch.png";
     this.kspritesheet_castleBG = "assets/bg_castle.png";
+    this.kSpriteSheetBat = "assets/BatAnimation.png";
     
     this.kLayerPos = [];
     
@@ -32,7 +33,8 @@ function MyGame() {
     
     this.mAllPlatforms = null;
     this.mHUDManager = null;
-    this.mEnemies = null;
+    this.mBats = null;
+    this.mBlobs = null;
     this.mTextures = null;
     this.mBackGrouds = null;
 
@@ -76,7 +78,8 @@ MyGame.prototype.unloadScene = function () {
     
     this.mAllPlatforms.removeAll();
     this.mHUDManager.removeAll();
-    this.mEnemies.removeAll();
+    this.mBats.removeAll();
+    this.mBlobs.removeAll();
     this.mTextures.removeAll();
     this.mBackGrouds.removeAll();
     this.mTorchSet.removeAll();
@@ -96,7 +99,8 @@ MyGame.prototype.initialize = function () {
     this.mAllPlatforms = new GameObjectSet();
     this.mTextures = new GameObjectSet();
     this.mBackGrouds = new GameObjectSet();
-    this.mEnemies = new GameObjectSet();
+    this.mBats = new GameObjectSet();
+    this.mBlobs = new GameObjectSet();
  
 //Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
@@ -159,20 +163,19 @@ MyGame.prototype.initialize = function () {
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
     
-    //this.mEnemies = new GameObjectSet();
     this.mTorchSet = new GameObjectSet();
     
     
     
     var offset = 0;
-//    this.LevelBlock1(offset);//begining this one must be first
-//    offset += 160;
-//    this.LevelBlock2(offset); //large amount of spikes
-//    offset += 160;
-//    this.LevelBlock3(offset); //randomized box placement
-//    offset += 160; 
-//    this.LevelBlock4(offset); //little bit of a maze
-//    offset += 160; 
+    this.LevelBlock1(offset);//begining this one must be first
+    offset += 160;
+    this.LevelBlock2(offset); //large amount of spikes
+    offset += 160;
+    this.LevelBlock3(offset); //randomized box placement
+    offset += 160; 
+    this.LevelBlock4(offset); //little bit of a maze
+    offset += 160; 
     this.LevelBlock10(offset); //entrace to castle
     offset += 160;
     this.LevelBlock8(offset); //empty except for spike platform in the middle
@@ -209,7 +212,8 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     
     this.mAllPlatforms.draw(aCamera);
     this.mTextures.draw(aCamera);
-    this.mEnemies.draw(aCamera);
+    this.mBats.draw(aCamera);
+    this.mBlobs.draw(aCamera);
     this.mHero.draw(aCamera);
    
     this.mTorchSet.draw(aCamera);
@@ -230,9 +234,8 @@ MyGame.prototype.GameWon = function () {
 // anything from this function!
 MyGame.prototype.update = function () {
     
-
-    
-    var heroBB = this.mHero.getBBox();
+    if(this.mKey !== null){
+        var heroBB = this.mHero.getBBox();
     var keyBB = this.mKey.getBBox();
     
     if(heroBB.intersectsBound(keyBB)){
@@ -240,12 +243,15 @@ MyGame.prototype.update = function () {
         this.mHUDManager.heroHasKey();
         this.mKey.hide();
     }
+    }
+    
     
     
     this.mAllPlatforms.updateWithREF(this.mHero);
-    this.mHero.update(this.mAllPlatforms,this.mEnemies);
+    this.mHero.update(this.mAllPlatforms,this.mBlobs, this.mBats);
     this.mHUDManager.update(this.mCamera,0,0);
-    //this.mEnemies.update();
+    this.mBats.update();
+    this.mBlobs.update();
     this.mTorchSet.update();
     
 

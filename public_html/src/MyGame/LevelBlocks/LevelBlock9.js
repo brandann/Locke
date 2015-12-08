@@ -85,7 +85,8 @@ MyGame.prototype.LevelBlock9 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[10],YLayerPos[6]]);
                                                 
-    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]);                                            
+    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]);         
+    console.log("bra");
 //                                                
 //    this.mPlatformFactory.newSimplePlatform('leftGreen','greenPlatforms',
 //                                                [XLayerPos[8],YLayerPos[5]]);
@@ -155,21 +156,21 @@ MyGame.prototype.LevelBlock9 = function (offset) {
             [80 + offset, 60],  // initial position
             12,                 // pace distance
             30);                // detection range
-    this.mEnemies.addToSet(e);
+    this.mBlobs.addToSet(e);
 //    
     var e1 = new Enemy();
     e1.setHeroObject(this.mHero);
     e1.setChaseState(           // set enemy as bat
             [115 + offset, 75], // initial position
             20);                // detection range
-    this.mEnemies.addToSet(e1);
+    this.mBats.addToSet(e1);
     
     var e = new Enemy();
     e.setHeroObject(this.mHero);
     e.setChaseState(            // set enemy as bat
             [40 + offset, 95],  // initial position
             20);                // detection range
-    this.mEnemies.addToSet(e); 
+    this.mBats.addToSet(e); 
 
 };
 

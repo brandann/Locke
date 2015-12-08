@@ -11,7 +11,7 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Enemy() {
+function Enemy(sprite) {
     
     this.mEnemy = new Renderable();
     this.mEnemy.setColor([1, 0, 1, 1]);
@@ -19,12 +19,7 @@ function Enemy() {
     this.mEnemy.getXform().setSize(5, 5);
 
     GameObject.call(this, this.mEnemy);
-    var r = new RigidRectangle(this.getXform(), 5, 5);
-    r.setMass(0.7);  // less dense than Minions
-    r.setRestitution(0.3);
-    r.setColor([1, 1, 0, 1]);
-    r.setDrawBounds(true);
-    this.setPhysicsComponent(r);
+
     
     this.mHero = null;
     
