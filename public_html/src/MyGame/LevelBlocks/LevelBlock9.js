@@ -60,8 +60,7 @@ MyGame.prototype.LevelBlock9 = function (offset) {
         this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
                                                 [XLayerPos[i],YLayerPos[2]]);
         this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
-                                                [XLayerPos[i],YLayerPos[1]]);
-//                                                
+                                                [XLayerPos[i],YLayerPos[1]]);                                                
     }
     
     this.mPlatformFactory.newSimplePlatform('stone','objects',
@@ -85,7 +84,32 @@ MyGame.prototype.LevelBlock9 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[10],YLayerPos[6]]);
                                                 
-    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]);                                            
+    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]); 
+    
+   this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[3]]);
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[4]]);
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[5]]);
+                                                
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[6]]);
+   this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[7]]);
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[8]]);
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[9]]);
+                                                
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[10]]); 
+                                                
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[11]]);
+                                                
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[12]]);                                                 
 //                                                
 //    this.mPlatformFactory.newSimplePlatform('leftGreen','greenPlatforms',
 //                                                [XLayerPos[8],YLayerPos[5]]);

@@ -8,7 +8,7 @@
 function Power(pos,dir) {
     this.mCycleLeft = 500;
     this.spriteSheet = 'assets/spritesheet_hud.png';
-    this.powerUp = new LightRenderable(this.spriteSheet);
+    this.powerUp = new SpriteRenderable(this.spriteSheet);
 
     this.powerUp.setColor([1, 1, 1, 0]);
     this.powerUp.getXform().setPosition(pos[0],pos[1]);
@@ -17,7 +17,7 @@ function Power(pos,dir) {
     this.powerUp.setElementPixelPosArray([256,384,896,1024]);
                                 // show each element for mAnimSpeed updates
     GameObject.call(this, this.powerUp);
-    this.setSpeed(0.30);
+    this.setSpeed(0.60);
     this.setCurrentFrontDir([dir,0]);
     
     this.interval = 10;
@@ -44,9 +44,9 @@ Power.prototype.explode = function () {
     
     this.powerUp.setElementPixelPosArray([-1,-1,-1,-1]);
     var i;
-    for(i=0; i<100; i++){
-        this._createParticle(this.getXform().getPosition());
-    }
+    //for(i=0; i<100; i++){
+        //this._createParticle(this.getXform().getPosition());
+    //}
     this.mexplode = true;
     
 };
@@ -97,7 +97,7 @@ Power.prototype.hasExpired = function() {
 Power.prototype._createParticle = function(pos) {
     var life = 30 + Math.random() * 50;
     var p = new ParticleGameObject(this.spriteSheet, pos[0], pos[1], life);
-    p.getRenderable().setColor([0, 1, 0.7, 1]);
+    p.getRenderable().setColor([0, 0, 0.7, 1]);
    // p.getRenderable().setElementPixelPosArray([256,384,896,1024]);
     
     // size of the particle

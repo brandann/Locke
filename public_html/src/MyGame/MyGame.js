@@ -71,21 +71,20 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_hud);
     gEngine.Textures.unloadTexture(this.kspritesheet_hero);
     gEngine.Textures.unloadTexture(this.kspritesheet_torch);
-     gEngine.Textures.unloadTexture(this.kspritesheet_castleBG); 
+    gEngine.Textures.unloadTexture(this.kspritesheet_castleBG); 
     
     
-    this.mAllPlatforms.removeAll();
-    this.mHUDManager.removeAll();
-    this.mEnemies.removeAll();
-    this.mTextures.removeAll();
-    this.mBackGrouds.removeAll();
-    this.mTorchSet.removeAll();
+//    this.mAllPlatforms.removeAll();
+//    this.mEnemies.removeAll();
+//    this.mTextures.removeAll();
+//    this.mBackGrouds.removeAll();
+//    this.mTorchSet.removeAll();
+//     
+//    this.mCamera = null;
+//    this.mHero = null;
+//    this.mMiniMap = null;
     
-    this.mCamera = null;
-    this.mHero = null;
-    this.mMiniMap = null;
-    
-    gEngine.Core.cleanUp();
+   // gEngine.Core.cleanUp();
 };
 
 MyGame.prototype.initialize = function () { 
@@ -158,21 +157,24 @@ MyGame.prototype.initialize = function () {
     this.mHero = new Hero(this.kspritesheet_hero);
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
-    
-    //this.mEnemies = new GameObjectSet();
+    this.mHero.registerhasKey(false);
+ 
+ 
     this.mTorchSet = new GameObjectSet();
     
     
     
     var offset = 0;
-//    this.LevelBlock1(offset);//begining this one must be first
-//    offset += 160;
-//    this.LevelBlock2(offset); //large amount of spikes
-//    offset += 160;
-//    this.LevelBlock3(offset); //randomized box placement
-//    offset += 160; 
-//    this.LevelBlock4(offset); //little bit of a maze
-//    offset += 160; 
+    this.LevelBlock1(offset);//begining this one must be first
+    offset += 160;
+    this.LevelBlock3(offset); //randomized box placement
+    offset += 160; 
+    this.LevelBlock2(offset); //large amount of spikes
+    offset += 160;
+    this.LevelBlock3(offset); //randomized box placement
+    offset += 160;         
+    this.LevelBlock4(offset); //little bit of a maze
+    offset += 160; 
     this.LevelBlock10(offset); //entrace to castle
     offset += 160;
     this.LevelBlock8(offset); //empty except for spike platform in the middle
@@ -217,7 +219,7 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
 };
 
 MyGame.prototype.GameLost = function () {
-        var deathScreen = new DeathScreen(); 
+        var deathScreen = new DeathScreen();       
         gEngine.Core.startScene(deathScreen);
 };
 
@@ -239,13 +241,14 @@ MyGame.prototype.update = function () {
         this.mHeroHasKey = true;
         this.mHUDManager.heroHasKey();
         this.mKey.hide();
+        this.mHero.registerhasKey(true);
     }
     
     
     this.mAllPlatforms.updateWithREF(this.mHero);
     this.mHero.update(this.mAllPlatforms,this.mEnemies);
     this.mHUDManager.update(this.mCamera,0,0);
-    //this.mEnemies.update();
+    this.mEnemies.update();
     this.mTorchSet.update();
     
 
@@ -259,7 +262,12 @@ MyGame.prototype.update = function () {
         this.GameWon();
 
     }   
-
+    //var x = this.mHero.getPhysicsComponent().getXform().getXPos();
+    var x = this.mHero.getXform().getXPos();
+    this.mCamera.panTo(x,60);  
+    this.mCamera.update();
+    
+    
     this._physicsSimulation();
     
      
@@ -267,9 +275,6 @@ MyGame.prototype.update = function () {
     
     //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.3 );
     //var y = this.mHero.getPhysicsComponent().getXform().getYPos();
-    var x = this.mHero.getPhysicsComponent().getXform().getXPos();
-    this.mCamera.panTo(x,60);
-    //this.mCamera.clampToBackGround(this.mBg);  
-    this.mCamera.update();
+
      
 };

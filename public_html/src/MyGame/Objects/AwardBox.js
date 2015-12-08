@@ -6,7 +6,7 @@
 
 
 function AwardBox(pixelPosition, spriteTexture, pos, size) {
-    this.mPlatform = new LightRenderable(spriteTexture);
+    this.mPlatform = new SpriteRenderable(spriteTexture);
 
     this.mPlatform.setColor([1, 1, 1, 0]);
     this.mPlatform.getXform().setPosition(pos[0], pos[1]);

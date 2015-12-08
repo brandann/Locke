@@ -66,6 +66,8 @@ function Hero(spriteSheet) {
     this.mKeyCounter = false;
     
     this.powerTick = 0;
+    
+    this.mKey = null;
 }
 gEngine.Core.inheritPrototype(Hero, GameObject);
 
@@ -141,16 +143,16 @@ Hero.prototype.update = function (platforms,enemies) {
 
     }
     
-    var l;
-    for(l = 0; l < this.mPowerUpSet.size(); l++){
-        var obj = this.mPowerUpSet.getObjectAt(l);
-        if(this.collideBottom(obj)){
-
-            var v = this.getPhysicsComponent().getVelocity();
-            v[1] += this.kJumpHeight * 0.05;
-            
-        }
-    }
+//    var l;
+//    for(l = 0; l < this.mPowerUpSet.size(); l++){
+//        var obj = this.mPowerUpSet.getObjectAt(l);
+//        if(this.collideBottom(obj)){
+//
+//            var v = this.getPhysicsComponent().getVelocity();
+//            v[1] += this.kJumpHeight * 0.05;
+//            
+//        }
+//    }
     
     this.mDye.updateAnimation();
     
@@ -172,9 +174,7 @@ Hero.prototype.handlePlatformCollision = function (platforms) {
         switch(platformName) {
             case 'SpikePlatform':
                 if(this.collideBottom(obj)){
-                    var v = this.getPhysicsComponent().getVelocity();
-                    v[1] += 20;
-                    //this.getXform().setYPos(this.getXform().getYPos() + 5);
+                    this.handleEnemyCollision();
                 }
                 break;
             //case n:
@@ -185,6 +185,10 @@ Hero.prototype.handlePlatformCollision = function (platforms) {
         }        
     }
 };
+
+Hero.prototype.registerhasKey = function (key) {
+    this.mKey = key;
+}
 
 Hero.prototype.collideBottom = function (obj) {
   var heroBB = this.getBBox();
@@ -283,7 +287,11 @@ Hero.prototype.updateControls = function () {
 };
 
 Hero.prototype.handleEnemyCollision = function(enemy) {
-    this.getXform().setPosition(20, 20);
+    if(!this.mKey){
+        this.getXform().setPosition(30,70);
+    }else if(this.mKey){
+        this.getXform().setPosition(1500,70);
+    }
     this.mLifeCounter.decByOne();
 };
 

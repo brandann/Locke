@@ -121,8 +121,8 @@ MyGame.prototype.LevelBlock4 = function (offset) {
     
 //    this.mPlatformFactory.newSimplePlatform('stone','objects',
 //                                                [XLayerPos[2],YLayerPos[11]]);
-//    this.mPlatformFactory.newSimplePlatform('stone','objects',
-//                                                [XLayerPos[2],YLayerPos[10]]);
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[14],YLayerPos[4]]);
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[2],YLayerPos[9]]);
                                                 
