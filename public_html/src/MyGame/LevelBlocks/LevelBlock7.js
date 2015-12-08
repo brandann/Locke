@@ -64,12 +64,17 @@ MyGame.prototype.LevelBlock7 = function (offset) {
 //                                                
     }
     
+    
     this.mPlatformFactory.newSimplePlatform('stone','objects',
-                                                [XLayerPos[6],YLayerPos[5]]);
+                                                [XLayerPos[1],YLayerPos[4]]);    
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[2],YLayerPos[4]]);
                                                 
     //this.mPlatformFactory.newSpikePlatform([XLayerPos[7],YLayerPos[4]]);
     //this.mPlatformFactory.newSpikePlatform([XLayerPos[8],YLayerPos[4]]);
-    
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[6],YLayerPos[5]]); 
+                                                
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[7],YLayerPos[5]]);
                                                 
@@ -81,7 +86,11 @@ MyGame.prototype.LevelBlock7 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[12],YLayerPos[6]]);
     this.mPlatformFactory.newSimplePlatform('stone','objects',
-                                                [XLayerPos[13],YLayerPos[6]]);                                                
+                                                [XLayerPos[13],YLayerPos[6]]); 
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[15],YLayerPos[4]]);
+    this.mPlatformFactory.newSimplePlatform('stone','objects',
+                                                [XLayerPos[16],YLayerPos[4]]);                                                
                                                
                                                 
                                                 
