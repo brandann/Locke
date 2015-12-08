@@ -114,8 +114,8 @@ MyGame.prototype.LevelBlock1 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[2],YLayerPos[12]]);                                                 
     
-    this.mTorchSet.addToSet(this._initLights([XLayerPos[1],YLayerPos[6]+2]));
-    this.mTorchSet.addToSet(this._initLights([XLayerPos[12],YLayerPos[7]+2]));
+    //this.mTorchSet.addToSet(this._initLights([XLayerPos[1],YLayerPos[6]+2]));
+    //this.mTorchSet.addToSet(this._initLights([XLayerPos[12],YLayerPos[7]+2]));
     
 
 //     this.mPlatformFactory.newSimplePlatform('middle','greenPlatforms',
@@ -128,7 +128,7 @@ MyGame.prototype.LevelBlock1 = function (offset) {
 //    this.mPlatformFactory.newSpikePlatform([xPos + 20,this.kLayerPos[3]]);
 //    this.mPlatformFactory.newAwardPlatform([60,this.kLayerPos[8]]);
 //    
-    var e = new Enemy();
+    var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
     e.setPaceState(             // set enemy as "not bat"
             [80 + offset, 60],  // initial position
@@ -136,17 +136,17 @@ MyGame.prototype.LevelBlock1 = function (offset) {
             30);                // detection range
     this.mBlobs.addToSet(e);
 //    
-    var e1 = new Enemy();
+    var e1 = new Enemy(this.kSpriteSheetEnemy);
     e1.setHeroObject(this.mHero);
     e1.setChaseState(           // set enemy as bat
             [115 + offset, 75], // initial position
             20);                // detection range
-    this.mBats.addToSet(e1);
+    //this.mBats.addToSet(e1);
     
-    var e = new Enemy();
+    var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
     e.setChaseState(            // set enemy as bat
-            [40 + offset, 95],  // initial position
+            [50 + offset, 95],  // initial position
             20);                // detection range
     this.mBats.addToSet(e); 
 

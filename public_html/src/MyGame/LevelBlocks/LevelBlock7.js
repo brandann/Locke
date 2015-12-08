@@ -85,7 +85,87 @@ MyGame.prototype.LevelBlock7 = function (offset) {
                                                 [XLayerPos[16],YLayerPos[4]]);                                                
                                                
                                                 
-    var e = new Enemy();
+                                      
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[11],YLayerPos[4]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[12],YLayerPos[4]]);
+//                                                
+//   this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[9],YLayerPos[5]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[10],YLayerPos[5]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[11],YLayerPos[5]]);
+//                                                
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[10],YLayerPos[6]]);
+//                                                
+//    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]);                                            
+//                                                
+//    this.mPlatformFactory.newSimplePlatform('leftGreen','greenPlatforms',
+//                                                [XLayerPos[8],YLayerPos[5]]);
+//    this.mPlatformFactory.newSimplePlatform('rightGreen','greenPlatforms',
+//                                                [XLayerPos[9],YLayerPos[5]]); 
+//                                                
+//                                                
+//    this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
+//                                                [XLayerPos[7],YLayerPos[3]]);
+//    this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
+//                                                [XLayerPos[8],YLayerPos[3]]);
+//    this.mPlatformFactory.newSimpleTexture('dirt','greenPlatforms',
+//                                                [XLayerPos[9],YLayerPos[3]]);
+//                                                
+//                                                
+//    this.mPlatformFactory.newSimplePlatform('plainBox','objects',
+//                                                [XLayerPos[11],YLayerPos[7]]);
+//    this.mPlatformFactory.newSimplePlatform('plainBox','objects',
+//                                                [XLayerPos[12],YLayerPos[7]]);
+//    this.mPlatformFactory.newSimplePlatform('plainBox','objects',
+//                                                [XLayerPos[13],YLayerPos[7]]);
+//    this.mPlatformFactory.newAwardPlatform([XLayerPos[14],YLayerPos[7]]);
+//    
+//    
+//    this.mPlatformFactory.newSimplePlatform('lock','objects',
+//                                                [XLayerPos[1],YLayerPos[4]]);                                                                                                
+//    this.mPlatformFactory.newSimplePlatform('lock','objects',
+//                                                [XLayerPos[1],YLayerPos[5]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[1],YLayerPos[6]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[1],YLayerPos[7]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[1],YLayerPos[8]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[1],YLayerPos[9]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[1],YLayerPos[10]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[1],YLayerPos[11]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[2],YLayerPos[10]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[2],YLayerPos[11]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[1],YLayerPos[12]]);
+//    this.mPlatformFactory.newSimplePlatform('stone','objects',
+//                                                [XLayerPos[2],YLayerPos[12]]);                                                 
+//    
+    //this.mTorchSet.addToSet(this._initLights([XLayerPos[1],YLayerPos[6]+2]));
+    //this.mTorchSet.addToSet(this._initLights([XLayerPos[12],YLayerPos[7]+2]));
+    
+
+//     this.mPlatformFactory.newSimplePlatform('middle','greenPlatforms',
+//                                                [XLayerPos[1],YLayerPos[4]]);
+    
+//    this.mPlatformFactory.newBoxPlatform('!withBorder','objects',[10,this.kLayerPos[8]]);
+//    this.mPlatformFactory.newBoxPlatform('plainBox','objects',[20,this.kLayerPos[8]]);
+//    this.mPlatformFactory.newBoxPlatform('plainBox','objects',[30,this.kLayerPos[8]]);
+//    this.mPlatformFactory.newSpikePlatform([xPos + 10,this.kLayerPos[3]]);
+//    this.mPlatformFactory.newSpikePlatform([xPos + 20,this.kLayerPos[3]]);
+//    this.mPlatformFactory.newAwardPlatform([60,this.kLayerPos[8]]);
+//    
+    var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
     e.setPaceState(             // set enemy as "not bat"
             [80 + offset, 60],  // initial position
@@ -93,14 +173,14 @@ MyGame.prototype.LevelBlock7 = function (offset) {
             30);                // detection range
     this.mBlobs.addToSet(e);
 //    
-    var e1 = new Enemy();
+    var e1 = new Enemy(this.kSpriteSheetEnemy);
     e1.setHeroObject(this.mHero);
     e1.setChaseState(           // set enemy as bat
             [115 + offset, 75], // initial position
             20);                // detection range
     this.mBats.addToSet(e1);
     
-    var e = new Enemy();
+    var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
     e.setChaseState(            // set enemy as bat
             [40 + offset, 95],  // initial position

@@ -20,7 +20,8 @@ function MyGame() {
     this.kspritesheet_hero = "assets/HeroAnimation.png";
     this.kspritesheet_torch = "assets/Torch.png";
     this.kspritesheet_castleBG = "assets/bg_castle.png";
-    this.kSpriteSheetBat = "assets/BatAnimation.png";
+    this.kSpriteSheetEnemy = "assets/EnemyAnimation.png";
+    this.kAudioSource = "assets/Audio/happy_adveture.mp3";
     
     this.kLayerPos = [];
     
@@ -63,6 +64,8 @@ MyGame.prototype.loadScene = function () {
     gEngine.Textures.loadTexture(this.kspritesheet_hero);
     gEngine.Textures.loadTexture(this.kspritesheet_torch);
     gEngine.Textures.loadTexture(this.kspritesheet_castleBG);
+    gEngine.Textures.loadTexture(this.kSpriteSheetEnemy);
+    gEngine.AudioClips.loadAudio(this.kAudioSource);
 };
 
 MyGame.prototype.unloadScene = function () {
@@ -74,6 +77,8 @@ MyGame.prototype.unloadScene = function () {
     gEngine.Textures.unloadTexture(this.kspritesheet_hero);
     gEngine.Textures.unloadTexture(this.kspritesheet_torch);
     gEngine.Textures.unloadTexture(this.kspritesheet_castleBG); 
+    gEngine.Textures.unloadTexture(this.kSpriteSheetEnemy); 
+    gEngine.AudioClips.stopBackgroundAudio();
     
     this.mAllPlatforms.removeAll();
     this.mBats.removeAll();
@@ -96,7 +101,8 @@ MyGame.prototype.unloadScene = function () {
 MyGame.prototype.initialize = function () { 
     
 
-    
+     gEngine.AudioClips.playBackgroundAudio(this.kAudioSource);
+     
     //create game object sets
     this.mAllPlatforms = new GameObjectSet();
     this.mTextures = new GameObjectSet();
@@ -152,7 +158,7 @@ MyGame.prototype.initialize = function () {
     
  
  //set up Lights----------------------------------------------------------------
-    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+    gEngine.DefaultResources.setGlobalAmbientIntensity(1);
 
  //initialize game world--------------------------------------------------------
 
@@ -193,6 +199,12 @@ MyGame.prototype.initialize = function () {
 //    this.LevelBlock8(offset); //empty except for spike platform in the middle
 //    offset += 160;    
     this.LevelBlock9(offset); //final level block with key
+    
+    this.initAllTorches();
+    
+    //directional light
+    
+    //spotlight
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more
@@ -225,7 +237,7 @@ MyGame.prototype._drawGameWorld = function (aCamera) {
     this.mHero.draw(aCamera);
    
     this.mTorchSet.draw(aCamera);
-    this.mKey.draw(aCamera);
+    if(this.mKey !== null) {this.mKey.draw(aCamera);}
 };
 
 MyGame.prototype.GameLost = function () {
@@ -269,6 +281,7 @@ MyGame.prototype.update = function () {
     this.mHUDManager.update(this.mCamera,0,0);
     this.mBats.update();
     this.mBlobs.update();
+    this.mTorchSet.update();
     
 
     

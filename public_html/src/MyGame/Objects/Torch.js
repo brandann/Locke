@@ -4,6 +4,18 @@
  * and open the template in the editor.
  */
 
+MyGame.prototype.initAllTorches = function() {
+    var i = 0;
+    for(i = 0; i < 12; i++) {
+        // make all torches
+        
+        this.mTorchSet.addToSet(this._initLights([
+            1200 + (i * 100),
+            57
+        ]));
+    }
+};
+
 MyGame.prototype._initLights = function(pos) {
     var l = this._createALight(Light.eLightType.ePointLight,
             [pos[0], pos[1], 0],         // position
@@ -15,13 +27,32 @@ MyGame.prototype._initLights = function(pos) {
                             1                  // drop off
             );
     
-    
-    //this.mBg.addLight(l); 
+    //BACKGROUNDS
     var i = 0;
     for(i = 0; i < this.mBackGrouds.size(); i++){
         this.mBackGrouds.getObjectAt(i).addLight(l);
     }
+    
+    //HERO
     this.mHero.getRenderable().addLight(l);
+    
+    //blobs 
+    var i = 0;
+    for(i = 0; i < this.mBlobs.size(); i++){
+        //this.mBlobs.addLight(l);
+    }
+    
+    //bats 
+    var i = 0;
+    for(i = 0; i < this.mBats.size(); i++){
+        //this.mBats.addLight(l);
+    }
+    
+    //bats 
+    var i = 0;
+    for(i = 0; i < this.mAllPlatforms.size(); i++){
+        //this.mAllPlatforms.addLight(l);
+    }
     
     var torch = new Torch(pos, this.kspritesheet_torch);
     torch.addLight(l);

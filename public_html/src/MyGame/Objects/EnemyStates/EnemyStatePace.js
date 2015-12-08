@@ -12,8 +12,6 @@ Enemy.prototype.setPaceState = function(initPos, dist, range) {
     var r = new RigidRectangle(this.getXform(), 5, 5);
     r.setMass(0.7);  // less dense than Minions
     r.setRestitution(0.3);
-    r.setColor([1, 1, 0, 1]);
-    r.setDrawBounds(true);
     this.setPhysicsComponent(r);
     
     this.mInitialPosition = initPos;
@@ -28,6 +26,11 @@ Enemy.prototype.setPaceState = function(initPos, dist, range) {
     this._updateState(this.updatePace);
     
     this.mRange = range;
+    
+    this.mEnemy.getXform().setSize(8.38, 5);
+    this.mEnemy.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
+    this.mEnemy.setAnimationSpeed(15); 
+    this.mEnemy.setSpriteSequence(68, 57, 57, 34, 2, 0);
 };
 
 Enemy.prototype.updatePace = function () {
@@ -43,15 +46,24 @@ Enemy.prototype.updatePace = function () {
         else { this.mDir = -1; }                                                // chase left
         this.mSpeedVel = 1.75;                                                  // increase speed
         if(Math.abs(heroXPos - enemyXPos) < 0.11) {this.mSpeedVel = 0;}         // if the enemy is under the hero stop pacing
-        this.mEnemy.setColor([1, 0, 0, 1]);                                     // show red on chase
+        this.mEnemy.setColor([1, 0, 0, .2]);                                     // show red on chase
     }
     else {
-        if (distFromInitial > this.mPaceDistance) {                                              // reached patrol bounds
-            if(enemyXPos < this.mInitialPosition[0]) { this.mDir = 1; }         // partol right
-            else { this.mDir = -1;}                                             // patrol left
+        if (distFromInitial > this.mPaceDistance) {                             // reached patrol bounds
+            if(enemyXPos < this.mInitialPosition[0]) {                          // partol right
+                this.mDir = 1;
+                this.mEnemy.setSpriteSequence(68, 57, 57, 34, 2, 0);
+            }
+            else {                                                              // patrol left
+                this.mDir = -1;
+                this.mEnemy.setSpriteSequence(34, 57, 57, 34, 2, 0);
+            }
         }
         this.mSpeedVel = 1;                                                     // set speed to normal
-        this.mEnemy.setColor([1, 0, 1, 1]);                                     // show pink on patrol
+        this.mEnemy.setColor([1, 0, 1, 0]);                                     // show pink on patrol
     }
+    
     xform.incXPosBy(this.kXDelta * this.mDir * this.mSpeedVel);                 // change position
+    
+    this.mEnemy.updateAnimation();
 };

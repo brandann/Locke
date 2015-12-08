@@ -12,22 +12,76 @@ Enemy.prototype.setChaseState = function(initPos, range) {
     
     this.getXform().setPosition(initPos[0], initPos[1]);                        // set the GameObject position to the initPos
     
+    this.mEnemy.getXform().setSize(-10, 5);
     this.mState = null;                                                         // null the mState, this is just percautionary
     this.mSpeedVel = 0.15;                                                      // speed of the enemy when moving
     
     this._updateState(this.updateChase);                                        // set the update state to this state
     
-    this.mRange = 40;
+    this.mRange = 45;
+    
+    this.mEnemy.getXform().setSize(20, 10);
+    this.mEnemy.setAnimationType(SpriteAnimateRenderable.eAnimationType.eAnimateLeft);
+    this.mEnemy.setAnimationSpeed(20); 
+    this.mEnemy.setSpriteSequence(128, 0, 88, 47, 2, 0);
+    
+    this.mCenter = new InterpolateVec2(initPos, 300, 0.015);
+    this.mFound = false;
+    this.mLost = false;
+    this.mStartPosition = initPos;
+    this.mCount = 0;
 };
 
 Enemy.prototype.updateChase = function () {
     
     var distFromHero = vec2.distance(this.getXform().getPosition(), this.mHero.getXform().getPosition());
-    if(distFromHero < this.mRange) {                                            // check hero distance firsrt
-        this.rotateObjPointTo(this.mHero.getXform().getPosition(), 0.05);       // turn the enemy torwards the hero
-        this.setSpeed(this.mSpeedVel);                                          // set the speed to make the enemy move torwards hero
+    if(this.mLost) {
+        this.mCenter.updateInterpolation();
+        var v = this.mCenter.getValue();
+        this.getXform().setPosition(v[0], v[1]);
     }
-    else if(this.getSpeed() !== 0) {
-        this.setSpeed(0.0);                                                     // set the speed to 0 to stop movement
+    else if(distFromHero < this.mRange && !(this.mFound)) {
+        this.mFound = true;
+        this.mCenter.setFinalValue(this.mHero.getXform().getPosition());
+        this.mCount = 298;
     }
+    else if(this.mFound && (distFromHero > this.mRange)) {
+        this.lostHero();
+    }
+    else if(this.mFound) {
+        this.mCenter.updateInterpolation();
+        var newPos = this.mCenter.getValue();
+        this.getXform().setPosition(newPos[0], newPos[1]);
+        if(this.mCount-- <= 0) { 
+            this.lostHero();
+        }
+    }
+    
+    // get width sign (-1, 1)
+    var w = 0;
+    if(this.getXform().getWidth() > 0) { w = 1;}
+    else {w = -1;}
+    
+    // get direction to hero
+    var hdx = this.getXform().getXPos() - this.mHero.getXform().getXPos();
+    var hd;
+    if(hdx > 0) { hd = 1;}
+    else {hd = -1;}
+    
+    var sum = hd + w;
+    if(sum === 0) { // art not in sync with direction
+        this.getXform().setWidth(this.getXform().getWidth() * -1);
+    }
+    
+    this.mEnemy.updateAnimation();
 };
+
+Enemy.prototype.lostHero = function() {
+    this.mFound = false;
+    this.mEnemy.setSpriteSequence(128, 176, 88, 47, 1, 0);
+    this.mLost = true;
+    this.mCenter = new InterpolateVec2(this.getXform().getPosition(), 300, 0.01);
+    var v = [this.mStartPosition[0], this.mStartPosition[1] - 200];
+    this.mCenter.setFinalValue(v);
+    this.getXform().setHeight(this.getXform().getHeight() * -1);
+}

@@ -112,16 +112,7 @@ Hero.prototype.changeAnimation = function () {
                     this.mDye.setSpriteSequence(420, 0, 67,92, 3, 3);
                 }
                 break;
-//            case Hero.state.Idle:
-//                if(this.mDir === Hero.dir.Right){
-//                    //[512,0,67,92,1,0]
-//                    this.mDye.setSpriteSequence(512, 0, 67, 92, 1, 0);
-//                }
-//                else if (this.mDir === Hero.dir.Left){
-//                    //[420,0,67,92,1,0]
-//                    this.mDye.setSpriteSequence(420, 0, 67,92, 1, 0);
-//                }                
-                break;
+
             case Hero.state.Jumping:
                 if(this.mDir === Hero.dir.Right){
                     //[512,0,67,92,1,0]

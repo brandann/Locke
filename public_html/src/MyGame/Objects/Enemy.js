@@ -11,16 +11,14 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Enemy(sprite) {
+function Enemy(spriteSheet) {
     
-    this.mEnemy = new Renderable();
-    this.mEnemy.setColor([1, 0, 1, 1]);
-    this.mEnemy.getXform().setPosition(-30, 10);
-    this.mEnemy.getXform().setSize(5, 5);
+    this.mEnemy = new LightRenderable(spriteSheet);
+    this.mEnemy.getXform().setPosition(0, 0);
+    this.mEnemy.getXform().setSize(10, 5);
 
     GameObject.call(this, this.mEnemy);
 
-    
     this.mHero = null;
     
     this.mRange = 30;
@@ -56,6 +54,7 @@ Enemy.prototype._heroCollision = function () {
 // set the function to be called. fancy Javascript right here.
 Enemy.prototype._updateState = function (func) {
     this.mState = func;
+    
 };
 
 // set the hero object, each update state uses the hero

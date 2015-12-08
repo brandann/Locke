@@ -92,7 +92,7 @@ MyGame.prototype.LevelBlock2 = function (offset) {
                                                 
     this.mPlatformFactory.newAwardPlatform([XLayerPos[10],YLayerPos[10]]);                                                
 
-    this.mTorchSet.addToSet(this._initLights([XLayerPos[4],YLayerPos[5]+2]));
+    //this.mTorchSet.addToSet(this._initLights([XLayerPos[4],YLayerPos[5]+2]));
 };
 
 
