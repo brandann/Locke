@@ -149,7 +149,7 @@ MyGame.prototype.initialize = function () {
     
  
  //set up Lights----------------------------------------------------------------
-    gEngine.DefaultResources.setGlobalAmbientIntensity(3);
+    gEngine.DefaultResources.setGlobalAmbientIntensity(1);
 
  //initialize game world--------------------------------------------------------
 
@@ -190,6 +190,12 @@ MyGame.prototype.initialize = function () {
     this.LevelBlock8(offset); //empty except for spike platform in the middle
     offset += 160;    
     this.LevelBlock9(offset); //final level block with key
+    
+    this.initAllTorches();
+    
+    //directional light
+    
+    //spotlight
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more

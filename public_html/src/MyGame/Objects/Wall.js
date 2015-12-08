@@ -10,7 +10,7 @@
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
 function Wall(texture, atX, atY) {
-    this.mWall = new TextureRenderable(texture);
+    this.mWall = new LightRenderable(texture);
 
     this.mWall.setColor([1, 1, 1, 0]);
     this.mWall.getXform().setPosition(atX, atY);

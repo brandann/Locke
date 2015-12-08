@@ -114,8 +114,8 @@ MyGame.prototype.LevelBlock1 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[2],YLayerPos[12]]);                                                 
     
-    this.mTorchSet.addToSet(this._initLights([XLayerPos[1],YLayerPos[6]+2]));
-    this.mTorchSet.addToSet(this._initLights([XLayerPos[12],YLayerPos[7]+2]));
+    //this.mTorchSet.addToSet(this._initLights([XLayerPos[1],YLayerPos[6]+2]));
+    //this.mTorchSet.addToSet(this._initLights([XLayerPos[12],YLayerPos[7]+2]));
     
 
 //     this.mPlatformFactory.newSimplePlatform('middle','greenPlatforms',
