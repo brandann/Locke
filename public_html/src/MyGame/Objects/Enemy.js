@@ -48,6 +48,9 @@ Enemy.prototype._heroCollision = function () {
     if(status){ 
         if(heroBBox.minY() > this.getXform().getYPos()){
             this.getXform().setPosition(-100,-100);
+            var v = this.mHero.getPhysicsComponent().getVelocity();
+            v[1] += 30;
+            
         }
         else {
             this.mHero.handleEnemyCollision(this);

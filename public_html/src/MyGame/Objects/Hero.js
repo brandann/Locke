@@ -146,7 +146,7 @@ Hero.prototype.updateControls = function () {
            v[0] -= this.kXDelta;
 
         }
-
+     
         if(this.mDir === Hero.dir.Left && this.mState === Hero.state.Walking){
             this.Update = true;
         }
@@ -160,10 +160,11 @@ Hero.prototype.updateControls = function () {
             v[0] += this.kXDelta;
         }
 
+        this.changeAnimation();
         if(this.mDir === Hero.dir.Right && this.mState === Hero.state.Walking){
             this.Update = true;
         }        
-        this.changeAnimation();  
+         
         this.mDir = Hero.dir.Right;
         controlsPressed = true;
     }
@@ -210,7 +211,6 @@ Hero.prototype.updateControls = function () {
             }
             if(this.mNumJump === 1){
                 this.changeAnimation();
-                this.mPrevState = Hero.state.Walking;
                 
                 if(v[1] > 15 && v[1] < 30){
                     
