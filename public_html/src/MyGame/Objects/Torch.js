@@ -10,7 +10,7 @@ MyGame.prototype.initAllTorches = function() {
         // make all torches
         
         this.mTorchSet.addToSet(this._initLights([
-            1200 + (i * 100),
+            480 + 160 + 100 + i * 100, //1200 + (i * 100),
             57
         ]));
     }
@@ -29,30 +29,15 @@ MyGame.prototype._initLights = function(pos) {
     
     //BACKGROUNDS
     var i = 0;
-    for(i = 0; i < this.mBackGrouds.size(); i++){
+    for(; i < this.mBackGrouds.size(); i++){
         this.mBackGrouds.getObjectAt(i).addLight(l);
     }
     
-    //HERO
     this.mHero.getRenderable().addLight(l);
-    
-    //blobs 
-    var i = 0;
-    for(i = 0; i < this.mBlobs.size(); i++){
-        //this.mBlobs.addLight(l);
-    }
-    
-    //bats 
-    var i = 0;
-    for(i = 0; i < this.mBats.size(); i++){
-        //this.mBats.addLight(l);
-    }
-    
-    //bats 
-    var i = 0;
-    for(i = 0; i < this.mAllPlatforms.size(); i++){
-        //this.mAllPlatforms.addLight(l);
-    }
+    this.mBlobs.addLight(l);
+    this.mBats.addLight(l);
+    this.mAllPlatforms.addLight(l);
+    this.mTextures.addLight(l);
     
     var torch = new Torch(pos, this.kspritesheet_torch);
     torch.addLight(l);

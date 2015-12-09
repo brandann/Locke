@@ -43,10 +43,15 @@ Enemy.prototype._heroCollision = function () {
     
     var enemyBBox = this.getBBox();
     var heroBBox = this.mHero.getBBox();
-    
-    if(enemyBBox.intersectsBound(heroBBox)){ 
-        this.mEnemy.setColor([1, 1, 1, 1]);                                     // show white on collision
-        this.mHero.handleEnemyCollision(this);
+    var status = enemyBBox.intersectsBound(heroBBox);
+
+    if(status){ 
+        if(heroBBox.minY() > this.getXform().getYPos()){
+            this.getXform().setPosition(-100,-100);
+        }
+        else {
+            this.mHero.handleEnemyCollision(this);
+        }
     }
 };
 

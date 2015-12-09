@@ -177,32 +177,75 @@ MyGame.prototype.initialize = function () {
     
     var offset = 0;
     this.LevelBlock1(offset);//begining this one must be first
-//    offset += 160;
-//    this.LevelBlock2(offset); //large amount of spikes
-//    offset += 160;
-//    this.LevelBlock3(offset); //randomized box placement
-//    offset += 160; 
-//    this.LevelBlock3(offset); //randomized box placement
-//    offset += 160; 
-//    this.LevelBlock2(offset); //large amount of spikes
-//    offset += 160;
-//    this.LevelBlock3(offset); //randomized box placement
-//    offset += 160;         
-//    this.LevelBlock4(offset); //little bit of a maze
-//    offset += 160; 
-//    this.LevelBlock10(offset); //entrace to castle
-//    offset += 160;
-//    this.LevelBlock8(offset); //empty except for spike platform in the middle
-//    offset += 160;
-//    this.LevelBlock7(offset); //empty with L platform
-//    offset += 160;
-//    this.LevelBlock8(offset); //empty except for spike platform in the middle
-//    offset += 160;    
-//    this.LevelBlock9(offset); //final level block with key
+    offset += 160;
+    this.LevelBlock2(offset); //large amount of spikes
+    offset += 160;
+    this.LevelBlock3(offset); //randomized box placement
+    //offset += 160; 
+    //this.LevelBlock3(offset); //randomized box placement
+    //offset += 160; 
+    //this.LevelBlock2(offset); //large amount of spikes
+    //offset += 160;
+    //this.LevelBlock3(offset); //randomized box placement
+    offset += 160;         
+    this.LevelBlock4(offset); //little bit of a maze
     
+    //directional light
+    var l2 = this._createALight(Light.eLightType.eDirectionalLight,
+            [1140, 60, 0],         // position
+            [-1, 0, 0],          // Direction 
+            [1, 1, 1, 1],  // some color
+            0, 1200,               // near and far distances
+            0, 0,            // inner and outer cones
+                    .5,                   // intensity
+                            1                  // drop off
+            );
+    
+    var i = 0;
+    for(i = 0; i < this.mBackGrouds.size(); i++){
+        this.mBackGrouds.getObjectAt(i).addLight(l2);
+    }
+    
+    this.mHero.getRenderable().addLight(l2);
+    this.mBlobs.addLight(l2);
+    this.mBats.addLight(l2);
+    this.mAllPlatforms.addLight(l2);
+    this.mTextures.addLight(l2);
+    
+    offset += 160; 
+    this.LevelBlock10(offset); //entrace to castle
+    offset += 160;
+    this.LevelBlock8(offset); //empty except for spike platform in the middle
+    offset += 160;
+    this.LevelBlock7(offset); //empty with L platform
+    offset += 160;
+    this.LevelBlock8(offset); //empty except for spike platform in the middle
+    offset += 160;    
+    this.LevelBlock9(offset); //final level block with key
+   
     this.initAllTorches();
     
     //directional light
+    var l = this._createALight(Light.eLightType.eSpotLight,
+            [1120, 60, 0],         // position
+            [1, 0, 0],          // Direction 
+            [1, 1, 1, 1],  // some color
+            0, 150,               // near and far distances
+            30, 60,            // inner and outer cones
+                    .5,                   // intensity
+                            1                  // drop off
+            );
+    
+    for(; i < this.mBackGrouds.size(); i++){
+        this.mBackGrouds.getObjectAt(i).addLight(l);
+    }
+    
+    
+    this.mHero.getRenderable().addLight(l);
+    this.mBlobs.addLight(l);
+    this.mBats.addLight(l);
+    this.mAllPlatforms.addLight(l);
+    this.mTextures.addLight(l);
     
     //spotlight
 };
@@ -273,7 +316,6 @@ MyGame.prototype.update = function () {
 
         }
     }
-    
     
     
     this.mAllPlatforms.updateWithREF(this.mHero);
