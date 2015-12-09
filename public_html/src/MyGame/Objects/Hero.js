@@ -160,11 +160,11 @@ Hero.prototype.updateControls = function () {
             v[0] += this.kXDelta;
         }
 
-        this.changeAnimation();
+        
         if(this.mDir === Hero.dir.Right && this.mState === Hero.state.Walking){
             this.Update = true;
         }        
-         
+        this.changeAnimation();
         this.mDir = Hero.dir.Right;
         controlsPressed = true;
     }
