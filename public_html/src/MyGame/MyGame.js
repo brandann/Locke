@@ -181,12 +181,12 @@ MyGame.prototype.initialize = function () {
     this.LevelBlock2(offset); //large amount of spikes
     offset += 160;
     this.LevelBlock3(offset); //randomized box placement
-    //offset += 160; 
-    //this.LevelBlock3(offset); //randomized box placement
-    //offset += 160; 
-    //this.LevelBlock2(offset); //large amount of spikes
-    //offset += 160;
-    //this.LevelBlock3(offset); //randomized box placement
+    offset += 160; 
+    this.LevelBlock3(offset); //randomized box placement
+    offset += 160; 
+    this.LevelBlock2(offset); //large amount of spikes
+    offset += 160;
+    this.LevelBlock3(offset); //randomized box placement
     offset += 160;         
     this.LevelBlock4(offset); //little bit of a maze
     
@@ -224,30 +224,6 @@ MyGame.prototype.initialize = function () {
     this.LevelBlock9(offset); //final level block with key
    
     this.initAllTorches();
-    
-    //directional light
-    var l = this._createALight(Light.eLightType.eSpotLight,
-            [1120, 60, 0],         // position
-            [1, 0, 0],          // Direction 
-            [1, 1, 1, 1],  // some color
-            0, 150,               // near and far distances
-            30, 60,            // inner and outer cones
-                    .5,                   // intensity
-                            1                  // drop off
-            );
-    
-    for(; i < this.mBackGrouds.size(); i++){
-        this.mBackGrouds.getObjectAt(i).addLight(l);
-    }
-    
-    
-    this.mHero.getRenderable().addLight(l);
-    this.mBlobs.addLight(l);
-    this.mBats.addLight(l);
-    this.mAllPlatforms.addLight(l);
-    this.mTextures.addLight(l);
-    
-    //spotlight
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more

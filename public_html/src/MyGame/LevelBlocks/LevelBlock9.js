@@ -84,7 +84,20 @@ MyGame.prototype.LevelBlock9 = function (offset) {
     this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[10],YLayerPos[6]]);
                             
-    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]); 
+    this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]);
+    //this.mKey.getRenderable().addLight(l);
+    //directional light
+    var l = this._createALight(Light.eLightType.eSpotLight,
+            [XLayerPos[10], YLayerPos[8]+10, 10],            // Right minion position
+            [0,  -1, -1],     // direction
+            [0.5, 0.5, 0.5, .2],     // color
+            100, 100,                  // near and far distances
+            1.65, 1.7,               // inner outter angles (in radius)
+            .3,                     // intensity
+            1.2                     // drop off
+            );
+    //this.mKey.addLight(l);
+    bg.addLight(l);
     
    this.mPlatformFactory.newSimplePlatform('stone','objects',
                                                 [XLayerPos[16],YLayerPos[3]]);
