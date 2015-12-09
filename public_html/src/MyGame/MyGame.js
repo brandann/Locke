@@ -208,7 +208,6 @@ MyGame.prototype.initialize = function () {
     }
     
     this.mHero.getRenderable().addLight(l2);
-    
     this.mBlobs.addLight(l2);
     this.mBats.addLight(l2);
     this.mAllPlatforms.addLight(l2);
@@ -241,6 +240,13 @@ MyGame.prototype.initialize = function () {
     for(; i < this.mBackGrouds.size(); i++){
         this.mBackGrouds.getObjectAt(i).addLight(l);
     }
+    
+    
+    this.mHero.getRenderable().addLight(l);
+    this.mBlobs.addLight(l);
+    this.mBats.addLight(l);
+    this.mAllPlatforms.addLight(l);
+    this.mTextures.addLight(l);
     
     //spotlight
 };
