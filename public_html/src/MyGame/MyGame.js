@@ -176,7 +176,6 @@ MyGame.prototype.initialize = function () {
     
     
     var offset = 0;
-    
     this.LevelBlock1(offset);//begining this one must be first
     offset += 160;
     this.LevelBlock2(offset); //large amount of spikes
@@ -223,7 +222,7 @@ MyGame.prototype.initialize = function () {
     this.LevelBlock8(offset); //empty except for spike platform in the middle
     offset += 160;    
     this.LevelBlock9(offset); //final level block with key
-    
+   
     this.initAllTorches();
     
     //directional light

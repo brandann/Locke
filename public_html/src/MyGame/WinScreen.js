@@ -75,7 +75,7 @@ WinScreen.prototype.initialize = function () {
     this.mCamera.setBackgroundColor([0.8, 0.8, 0.8, 1]); 
    
    
-    this.mMsg = new FontRenderable("You Saved the Pincess!!");
+    this.mMsg = new FontRenderable("You Saved the Princess!!");
     this.mMsg.setColor([0, 0, 0, 1]);
     this.mMsg.getXform().setSize(100,10);
     this.mMsg.getXform().setPosition(40,80);
