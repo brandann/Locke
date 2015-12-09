@@ -69,6 +69,7 @@ function Hero(spriteSheet) {
     //Hero States
     this.mState = Hero.state.Walking;
     this.mDir = Hero.dir.Right;
+    this.mPrevState = Hero.state.Walking;
     this.mNumJump = 0;
     
     
@@ -149,10 +150,8 @@ Hero.prototype.updateControls = function () {
         if(this.mDir === Hero.dir.Left && this.mState === Hero.state.Walking){
             this.Update = true;
         }
-        this.changeAnimation();  
- 
-        this.mDir = Hero.dir.Left;
-        
+        this.changeAnimation();
+        this.mDir = Hero.dir.Left;        
         controlsPressed = true;
 
     }
@@ -160,16 +159,10 @@ Hero.prototype.updateControls = function () {
         if(Math.abs(v[0]) <= this.kMaxVelocity){
             v[0] += this.kXDelta;
         }
-        
-      
 
-
-       
-       
         if(this.mDir === Hero.dir.Right && this.mState === Hero.state.Walking){
             this.Update = true;
-        }
-                 
+        }        
         this.changeAnimation();  
         this.mDir = Hero.dir.Right;
         controlsPressed = true;
@@ -207,15 +200,20 @@ Hero.prototype.updateControls = function () {
 
     
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Space)) {
-        controlsPressed = true;
+      
         if(v[1] < 20){
             if(this.mNumJump === 0){
+                this.mPrevState = Hero.state.Walking;
                 v[1] += this.kJumpHeight;
                 this.mState = Hero.state.Jumping;
                 this.mNumJump++;
             }
             if(this.mNumJump === 1){
+                this.changeAnimation();
+                this.mPrevState = Hero.state.Walking;
+                
                 if(v[1] > 15 && v[1] < 30){
+                    
                     v[1] += this.kJumpHeight * 0.50;
                     this.mState = Hero.state.Jumping;
                     this.mNumJump++;                
@@ -241,7 +239,7 @@ Hero.prototype.draw = function (aCamera) {
     this.mPowerUpSet.draw(aCamera);
 };
 
-Hero.prototype.update = function (platforms,enemies) {
+Hero.prototype.update = function (platforms,enemies,bats) {
     // must call super class update
     GameObject.prototype.update.call(this);
 
@@ -290,6 +288,17 @@ Hero.prototype.update = function (platforms,enemies) {
                    // this.mPowerUpSet.removeFromSet(obj);
                     obj.explode();
                 }
+            }  
+            var p;
+            for(p = 0; p< bats.size() ;p++){
+                
+                var bat = bats.getObjectAt(p);
+                var batBB = bat.getBBox();
+
+                if(objBB.intersectsBound(batBB)){
+                    bats.removeFromSet(bat);
+                    obj.explode();
+                }
             }            
         }
 
@@ -313,7 +322,11 @@ Hero.prototype.handlePlatformCollision = function (platforms) {
         
         if(this.collideBottom(obj) && this.mState === Hero.state.Jumping){
             this.mState = Hero.state.Walking;
-            this.changeAnimation();
+            this.mPrevState = Hero.state.Jumping;
+            //this.Update = false;
+            //this.changeAnimation();
+            this.Update = true;
+            
             this.mNumJump = 0;
         }
         
@@ -334,7 +347,7 @@ Hero.prototype.handlePlatformCollision = function (platforms) {
 
 Hero.prototype.registerhasKey = function (key) {
     this.mKey = key;
-}
+};
 
 Hero.prototype.collideBottom = function (obj) {
   var heroBB = this.getBBox();
@@ -356,7 +369,7 @@ Hero.prototype.handleEnemyCollision = function(enemy) {
     }
 
     
-    this.mLifeCounter.decByOne();
+    //this.mLifeCounter.decByOne();
 };
 
 Hero.prototype.setLifeCounter = function(life) {
