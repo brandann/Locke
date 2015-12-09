@@ -182,22 +182,22 @@ MyGame.prototype.initialize = function () {
     this.LevelBlock2(offset); //large amount of spikes
     offset += 160;
     this.LevelBlock3(offset); //randomized box placement
-    offset += 160; 
-    this.LevelBlock3(offset); //randomized box placement
-    offset += 160; 
-    this.LevelBlock2(offset); //large amount of spikes
-    offset += 160;
-    this.LevelBlock3(offset); //randomized box placement
+    //offset += 160; 
+    //this.LevelBlock3(offset); //randomized box placement
+    //offset += 160; 
+    //this.LevelBlock2(offset); //large amount of spikes
+    //offset += 160;
+    //this.LevelBlock3(offset); //randomized box placement
     offset += 160;         
     this.LevelBlock4(offset); //little bit of a maze
     
     //directional light
-    var l2 = this._createALight(Light.eLightType.eSpotLight,
+    var l2 = this._createALight(Light.eLightType.eDirectionalLight,
             [1140, 60, 0],         // position
             [-1, 0, 0],          // Direction 
             [1, 1, 1, 1],  // some color
             0, 1200,               // near and far distances
-            30, 60,            // inner and outer cones
+            0, 0,            // inner and outer cones
                     .5,                   // intensity
                             1                  // drop off
             );
@@ -207,6 +207,12 @@ MyGame.prototype.initialize = function () {
         this.mBackGrouds.getObjectAt(i).addLight(l2);
     }
     
+    this.mHero.getRenderable().addLight(l2);
+    
+    this.mBlobs.addLight(l2);
+    this.mBats.addLight(l2);
+    this.mAllPlatforms.addLight(l2);
+    this.mTextures.addLight(l2);
     
     offset += 160; 
     this.LevelBlock10(offset); //entrace to castle
@@ -305,7 +311,6 @@ MyGame.prototype.update = function () {
 
         }
     }
-    
     
     
     this.mAllPlatforms.updateWithREF(this.mHero);

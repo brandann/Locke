@@ -55,11 +55,13 @@ PlatformFactory.prototype.newSimplePlatform = function (object, sheet, pos) {
 };
 
 PlatformFactory.prototype.newSimpleTexture = function (object, sheet, pos) {
+    this.newSimplePlatform(object, sheet, pos);
+    /*
     var texture = new LightRenderable(this.mSpriteSheetMap[sheet]);
     texture.getXform().setPosition(pos[0], pos[1]);
     texture.getXform().setSize(10,10);
     texture.setElementPixelPosArray(this.mSpriteMap[object]);
-    this.mTextureSet.addToSet(texture);
+    this.mTextureSet.addToSet(texture);*/
 };
 
 PlatformFactory.prototype.newBoxPlatform = function (object, sheet, pos) {

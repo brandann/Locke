@@ -10,7 +10,7 @@ MyGame.prototype.initAllTorches = function() {
         // make all torches
         
         this.mTorchSet.addToSet(this._initLights([
-            200 + i * 100, //1200 + (i * 100),
+            480 + 160 + 100 + i * 100, //1200 + (i * 100),
             57
         ]));
     }
