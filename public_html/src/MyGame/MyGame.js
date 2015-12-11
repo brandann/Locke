@@ -177,13 +177,11 @@ MyGame.prototype.initialize = function () {
     BgXform.setPosition(80,60);
     BgXform.setSize(160,120);
     
-    this.mHero = new Hero(this.kspritesheet_hero);
+    this.mHero = new Hero(this.kspritesheet_hero, this.mItemLight);
     this.mHero.setLifeCounter(this.mHUDManager.getLifeCounter());
     this.mHero.setPowerCounter(this.mHUDManager.getPowerCounter());
     this.mHero.registerhasKey(false);
     this.mTorchSet = new GameObjectSet();
-    
-    
     
     var offset = 0;
     this.LevelBlock1(offset);//begining this one must be first
@@ -201,6 +199,7 @@ MyGame.prototype.initialize = function () {
     this.LevelBlock4(offset); //little bit of a maze
     
     //directional light
+    // light just the outdoors
     var l2 = this._createALight(Light.eLightType.eDirectionalLight,
             [1140, 60, 0],         // position
             [-1, 0, 0],          // Direction 

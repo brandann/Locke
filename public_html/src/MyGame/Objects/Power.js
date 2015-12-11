@@ -8,7 +8,7 @@
 function Power(pos,dir) {
     this.mCycleLeft = 500;
     this.spriteSheet = 'assets/spritesheet_hud.png';
-    this.powerUp = new SpriteRenderable(this.spriteSheet);
+    this.powerUp = new LightRenderable(this.spriteSheet);
 
     this.powerUp.setColor([1, 1, 1, 0]);
     this.powerUp.getXform().setPosition(pos[0],pos[1]);
@@ -119,4 +119,8 @@ Power.prototype._createParticle = function(pos) {
     p.setSizeDelta(0.5);
     
     this.mParticleSet.addToSet(p);
+};
+
+Power.prototype.addLight = function(l) {
+    this.powerUp.addLight(l);
 };

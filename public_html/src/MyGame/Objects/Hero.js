@@ -11,12 +11,13 @@
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 
-function Hero(spriteSheet) {
+function Hero(spriteSheet, itemLight) {
     
     this.kXDelta = 1;
     this.kYDelta = 5.0;
     this.kJumpHeight = 40;
     this.kMaxVelocity = 40;
+    this.mItemLight = itemLight;
     
     this.mSpriteSheet = spriteSheet;
     this.mSpriteMap = {};
@@ -190,7 +191,9 @@ Hero.prototype.updateControls = function () {
         
         if(this.mPowerCounter.getNumber() >= 1){
             this.decPowerCounter();
-            this.mPowerUpSet.addToSet(new Power(this.getXform().getPosition(),this.mDir));
+            var p = new Power(this.getXform().getPosition(),this.mDir);
+            p.addLight(this.mItemLight);
+            this.mPowerUpSet.addToSet(p);
         }
     } 
 
