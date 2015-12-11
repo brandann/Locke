@@ -26,6 +26,7 @@ function MenuScreen() {
     
     this.mMsg = null;
     this.mMsg2 = null;
+    this.mInstructions = null;
     
     this.mNextScene = false;
     
@@ -83,12 +84,50 @@ MenuScreen.prototype.initialize = function () {
     this.mMsg2.setColor([0, 0, 0, 1]);
     this.mMsg2.getXform().setSize(50,5);
     this.mMsg2.getXform().setPosition(40,65);
-
     
     this.mBg = new TextureRenderable(this.kBgBlueLandBG);
     var BgXform = this.mBg.getXform();
     BgXform.setPosition(80,60);
     BgXform.setSize(160,120);  
+    
+    this.mInstructions = new GameObjectSet();
+    
+    var instructions1 = new FontRenderable("WASD - Move");
+    instructions1.setColor([0, 0, 0, 1]);
+    instructions1.setTextHeight(4);
+    instructions1.getXform().setPosition(40,50);
+    
+    var instructions2 = new FontRenderable("E - Shoot");
+    instructions2.setColor([0, 0, 0, 1]);
+    instructions2.setTextHeight(4);
+    instructions2.getXform().setPosition(40,45);
+    
+    var instructions3 = new FontRenderable("Space - Jump");
+    instructions3.setColor([0, 0, 0, 1]);
+    instructions3.setTextHeight(4);
+    instructions3.getXform().setPosition(40,40);
+    
+    var instructions4 = new FontRenderable("M - Mini Map");
+    instructions4.setColor([0, 0, 0, 1]);
+    instructions4.setTextHeight(4);
+    instructions4.getXform().setPosition(40,35);
+    
+    var instructions5 = new FontRenderable("Art: Kenny Art (http://kenney.nl/assets)");
+    instructions5.setColor([0, 0, 0, 1]);
+    instructions5.setTextHeight(3);
+    instructions5.getXform().setPosition(5,10);
+    
+    var instructions6 = new FontRenderable("Audio: Happy Adventure (http://opengameart.org/content/happy-adventure-loop)");
+    instructions6.setColor([0, 0, 0, 1]);
+    instructions6.setTextHeight(3);
+    instructions6.getXform().setPosition(5,5);
+    
+    this.mInstructions.addToSet(instructions1);
+    this.mInstructions.addToSet(instructions2);
+    this.mInstructions.addToSet(instructions3);
+    this.mInstructions.addToSet(instructions4);
+    this.mInstructions.addToSet(instructions5);
+    this.mInstructions.addToSet(instructions6);
     
 //    var randomObj = new SpriteRenderable(this.randomObjects);
 //    var xform = randomObj.getXform();
@@ -187,6 +226,7 @@ MenuScreen.prototype.draw = function () {
     this.mBg.draw(this.mCamera);
     this.mFlyingThings.draw(this.mCamera);
     this.mMsg.draw(this.mCamera);
+    this.mInstructions.draw(this.mCamera);
     
     if(this.mBlink < 40){
        this.mMsg2.draw(this.mCamera); 
