@@ -49,7 +49,7 @@ Enemy.prototype.updatePace = function () {
         this.mEnemy.setColor([1, 0, 0, .2]);                                     // show red on chase
     }
     else {
-        if (distFromInitial > this.mPaceDistance) {                             // reached patrol bounds
+        if (distFromInitial[0] > this.mPaceDistance) {                          // reached patrol bounds
             if(enemyXPos < this.mInitialPosition[0]) {                          // partol right
                 this.mDir = 1;
                 this.mEnemy.setSpriteSequence(68, 57, 57, 34, 2, 0);
