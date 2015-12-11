@@ -166,14 +166,14 @@ MyGame.prototype.LevelBlock10 = function (offset) {
             [115 + offset, 75], // initial position
             20);                // detection range
     this.mBats.addToSet(e1);
-    
+    /*
     var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
     e.setChaseState(            // set enemy as bat
             [40 + offset, 95],  // initial position
             20);                // detection range
     this.mBats.addToSet(e); 
-
+*/
 };
 
 
