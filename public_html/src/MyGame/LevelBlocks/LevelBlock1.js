@@ -131,9 +131,10 @@ MyGame.prototype.LevelBlock1 = function (offset) {
     var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
     e.setPaceState(             // set enemy as "not bat"
-            [80 + offset, 60],  // initial position
+            [40 + offset, 60],  // initial position
             5,                 // pace distance
             30);                // detection range
+    this.mBlobs.addToSet(e);
 /*
     var e1 = new Enemy(this.kSpriteSheetEnemy);
     e1.setHeroObject(this.mHero);

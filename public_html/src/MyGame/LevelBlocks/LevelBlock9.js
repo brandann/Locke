@@ -187,13 +187,13 @@ MyGame.prototype.LevelBlock9 = function (offset) {
 //    this.mPlatformFactory.newSpikePlatform([xPos + 20,this.kLayerPos[3]]);
 //    this.mPlatformFactory.newAwardPlatform([60,this.kLayerPos[8]]);
 //    
-    var e = new Enemy(this.kSpriteSheetEnemy);
+    /*var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
     e.setPaceState(             // set enemy as "not bat"
             [80 + offset, 60],  // initial position
             12,                 // pace distance
             30);                // detection range
-    this.mBlobs.addToSet(e);
+    this.mBlobs.addToSet(e);*/
 //    
     var e1 = new Enemy(this.kSpriteSheetEnemy);
     e1.setHeroObject(this.mHero);
