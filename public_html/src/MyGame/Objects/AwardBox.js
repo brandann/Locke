@@ -5,13 +5,14 @@
  */
 
 
-function AwardBox(pixelPosition, spriteTexture, pos, size) {
+function AwardBox(pixelPosition, spriteTexture, pos, size, light) {
     this.mPlatform = new LightRenderable(spriteTexture);
 
     this.mPlatform.setColor([1, 1, 1, 0]);
     this.mPlatform.getXform().setPosition(pos[0], pos[1]);
     this.mPlatform.getXform().setSize(size[0],size[1]);
     this.mPlatform.setElementPixelPosArray(pixelPosition);
+    this.mLight = light;
     
     GameObject.call(this,this.mPlatform);
     
@@ -47,8 +48,6 @@ AwardBox.prototype.update = function (hero) {
     if(this.spawnedItem !== null){
         this.spawnedItem.update(hero);
     }
-    
-    
     
     var bb = this.getBBox();
     var heroBB = hero.getBBox();
@@ -105,6 +104,7 @@ AwardBox.prototype._startAnimation = function () {
             var spawnPosX = this.getXform().getXPos();
             var spawnPosY = this.getXform().getYPos() + 10;
             this.spawnedItem = new Item('heart', [spawnPosX,spawnPosY]);
+            this.spawnedItem.addLight(this.mLight);
         }
             
 };

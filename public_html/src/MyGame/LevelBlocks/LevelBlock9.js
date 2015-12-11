@@ -85,6 +85,7 @@ MyGame.prototype.LevelBlock9 = function (offset) {
                                                 [XLayerPos[10],YLayerPos[6]]);
                             
     this.mKey = new Item('goldKey', [XLayerPos[10],YLayerPos[8]]);
+    this.mKey.addLight(this.mItemLight);
     //this.mKey.getRenderable().addLight(l);
     //directional light
     var l = this._createALight(Light.eLightType.eSpotLight,

@@ -88,6 +88,8 @@ Item.prototype.update = function (hero) {
     if(bb.intersectsBound(heroBB)){
         this._handleCollision(hero);
     }
-        
-    
+};
+
+Item.prototype.addLight = function(l) {
+    this.mItem.addLight(l);
 };

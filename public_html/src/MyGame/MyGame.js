@@ -133,7 +133,7 @@ MyGame.prototype.initialize = function () {
  // CreateManagers--------------------------------------------------------------   
     
     this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms,
-                                                this.mTextures);
+                                                this.mTextures, this.mItemLight);
     this.mHUDManager = new HUDManager(this.kspritesheet_hud,this.kspritesheet_tiles, this.mItemLight);
 
 //  Create Cameras--------------------------------------------------------------

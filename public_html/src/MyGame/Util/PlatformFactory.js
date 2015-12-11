@@ -5,11 +5,12 @@
  */
 
 
-function PlatformFactory(mapOfSprites, globalPlatformSet,globalTextureSet) {
+function PlatformFactory(mapOfSprites, globalPlatformSet,globalTextureSet, light) {
     this.mSpriteSheetMap = mapOfSprites;
     this.mSpriteMap = {};
     this.mAllPlatforms = globalPlatformSet;
     this.mTextureSet = globalTextureSet;
+    this.mLight = light;
 
     
     var key;
@@ -83,7 +84,6 @@ PlatformFactory.prototype.newSpikePlatform = function (pos) {
 PlatformFactory.prototype.newAwardPlatform = function (pos) {
     var objectKey = '!withBorder';
     var sheetKey = 'objects';
-    var platform = new AwardBox(this.mSpriteMap[objectKey], this.mSpriteSheetMap[sheetKey], pos, [10,10]);
+    var platform = new AwardBox(this.mSpriteMap[objectKey], this.mSpriteSheetMap[sheetKey], pos, [10,10], this.mLight);
     this.mAllPlatforms.addToSet(platform);
-
 };
