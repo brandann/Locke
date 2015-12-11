@@ -331,5 +331,13 @@ MyGame.prototype.update = function () {
     //this.mCamera.panWith(this.mHero.getPhysicsComponent().getXform(), 0.3 );
     //var y = this.mHero.getPhysicsComponent().getXform().getYPos();
 
-     
+     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Right)) {
+        this.mHero.getXform().setPosition(this.mHero.getXform().getXPos() + 100, this.mHero.getXform().getYPos());
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Left)) {
+        this.mHero.getXform().setPosition(this.mHero.getXform().getXPos() - 100, this.mHero.getXform().getYPos());
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Up)) {
+        this.mHero.getXform().setPosition(this.mHero.getXform().getXPos(), this.mHero.getXform().getYPos()+50);
+    }
 };

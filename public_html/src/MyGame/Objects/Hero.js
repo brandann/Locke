@@ -34,9 +34,6 @@ function Hero(spriteSheet) {
     key = 'jumpLeft';
     this.mSpriteMap[key] = [328,67,67,92,1,0];      
     
-    
-    
-    
     key = 'blueDiamond';
     this.mSpriteMap[key] = [0,128,896,1024];
     key = 'goldKeyEmpty';
@@ -45,8 +42,6 @@ function Hero(spriteSheet) {
     this.mSpriteMap[key] = [256,384,128,256];
     key = 'bomb';
     this.mSpriteMap[key] = [256,384,128,256];
-    
-    
     
     this.mDye = new LightRenderable(this.mSpriteSheet);
     this.mDye.setColor([1, 1, 1, 0]);
@@ -363,9 +358,9 @@ Hero.prototype.collideBottom = function (obj) {
 
 Hero.prototype.handleEnemyCollision = function(enemy) {
     if(!this.mKey){
-        this.getXform().setPosition(30,70);
+        //this.getXform().setPosition(30,70);
     }else if(this.mKey){
-        this.getXform().setPosition(1500,70);
+        //this.getXform().setPosition(1500,70);
     }
 
     
