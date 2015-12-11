@@ -49,7 +49,7 @@ function MyGame() {
 
     this.kGameWorldWidth = 1600;
     
-    
+    this.mItemLight = null;
     
     this.mTorchSet = null;
 }
@@ -109,6 +109,16 @@ MyGame.prototype.initialize = function () {
     this.mBackGrouds = new GameObjectSet();
     this.mBats = new GameObjectSet();
     this.mBlobs = new GameObjectSet();
+    
+    this.mItemLight = this._createALight(Light.eLightType.eDirectionalLight,
+            [0, 0, 0],     // position
+            [0, -1, 0],    // Direction 
+            [1, 1, 1, 1],  // some color
+            0, 1200,       // near and far distances
+            0, 0,          // inner and outer cones
+            .5,            // intensity
+            1              // drop off
+            );
  
 //Define SpriteSheets-----------------------------------------------------------
     var assetMap = {};
@@ -124,7 +134,7 @@ MyGame.prototype.initialize = function () {
     
     this.mPlatformFactory = new PlatformFactory(assetMap,this.mAllPlatforms,
                                                 this.mTextures);
-    this.mHUDManager = new HUDManager(this.kspritesheet_hud,this.kspritesheet_tiles);
+    this.mHUDManager = new HUDManager(this.kspritesheet_hud,this.kspritesheet_tiles, this.mItemLight);
 
 //  Create Cameras--------------------------------------------------------------
     var mainCamH = 600;
@@ -224,6 +234,8 @@ MyGame.prototype.initialize = function () {
     this.LevelBlock9(offset); //final level block with key
    
     this.initAllTorches();
+    
+    
 };
 
 // This is the draw function, make sure to setup proper drawing environment, and more

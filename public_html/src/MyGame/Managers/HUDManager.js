@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function HUDManager(hudSpriteSheet,objSheet) {
+function HUDManager(hudSpriteSheet,objSheet,light) {
     this.mSpriteSheet = hudSpriteSheet;
     this.mObjSheet = objSheet;
     this.mSpriteMap = {};
@@ -22,26 +22,28 @@ function HUDManager(hudSpriteSheet,objSheet) {
     key = 'power';
     this.mSpriteMap[key] = [256,384,896,1024];
    
-    this.lifeCounter = new Counter(this.mSpriteSheet);
-    this.keyCounter = new Counter(this.mSpriteSheet);
-    this.powerCounter = new Counter(this.mSpriteSheet);
+    this.lifeCounter = new Counter(this.mSpriteSheet); this.lifeCounter.addLight(light);
+    this.keyCounter = new Counter(this.mSpriteSheet); this.keyCounter.addLight(light);
+    this.powerCounter = new Counter(this.mSpriteSheet); this.powerCounter.addLight(light);
     
-    this.heartIcon = this.createIcon('heart');
-    this.powerIcon = this.createIcon('power');
-    this.keyIcon = this.createIcon('goldKeyEmpty');
+    this.heartIcon = this.createIcon('heart', light);
+    this.powerIcon = this.createIcon('power', light);
+    this.keyIcon = this.createIcon('goldKeyEmpty', light);
 }
 
-HUDManager.prototype.createIcon = function (key) {
-    var sprite = new SpriteRenderable(this.mSpriteSheet);
+HUDManager.prototype.createIcon = function (key, l) {
+    var sprite = new LightRenderable(this.mSpriteSheet);
     sprite.setColor([1, 1, 1, 0]);
     sprite.setElementPixelPosArray(this.mSpriteMap[key]); 
+    sprite.addLight(l);
     return sprite;
 };
 
-HUDManager.prototype.createIcon2 = function (key) {
-    var sprite = new SpriteRenderable(this.mObjSheet);
+HUDManager.prototype.createIcon2 = function (key, l) {
+    var sprite = new LightRenderable(this.mObjSheet);
     sprite.setColor([1, 1, 1, 0]);
     sprite.setElementPixelPosArray(this.mSpriteMap[key]); 
+    sprite.addLight(l);
     return sprite;
 };
 

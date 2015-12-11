@@ -23,7 +23,7 @@ function Counter(hudSpriteSheet) {
     
     this.mCounter = 3;
     
-    this.ones = new SpriteRenderable(this.mSpriteSheet);
+    this.ones = new LightRenderable(this.mSpriteSheet);
     this.ones.setColor([1, 1, 1, 0]);
     this.ones.getXform().setPosition(-10, -10);
     this.ones.getXform().setSize(10,10);
@@ -73,4 +73,8 @@ Counter.prototype.set = function (x,y,w,h) {
 
 Counter.prototype.draw = function (aCamera) {
     this.ones.draw(aCamera);
+};
+
+Counter.prototype.addLight = function(l) {
+    this.ones.addLight(l);
 };
