@@ -194,13 +194,13 @@ MyGame.prototype.LevelBlock9 = function (offset) {
             12,                 // pace distance
             30);                // detection range
     this.mBlobs.addToSet(e);*/
-//    
-    var e1 = new Enemy(this.kSpriteSheetEnemy);
-    e1.setHeroObject(this.mHero);
-    e1.setChaseState(           // set enemy as bat
-            [115 + offset, 75], // initial position
-            20);                // detection range
-    this.mBats.addToSet(e1);
+////    
+//    var e1 = new Enemy(this.kSpriteSheetEnemy);
+//    e1.setHeroObject(this.mHero);
+//    e1.setChaseState(           // set enemy as bat
+//            [115 + offset, 75], // initial position
+//            20);                // detection range
+//    this.mBats.addToSet(e1);
 /*
     var e = new Enemy(this.kSpriteSheetEnemy);
     e.setHeroObject(this.mHero);
