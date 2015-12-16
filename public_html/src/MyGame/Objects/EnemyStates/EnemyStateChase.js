@@ -17,7 +17,7 @@ Enemy.prototype.setChaseState = function(initPos, range) {
     this.mSpeedVel = 0.15;                                                      // speed of the enemy when moving
     
     this._updateState(this.updateChase);                                        // set the update state to this state
-    
+    this.mInitialPosition = initPos;
     this.mRange = 45;
     
     this.mEnemy.getXform().setSize(20, 10);
@@ -25,7 +25,7 @@ Enemy.prototype.setChaseState = function(initPos, range) {
     this.mEnemy.setAnimationSpeed(20); 
     this.mEnemy.setSpriteSequence(128, 0, 88, 47, 2, 0);
     
-    this.mCenter = new InterpolateVec2(initPos, 300, 0.015);
+    this.mCenter = new InterpolateVec2(initPos, 300, 0.01);
     this.mFound = false;
     this.mLost = false;
     this.mStartPosition = initPos;
@@ -84,4 +84,4 @@ Enemy.prototype.lostHero = function() {
     var v = [this.mStartPosition[0], this.mStartPosition[1] - 200];
     this.mCenter.setFinalValue(v);
     this.getXform().setHeight(this.getXform().getHeight() * -1);
-}
+};
