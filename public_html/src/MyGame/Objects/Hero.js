@@ -363,7 +363,7 @@ Hero.prototype.handleEnemyCollision = function(enemy) {
     if(!this.mKey){
      this.getXform().setPosition(30,70);
     }else if(this.mKey){
-     this.getXform().setPosition(1500,70);
+     this.getXform().setPosition(1800,70);
     }
 
   this.mLifeCounter.decByOne();

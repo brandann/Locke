@@ -344,7 +344,7 @@ MyGame.prototype.update = function () {
     //var y = this.mHero.getPhysicsComponent().getXform().getYPos();
 //
 //     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Right)) {
-//        this.mHero.getXform().setPosition(this.mHero.getXform().getXPos() + 100, this.mHero.getXform().getYPos());
+//        this.mHero.getXform().setPosition(1800, this.mHero.getXform().getYPos());
 //    }
 //    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Left)) {
 //        this.mHero.getXform().setPosition(this.mHero.getXform().getXPos() - 100, this.mHero.getXform().getYPos());
