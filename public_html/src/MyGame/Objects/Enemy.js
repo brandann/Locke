@@ -71,3 +71,7 @@ Enemy.prototype._updateState = function (func) {
 Enemy.prototype.setHeroObject = function(hero) {
     this.mHero = hero;
 };
+
+Enemy.prototype.reset = function() {
+    this.getXform().setPosition(this.mInitialPosition[0], this.mInitialPosition[1]);
+};

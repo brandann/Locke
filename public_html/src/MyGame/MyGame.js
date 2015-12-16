@@ -298,7 +298,8 @@ MyGame.prototype.update = function () {
                 this.mHeroHasKey = true;
                 this.mHUDManager.heroHasKey();
                 this.mKey.hide(); 
-                this.mHero.registerhasKey(true);            
+                this.mHero.registerhasKey(true);
+                //this.onKeyGetEvent();
             }
 
         }
@@ -351,4 +352,8 @@ MyGame.prototype.update = function () {
     if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Up)) {
         this.mHero.getXform().setPosition(this.mHero.getXform().getXPos(), this.mHero.getXform().getYPos()+50);
     }
+};
+
+MyGame.prototype.onKeyGetEvent = function() {
+    
 };
