@@ -326,7 +326,7 @@ MyGame.prototype.update = function () {
     }   
     //var x = this.mHero.getPhysicsComponent().getXform().getXPos();
     
-    if(this.mHero.getXform().getXPos() < -30){
+    if(this.mHero.getXform().getYPos() < 0){
         this.mHero.handleEnemyCollision();
     }
     

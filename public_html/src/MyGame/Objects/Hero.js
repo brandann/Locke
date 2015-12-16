@@ -59,7 +59,7 @@ function Hero(spriteSheet, itemLight) {
     r.setMass(0.7); 
     r.setRestitution(0.05);
     r.setColor([0, 1, 0, 1]);
-    r.setDrawBounds(true);
+    //r.setDrawBounds(true);
     this.setPhysicsComponent(r);
     
     //Hero States
@@ -361,13 +361,12 @@ Hero.prototype.collideBottom = function (obj) {
 
 Hero.prototype.handleEnemyCollision = function(enemy) {
     if(!this.mKey){
-        //this.getXform().setPosition(30,70);
+     this.getXform().setPosition(30,70);
     }else if(this.mKey){
-        //this.getXform().setPosition(1500,70);
+     this.getXform().setPosition(1500,70);
     }
 
-    
-    //this.mLifeCounter.decByOne();
+  this.mLifeCounter.decByOne();
 };
 
 Hero.prototype.setLifeCounter = function(life) {

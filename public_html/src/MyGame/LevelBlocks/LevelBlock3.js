@@ -144,14 +144,14 @@ MyGame.prototype.LevelBlock3 = function (offset) {
 //    this.mPlatformFactory.newSpikePlatform([xPos + 10,this.kLayerPos[3]]);
 //    this.mPlatformFactory.newSpikePlatform([xPos + 20,this.kLayerPos[3]]);
 //    this.mPlatformFactory.newAwardPlatform([60,this.kLayerPos[8]]);
-//    
-    /*var e = new Enemy(this.kSpriteSheetEnemy);
-    e.setHeroObject(this.mHero);
-    e.setPaceState(             // set enemy as "not bat"
-            [100 + offset, 60],  // initial position
-            5,                 // pace distance
-            30);                // detection range
-    this.mBlobs.addToSet(e);*/
+//    randomIndex = Math.round(Math.random() * 16);
+//    var e = new Enemy(this.kSpriteSheetEnemy);
+//    e.setHeroObject(this.mHero);
+//    e.setPaceState(             // set enemy as "not bat"
+//            [XLayerPos[randomIndex], 60],  // initial position
+//            5,                 // pace distance
+//            30);                // detection range
+//    this.mBlobs.addToSet(e);
 //    
     var e1 = new Enemy(this.kSpriteSheetEnemy);
     e1.setHeroObject(this.mHero);
