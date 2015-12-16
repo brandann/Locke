@@ -17,7 +17,7 @@ Enemy.prototype.setChaseState = function(initPos, range) {
     this.mSpeedVel = 0.15;                                                      // speed of the enemy when moving
     
     this._updateState(this.updateChase);                                        // set the update state to this state
-    this.mInitialPosition = initPos;
+    this.mInitialPosition = vec2.create(initPos[0]);
     this.mRange = 45;
     
     this.mEnemy.getXform().setSize(20, 10);

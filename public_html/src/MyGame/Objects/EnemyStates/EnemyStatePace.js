@@ -14,7 +14,7 @@ Enemy.prototype.setPaceState = function(initPos, dist, range) {
     r.setRestitution(0.3);
     this.setPhysicsComponent(r);
     
-    this.mInitialPosition = initPos;
+    this.mInitialPosition = vec2.create(initPos[0]);
     this.getXform().setPosition(initPos[0], initPos[1]);
     
     this.kXDelta = .1;

@@ -355,5 +355,14 @@ MyGame.prototype.update = function () {
 };
 
 MyGame.prototype.onKeyGetEvent = function() {
-    
+   // reset all the enemies
+   var i = 0;
+   for(i = 0; i < this.mBlobs.size(); i++) {
+       this.mBlobs.getObjectAt(i).reset();
+   }
+   
+   var j = 0;
+   for(j = 0; j < this.mBats.size(); j++ ){
+       this.mBats.getObjectAt(j).reset();
+   }
 };
